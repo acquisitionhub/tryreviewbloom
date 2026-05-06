@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Review Automation for Home Service Businesses | Review Bloom</title>
+<meta name="description" content="Review Bloom helps service businesses automate the process of requesting and managing reviews. So that they rank higher on search and win more customers."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pink:#c45c7e;
+  --pink-dark:#a33d62;
+  --pink-light:#fce8ef;
+  --black:#0d0d0d;
+  --gray-900:#111827;
+  --gray-700:#374151;
+  --gray-500:#6b7280;
+  --gray-300:#d1d5db;
+  --gray-100:#f3f4f6;
+  --gray-50:#f9fafb;
+  --white:#ffffff;
+  --font:'Plus Jakarta Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--gray-900);background:var(--white);line-height:1.6;font-size:16px;overflow-x:hidden}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-100);padding:0 5%}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:68px;gap:32px}
+.nav-logo img{height:32px;object-fit:contain}
+.nav-links{display:flex;align-items:center;gap:6px;flex:1}
+.nav-links a,.nav-dropdown-btn{font-size:14px;font-weight:500;color:var(--gray-700);text-decoration:none;padding:6px 12px;border-radius:8px;border:none;background:transparent;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:4px;transition:background .15s,color .15s}
+.nav-links a:hover,.nav-dropdown-btn:hover{background:var(--gray-100);color:var(--black)}
+.nav-dropdown{position:relative}
+.nav-dropdown-menu{display:none;position:absolute;top:calc(100%+8px);left:0;background:var(--white);border:1px solid var(--gray-100);border-radius:12px;padding:8px;min-width:220px;box-shadow:0 8px 32px rgba(0,0,0,.1);z-index:200}
+.nav-dropdown:hover .nav-dropdown-menu{display:block}
+.nav-dropdown-menu a{display:block;padding:8px 12px;font-size:14px;color:var(--gray-700);text-decoration:none;border-radius:8px;transition:background .15s}
+.nav-dropdown-menu a:hover{background:var(--gray-50);color:var(--black)}
+.nav-ctas{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.btn-ghost{font-size:14px;font-weight:600;color:var(--gray-700);text-decoration:none;padding:8px 16px;border-radius:8px;transition:background .15s}
+.btn-ghost:hover{background:var(--gray-100)}
+.btn-primary{font-size:14px;font-weight:700;color:var(--white);background:var(--pink);text-decoration:none;padding:10px 20px;border-radius:10px;white-space:nowrap;transition:background .15s,transform .1s;display:inline-block}
+.btn-primary:hover{background:var(--pink-dark);transform:translateY(-1px)}
+.btn-primary-lg{font-size:16px;font-weight:700;color:var(--white);background:var(--pink);text-decoration:none;padding:14px 28px;border-radius:12px;white-space:nowrap;transition:background .15s,transform .1s,box-shadow .15s;display:inline-block}
+.btn-primary-lg:hover{background:var(--pink-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(196,92,126,.35)}
+.btn-outline-lg{font-size:16px;font-weight:600;color:var(--gray-700);background:transparent;border:1.5px solid var(--gray-300);text-decoration:none;padding:13px 28px;border-radius:12px;transition:border-color .15s,color .15s;display:inline-block}
+.btn-outline-lg:hover{border-color:var(--pink);color:var(--pink)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#fdf0f4 0%,#fffafe 50%,#fff0f6 100%);padding:80px 5% 60px;text-align:center}
+.hero-inner{max-width:800px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--pink-light);border:1px solid rgba(196,92,126,.2);color:var(--pink-dark);font-size:13px;font-weight:600;padding:6px 14px;border-radius:100px;margin-bottom:28px}
+.hero-badge::before{content:'★★★★★';font-size:11px;letter-spacing:1px}
+h1{font-size:clamp(36px,6vw,64px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;color:var(--black);margin-bottom:20px}
+h1 span{color:var(--pink)}
+.hero-sub{font-size:18px;color:var(--gray-500);max-width:600px;margin:0 auto 36px;line-height:1.6}
+.hero-ctas{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:48px}
+.hero-stat{font-size:13px;font-weight:600;color:var(--gray-500);margin-bottom:40px}
+.hero-stat span{color:var(--pink);font-weight:700}
+.hero-video{max-width:760px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.18);border:1px solid var(--gray-200,#e5e7eb)}
+.hero-video iframe{width:100%;aspect-ratio:16/9;display:block;border:none}
+
+/* TRUST LOGOS */
+.trust-section{padding:48px 5%;background:var(--white);border-bottom:1px solid var(--gray-100)}
+.trust-inner{max-width:1200px;margin:0 auto;text-align:center}
+.trust-label{font-size:13px;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.8px;margin-bottom:24px}
+.logos-scroll{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.logos-scroll img{height:44px;width:auto;object-fit:contain;border-radius:8px;border:1px solid var(--gray-100);padding:6px 12px;background:var(--white);filter:grayscale(.2)}
+
+/* SECTION COMMONS */
+section{padding:80px 5%}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-label{font-size:12px;font-weight:700;color:var(--pink);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+h2{font-size:clamp(28px,4vw,44px);font-weight:800;line-height:1.15;letter-spacing:-1px;color:var(--black);margin-bottom:16px}
+.section-sub{font-size:18px;color:var(--gray-500);max-width:640px;margin-bottom:48px;line-height:1.6}
+
+/* PROBLEM SECTION */
+.problem-section{background:var(--gray-50)}
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.problem-card{background:var(--white);border:1px solid var(--gray-100);border-radius:16px;padding:32px;position:relative;overflow:hidden}
+.problem-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ef4444,#f97316)}
+.problem-icon{font-size:28px;margin-bottom:16px}
+.problem-card h3{font-size:17px;font-weight:700;color:var(--black);margin-bottom:10px}
+.problem-card p{font-size:15px;color:var(--gray-500);line-height:1.6}
+
+/* HOW WE FIX */
+.fix-section{background:var(--white)}
+.fix-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:48px}
+.fix-card{background:var(--pink-light);border:1px solid rgba(196,92,126,.15);border-radius:16px;padding:28px}
+.fix-icon{width:40px;height:40px;background:var(--pink);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:18px}
+.fix-card h3{font-size:17px;font-weight:700;color:var(--black);margin-bottom:8px}
+.fix-card p{font-size:15px;color:var(--gray-600,#4b5563);line-height:1.6}
+.fix-video{border-radius:16px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.12);border:1px solid var(--gray-100);margin-bottom:36px}
+.fix-video iframe{width:100%;aspect-ratio:16/9;display:block;border:none}
+.cta-center{text-align:center;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* CASE STUDIES */
+.cases-section{background:var(--gray-50)}
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.case-card{background:var(--white);border:1px solid var(--gray-100);border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.case-card-img{width:100%;height:180px;object-fit:cover;display:block}
+.case-badge{font-size:12px;font-weight:700;color:var(--pink);background:var(--pink-light);padding:4px 12px;border-radius:100px;display:inline-block;margin:20px 20px 12px}
+.case-card-body{padding:0 20px 20px;flex:1;display:flex;flex-direction:column}
+.case-card h3{font-size:19px;font-weight:700;color:var(--black);margin-bottom:12px}
+.case-card p{font-size:14px;color:var(--gray-500);line-height:1.6;flex:1;margin-bottom:16px}
+.case-author{display:flex;align-items:center;gap:10px;padding-top:16px;border-top:1px solid var(--gray-100)}
+.case-author-img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.case-author-info{font-size:13px}
+.case-author-name{font-weight:700;color:var(--black)}
+.case-author-meta{color:var(--gray-500)}
+
+/* BOOST */
+.boost-section{background:linear-gradient(135deg,#c45c7e 0%,#8b2c52 100%);color:var(--white);text-align:center;padding:80px 5%}
+.boost-section h2{color:var(--white)}
+.boost-section .section-sub{color:rgba(255,255,255,.8);margin:0 auto 40px}
+.boost-stat{font-size:clamp(56px,8vw,100px);font-weight:800;letter-spacing:-3px;color:var(--white);line-height:1;margin-bottom:8px}
+.boost-stat-sub{font-size:18px;color:rgba(255,255,255,.8);margin-bottom:48px}
+.boost-screenshot{max-width:600px;margin:0 auto 48px;border-radius:16px;overflow:hidden;box-shadow:0 32px 64px rgba(0,0,0,.4)}
+.boost-screenshot img{width:100%;display:block}
+.boost-author{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:56px}
+.boost-author-avatar{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
+.boost-author-info{text-align:left;font-size:14px;color:rgba(255,255,255,.8)}
+.boost-author-name{font-weight:700;color:var(--white)}
+
+/* TIMELINE */
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;background:rgba(255,255,255,.1);border-radius:20px;padding:40px;margin-top:0}
+.timeline-step{text-align:center}
+.timeline-day{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.6);margin-bottom:6px}
+.timeline-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:8px}
+.timeline-desc{font-size:14px;color:rgba(255,255,255,.75);line-height:1.5}
+
+/* HOW IT WORKS */
+.hiw-section{background:var(--white)}
+.hiw-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:48px}
+.hiw-step{text-align:center;padding:36px 28px;background:var(--gray-50);border-radius:20px;border:1px solid var(--gray-100)}
+.hiw-num{width:48px;height:48px;background:var(--pink);color:var(--white);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;margin:0 auto 16px}
+.hiw-step-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--pink);margin-bottom:6px}
+.hiw-step h3{font-size:17px;font-weight:700;color:var(--black);margin-bottom:10px}
+.hiw-step p{font-size:14px;color:var(--gray-500);line-height:1.6}
+
+/* TESTIMONIALS */
+.testimonials-section{background:var(--gray-50)}
+.testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.testi-card{background:var(--white);border:1px solid var(--gray-100);border-radius:20px;padding:28px}
+.testi-stars{color:#f59e0b;font-size:16px;letter-spacing:2px;margin-bottom:16px}
+.testi-quote{font-size:15px;color:var(--gray-700);line-height:1.7;margin-bottom:20px;font-style:italic}
+.testi-stat{font-size:28px;font-weight:800;color:var(--pink);margin-bottom:4px}
+.testi-stat-desc{font-size:13px;color:var(--gray-500);margin-bottom:20px}
+.testi-author{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--gray-100)}
+.testi-logo{height:32px;width:auto;object-fit:contain;max-width:100px}
+.testi-name{font-size:14px;font-weight:700;color:var(--black)}
+.testi-biz{font-size:12px;color:var(--gray-500)}
+
+/* FEATURES */
+.features-section{background:var(--white)}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px}
+.feature-card{border:1px solid var(--gray-100);border-radius:16px;padding:24px;transition:box-shadow .2s,transform .2s}
+.feature-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.08);transform:translateY(-2px)}
+.feature-icon{font-size:24px;margin-bottom:14px;width:44px;height:44px;background:var(--pink-light);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.feature-card h3{font-size:16px;font-weight:700;color:var(--black);margin-bottom:8px}
+.feature-card p{font-size:14px;color:var(--gray-500);line-height:1.6}
+.feature-img{width:100%;border-radius:12px;margin-top:14px;border:1px solid var(--gray-100)}
+
+/* INDUSTRIES */
+.industries-section{background:var(--gray-50);overflow:hidden}
+.industries-scroll{display:flex;gap:12px;animation:scroll 30s linear infinite;width:max-content}
+.industries-scroll-wrap{overflow:hidden;mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent)}
+.industry-tag{background:var(--white);border:1px solid var(--gray-200,#e5e7eb);border-radius:100px;padding:10px 20px;font-size:15px;font-weight:600;color:var(--gray-700);white-space:nowrap}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* PRICING */
+.pricing-section{background:var(--white)}
+.pricing-toggle{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:48px}
+.toggle-btn{padding:8px 20px;border-radius:8px;border:1.5px solid var(--gray-300);background:transparent;font-family:var(--font);font-size:14px;font-weight:600;color:var(--gray-500);cursor:pointer;transition:all .2s}
+.toggle-btn.active{background:var(--pink);border-color:var(--pink);color:var(--white)}
+.save-badge{background:var(--pink-light);color:var(--pink-dark);font-size:12px;font-weight:700;padding:3px 10px;border-radius:100px}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pricing-card{border:1.5px solid var(--gray-100);border-radius:20px;padding:32px;position:relative;background:var(--white)}
+.pricing-card.popular{border-color:var(--pink);box-shadow:0 8px 32px rgba(196,92,126,.15)}
+.popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--pink);color:var(--white);font-size:12px;font-weight:700;padding:4px 16px;border-radius:100px;white-space:nowrap}
+.pricing-tier{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--pink);margin-bottom:8px}
+.pricing-card h3{font-size:22px;font-weight:800;color:var(--black);margin-bottom:6px}
+.pricing-requests{font-size:14px;color:var(--gray-500);margin-bottom:24px}
+.pricing-price{font-size:42px;font-weight:800;color:var(--black);letter-spacing:-2px;line-height:1;margin-bottom:6px}
+.pricing-price span{font-size:16px;font-weight:500;color:var(--gray-500);letter-spacing:0}
+.pricing-period{font-size:14px;color:var(--gray-500);margin-bottom:28px}
+.pricing-divider{height:1px;background:var(--gray-100);margin-bottom:24px}
+.pricing-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.pricing-features li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray-700)}
+.pricing-features li::before{content:'✓';width:18px;height:18px;background:var(--pink-light);color:var(--pink-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.pricing-cta{display:block;text-align:center;font-size:15px;font-weight:700;color:var(--pink);background:var(--pink-light);border:1.5px solid rgba(196,92,126,.2);padding:13px;border-radius:12px;text-decoration:none;transition:all .2s}
+.pricing-cta:hover{background:var(--pink);color:var(--white)}
+.pricing-card.popular .pricing-cta{background:var(--pink);color:var(--white)}
+.pricing-card.popular .pricing-cta:hover{background:var(--pink-dark)}
+
+/* FAQ */
+.faq-section{background:var(--gray-50)}
+.faq-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq-item{background:var(--white);border:1px solid var(--gray-100);border-radius:14px;overflow:hidden}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;padding:20px 24px;font-size:16px;font-weight:600;color:var(--black);background:transparent;border:none;cursor:pointer;font-family:var(--font);text-align:left;gap:12px;transition:background .15s}
+.faq-q:hover{background:var(--gray-50)}
+.faq-icon{width:24px;height:24px;flex-shrink:0;background:var(--gray-100);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;transition:transform .2s,background .2s}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--pink);color:var(--white)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease}
+.faq-item.open .faq-a{max-height:400px}
+.faq-a-inner{padding:0 24px 20px;font-size:15px;color:var(--gray-500);line-height:1.7}
+.faq-a-inner a{color:var(--pink)}
+
+/* CTA BANNER */
+.cta-banner{background:linear-gradient(135deg,#1a0a10 0%,#3d1325 100%);padding:80px 5%;text-align:center}
+.cta-banner h2{color:var(--white);margin-bottom:12px}
+.cta-banner p{color:rgba(255,255,255,.7);font-size:18px;max-width:500px;margin:0 auto 36px}
+
+/* FOOTER */
+footer{background:var(--black);color:rgba(255,255,255,.7);padding:64px 5% 32px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:40px;margin-bottom:48px}
+.footer-logo{height:28px;object-fit:contain;margin-bottom:20px;filter:brightness(0) invert(1)}
+.footer-col h4{font-size:13px;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,.6);text-decoration:none;margin-bottom:10px;transition:color .15s}
+.footer-col a:hover{color:var(--white)}
+.footer-newsletter{display:flex;flex-direction:column;gap:10px}
+.footer-newsletter input{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--white);border-radius:8px;padding:10px 14px;font-family:var(--font);font-size:14px;outline:none;transition:border-color .2s}
+.footer-newsletter input::placeholder{color:rgba(255,255,255,.4)}
+.footer-newsletter input:focus{border-color:var(--pink)}
+.footer-newsletter button{background:var(--pink);color:var(--white);border:none;border-radius:8px;padding:10px 18px;font-family:var(--font);font-weight:700;font-size:14px;cursor:pointer;transition:background .15s}
+.footer-newsletter button:hover{background:var(--pink-dark)}
+.footer-divider{height:1px;background:rgba(255,255,255,.08);margin-bottom:28px}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.footer-legal{font-size:12px;color:rgba(255,255,255,.4);line-height:1.6;max-width:700px}
+.footer-copy{font-size:13px;color:rgba(255,255,255,.4)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .problem-grid,.fix-grid,.cases-grid,.hiw-steps,.features-grid,.pricing-grid,.testi-grid{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .timeline{grid-template-columns:1fr}
+  h2{font-size:clamp(24px,5vw,36px)}
+}
+@media(max-width:640px){
+  .problem-grid,.cases-grid,.hiw-steps,.features-grid,.pricing-grid,.testi-grid,.fix-grid,.footer-top{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .boost-stat{font-size:64px}
+  .hero{padding:60px 5% 48px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/690554720246e7da092d4db3_RH%20logo%20horizontal.webp" alt="Review Bloom"/>
+    </a>
+    <div class="nav-links">
+      <a href="#">Features</a>
+      <a href="#">Case Studies</a>
+      <a href="#">About</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn">Resources ▾</button>
+        <div class="nav-dropdown-menu">
+          <a href="#">Blog</a>
+          <a href="#">Podcast</a>
+          <a href="#">Community</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn">Industries ▾</button>
+        <div class="nav-dropdown-menu">
+          <a href="#">Concrete/Coatings</a>
+          <a href="#">Carpet Cleaning</a>
+          <a href="#">Window Cleaning</a>
+          <a href="#">Tree Care</a>
+          <a href="#">Cleaning</a>
+          <a href="#">Pet Waste Removal</a>
+          <a href="#">Pressure Washing</a>
+          <a href="#">Junk Removal</a>
+        </div>
+      </div>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <div class="nav-ctas">
+      <a class="btn-ghost" href="#">Login</a>
+      <a class="btn-primary" href="#">Start getting reviews</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">More than <span>50,000</span> reviews generated to date</div>
+    <h1>Review Automation<br/>for <span>Home Service</span> Businesses</h1>
+    <p class="hero-sub">Start Getting the Reviews You Deserve. Start Ranking Higher On Google. Start Getting Chosen Over Your Competition.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary-lg" href="#">Start getting reviews</a>
+      <a class="btn-outline-lg" href="#">Book a demo</a>
+    </div>
+    <div class="hero-video">
+      <iframe src="https://www.youtube.com/embed/qZ8nCBW8vEU?rel=0&controls=1&autoplay=0&mute=0&start=0" allowfullscreen loading="lazy" title="Review Bloom Introduction"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST LOGOS -->
+<div class="trust-section">
+  <div class="trust-inner">
+    <div class="trust-label">Trusted by 700+ businesses nationwide</div>
+    <div class="logos-scroll">
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/684ae911e2f540536d453b3a_3.webp" alt=""/>
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/684ae9136e4fd53f3933a2a6_23.webp" alt=""/>
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/684ae911034c07af5a19c0c8_7.webp" alt=""/>
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/684ae9137c69f87c209b0cfd_20.webp" alt=""/>
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/684ae9134fcade39e0225289_21.webp" alt=""/>
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/684ae9139b37145e739bcb8e_24.webp" alt=""/>
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/684ae9131f225af761974856_22.webp" alt=""/>
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/684ae91354250b58bf4d0da4_18.webp" alt=""/>
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/684ae9135af232f3b223a94b_16.webp" alt=""/>
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/684ae912596d8639936b8858_14.webp" alt=""/>
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/684ae91209461aebf4e8ffd8_19.webp" alt=""/>
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/684ae9124c6399f89ae960d1_17.webp" alt=""/>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem-section">
+  <div class="section-inner">
+    <div class="section-label">The Problem</div>
+    <h2>Your Business Deserves More Reviews</h2>
+    <p class="section-sub">Your customers are happy. You make sure the job is done right. But when it comes time to get a review... crickets.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">😶</div>
+        <h3>No Reviews</h3>
+        <p>You have lots of happy customers but only a few reviews to show for it. So you have to prove yourself to new leads every time.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">⏰</div>
+        <h3>No Time</h3>
+        <p>As a business owner, you don't have the time to chase customers down to ask for a review. You're wearing enough hats already.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📉</div>
+        <h3>No Visibility On Google</h3>
+        <p>Your ideal customers are choosing your competition over you just because of their reviews. You know you do better work, but new customers don't.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE FIX -->
+<section class="fix-section">
+  <div class="section-inner">
+    <div class="section-label">The Solution</div>
+    <h2>How we fix that with reviews</h2>
+    <p class="section-sub">Reviews are one of the most under utilized growth levers in any business's toolbox. As your trusted review partner, we get it running — then you never worry about reviews again.</p>
+    <div class="fix-grid">
+      <div class="fix-card">
+        <div class="fix-icon">🏆</div>
+        <h3>Win More Customers</h3>
+        <p>People trust businesses with strong reviews, and the right reputation makes you the obvious choice.</p>
+      </div>
+      <div class="fix-card">
+        <div class="fix-icon">📈</div>
+        <h3>Boost Local Rankings</h3>
+        <p>Reviews help your business climb Google search results, putting you in front of more buyers.</p>
+      </div>
+      <div class="fix-card">
+        <div class="fix-icon">🤝</div>
+        <h3>Build Trust Instantly</h3>
+        <p>Social proof from happy customers gives prospects the confidence to choose you over competitors.</p>
+      </div>
+      <div class="fix-card">
+        <div class="fix-icon">⭐</div>
+        <h3>Stand Out On Google</h3>
+        <p>Reviews make your business the obvious choice over your competition in every local search.</p>
+      </div>
+    </div>
+    <div class="fix-video">
+      <iframe src="https://www.youtube.com/embed/HAHCe8ML7mE?rel=0&controls=1&autoplay=0&mute=0&start=0" allowfullscreen loading="lazy" title="How Review Bloom Works"></iframe>
+    </div>
+    <div class="cta-center">
+      <a class="btn-primary-lg" href="#">Start getting reviews</a>
+      <a class="btn-outline-lg" href="#">Book a demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="cases-section">
+  <div class="section-inner">
+    <div class="section-label">Case Studies</div>
+    <h2>Transforming businesses like yours with review automation</h2>
+    <p class="section-sub" style="margin-bottom:40px">Real results from real home service businesses across the country.</p>
+    <div class="cases-grid">
+      <div class="case-card">
+        <img class="case-card-img" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258be3/69d6b2e7820fd64ad7cb19da_Screenshot%202026-04-08%20at%202.56.18%E2%80%AFPM.png" alt="Ogburn Concrete"/>
+        <span class="case-badge">🏅 Over 130 Reviews in 6 months!</span>
+        <div class="case-card-body">
+          <h3>Ogburn Concrete Leveling & Resurfacing</h3>
+          <p>Working with Review Bloom has been a great experience, especially with how simple everything was to get set up and running. Unlike what they tried before with surveys, this actually helps turn customer feedback into real reviews that grow the business.</p>
+          <div class="case-author">
+            <img class="case-author-img" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258be3/69d6b26e8f28e6f99106125d_Screenshot%202026-04-08%20at%202.54.17%E2%80%AFPM.png" alt="Stephen Ogburn"/>
+            <div class="case-author-info">
+              <div class="case-author-name">Stephen Ogburn</div>
+              <div class="case-author-meta">Ogburn Concrete Leveling · Concrete/Coatings</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <img class="case-card-img" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258be3/69d6ad9ddfb20bf453efd487_Screenshot%202026-04-08%20at%202.33.35%E2%80%AFPM.png" alt="Poo Squad"/>
+        <span class="case-badge">🚀 74 to 423 Reviews in 3 Months!</span>
+        <div class="case-card-body">
+          <h3>Poo Squad</h3>
+          <p>Review Bloom helped Poo Squad skyrocket from just 74 reviews to nearly 400 in 3 months, delivering massive growth after years of stagnation. The impact was immediate and dramatic, transforming their online reputation in just a few months.</p>
+          <div class="case-author">
+            <img class="case-author-img" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258be3/69d6adf50350ce418f8d8c6e_Screenshot%202026-04-08%20at%202.35.13%E2%80%AFPM.png" alt="Matt Fast"/>
+            <div class="case-author-info">
+              <div class="case-author-name">Matt Fast</div>
+              <div class="case-author-meta">Poo Squad · Pet Waste Removal</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <img class="case-card-img" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258be3/69d6aae4123f60776b733e28_Screenshot%202026-04-08%20at%202.20.57%E2%80%AFPM.png" alt="Jones Carpet"/>
+        <span class="case-badge">🎯 30 to 139 Reviews in 7 months!</span>
+        <div class="case-card-body">
+          <h3>Jones Carpet Care</h3>
+          <p>Review Bloom made it incredibly easy for their business to grow from 29 to 139 reviews in just 7 months, with a seamless setup and clear, consistent communication from day one.</p>
+          <div class="case-author">
+            <img class="case-author-img" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258be3/69d6aad51c8a6ac6c1799b97_Screenshot%202026-04-08%20at%202.21.41%E2%80%AFPM.png" alt="Quanteaus Jones"/>
+            <div class="case-author-info">
+              <div class="case-author-name">Quanteaus Jones</div>
+              <div class="case-author-meta">Jones Carpet Care · Carpet Cleaning</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOST -->
+<section class="boost-section">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-label" style="color:rgba(255,255,255,.6)">Results</div>
+    <h2>Boost your blue-collar business</h2>
+    <p class="section-sub">What you could achieve in just 7 days by adding Review Bloom to your business.</p>
+    <div class="boost-stat">+4,356%</div>
+    <div class="boost-stat-sub">Increased reviews from 23 to 1,025 reviews in 2 years</div>
+    <div class="boost-screenshot">
+      <img src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/6844bd38a30288977d677de2_Screenshot%202025-06-07%20at%2018.27.44.png" alt="Dashboard screenshot"/>
+    </div>
+    <div class="boost-author">
+      <div class="boost-author-avatar">D</div>
+      <div class="boost-author-info">
+        <div class="boost-author-name">Davin Hand</div>
+        <div>30a Blaze Beach Bonfires</div>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-step">
+        <div class="timeline-day">Today</div>
+        <div class="timeline-title">Sign up and reactivate</div>
+        <div class="timeline-desc">Onboard in minutes and book a setup call. Connect to your existing CRM and start your reactivation campaign.</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-day">Day 3</div>
+        <div class="timeline-title">Reviews start rolling in</div>
+        <div class="timeline-desc">Your previous customers will start leaving you those hard earned reviews and we reply and repost to social media for you.</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-day">Day 7</div>
+        <div class="timeline-title">Win jobs again</div>
+        <div class="timeline-desc">Your business will rank higher on Google and be seen faster. You'll spend less time building trust with leads, and more time closing deals.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="hiw-section">
+  <div class="section-inner">
+    <div class="section-label">How It Works</div>
+    <h2>The system you'll set and forget.</h2>
+    <p class="section-sub">Three simple steps and your review machine is running on autopilot.</p>
+    <div class="hiw-steps">
+      <div class="hiw-step">
+        <div class="hiw-num">1</div>
+        <div class="hiw-step-label">Connect</div>
+        <h3>Connect your CRM</h3>
+        <p>Connect your existing CRM and import your previous &amp; new customers in minutes.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">2</div>
+        <div class="hiw-step-label">Launch</div>
+        <h3>Launch reactivation</h3>
+        <p>Old customers are contacted gradually, creating fresh and authentic reviews naturally.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">3</div>
+        <div class="hiw-step-label">Automate</div>
+        <h3>Sit back and grow</h3>
+        <p>We request, reply, and repurpose your new reviews for you — completely hands-free.</p>
+      </div>
+    </div>
+    <div class="fix-video">
+      <iframe src="https://www.youtube.com/embed/d8D3VFCTFUg?rel=0&controls=1&autoplay=0&mute=0&start=0" allowfullscreen loading="lazy" title="Review Bloom System Overview"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-inner">
+    <div class="section-label">Testimonials</div>
+    <h2>How we've helped people like you</h2>
+    <p class="section-sub" style="margin-bottom:40px">We've helped businesses of all shapes and sizes regardless of whether they're just starting out or have been in business for years.</p>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Review Bloom has been great for our business! They are super friendly, professional, knowledgeable, and will ensure you are happy with the results. A solid business with solid results!!!"</p>
+        <div class="testi-stat">150+</div>
+        <div class="testi-stat-desc">Gained over 150+ reviews in less than 3 months and are now ranking on the first page of Google!</div>
+        <div class="testi-author">
+          <img class="testi-logo" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/68dea16c1e59007209ad5ac3_DeRoseLogo.webp" alt="DeRose"/>
+          <div>
+            <div class="testi-name">Ryan DeRose</div>
+            <div class="testi-biz">DeRose Plumbing &amp; Water Conditioning</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Outstanding service, genuine people, and proven results as we've gained over 500 reviews in less than 2 years!"</p>
+        <div class="testi-stat">500+</div>
+        <div class="testi-stat-desc">Gained over 500 reviews in less than 2 years and have doubled their business in the last 2 years.</div>
+        <div class="testi-author">
+          <img class="testi-logo" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/68dea16bc36fb6e1b2199900_Monster-Steamer-Air-Duct-Cleaning-Logo%201.webp" alt="Monster Steamer"/>
+          <div>
+            <div class="testi-name">Ludo Castavono</div>
+            <div class="testi-biz">Monster Steamer Cleaning</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Stellar system - I gained over 100+ reviews with them and it's only been a week. Thank you guys, amazing work!"</p>
+        <div class="testi-stat">280+</div>
+        <div class="testi-stat-desc">Gained over 280 reviews in less than 6 months and dominate the first page of Google now.</div>
+        <div class="testi-author">
+          <img class="testi-logo" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/68dea16cece67b849ac9631d_smallville%20logo.webp" alt="Smallville"/>
+          <div>
+            <div class="testi-name">Brett Billhart</div>
+            <div class="testi-biz">Smallville Carpet Cleaning</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Since making the switch, Review Bloom has completely transformed our review game. We're now getting 4x the reviews we used to. The system is incredibly simple and user-friendly. It's hands-down the best service we've used."</p>
+        <div class="testi-stat">250+</div>
+        <div class="testi-stat-desc">Gained over 250 reviews in less than 3 months and are the #1 Reviewed Business in their area.</div>
+        <div class="testi-author">
+          <img class="testi-logo" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/68dea16c31a87b9cda37144b_dds%20logo.webp" alt="Doo Doo Squad"/>
+          <div>
+            <div class="testi-name">Todd Miller</div>
+            <div class="testi-biz">Doo Doo Squad</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section">
+  <div class="section-inner">
+    <div class="section-label">Features</div>
+    <h2>Getting reviews has never been easier</h2>
+    <p class="section-sub" style="margin-bottom:40px">Review Bloom does the hard work for you and with easy-to-use features, your reputation grows on auto pilot.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Personalized Review Requests</h3>
+        <p>Images personalized with your customer's name to get their attention and increase your review conversion rate.</p>
+        <img class="feature-img" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/68fe92e64fb9beb21bfbba2d_Reviews%20card%20formatted%202x%20(2).webp" alt="Personalized requests"/>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <h3>Seamlessly Integrates with Your Tools</h3>
+        <p>Compatible with your favorite CRMs and can integrate into a wide range of platforms. Connect once and never worry again!</p>
+        <img class="feature-img" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/68e669e3fb0791d4797fa761_Tools%20card%20formatted%202x%20(2).webp" alt="Integrations"/>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Rank First On Google</h3>
+        <p>Stop being invisible and start getting chosen on Google. More reviews means higher rankings and more customers.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>AI Review Responses</h3>
+        <p>We take the burden off you by responding to your positive reviews automatically with smart, personalized AI replies.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📲</div>
+        <h3>Easy Follow-ups</h3>
+        <p>If they haven't left a review we can send gentle reminders to get the reviews you deserve without being pushy.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Review Reactivation</h3>
+        <p>Turn those happy customers that "said" they'd leave a review into real, published, 5-star Google reviews.</p>
+      </div>
+    </div>
+    <div class="cta-center">
+      <a class="btn-primary-lg" href="#">Start getting reviews</a>
+      <a class="btn-outline-lg" href="#">Book a demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="industries-section">
+  <div class="section-inner">
+    <div class="section-label" style="text-align:center">Industries</div>
+    <h2 style="text-align:center;margin-bottom:40px">Every home service supported</h2>
+  </div>
+  <div class="industries-scroll-wrap">
+    <div class="industries-scroll">
+      <div class="industry-tag">🧹 Carpet Cleaning</div><div class="industry-tag">🌿 Lawn Care</div><div class="industry-tag">🏊 Pool Cleaning</div><div class="industry-tag">🐾 Pet Care</div><div class="industry-tag">📦 Moving and Packing</div><div class="industry-tag">🪵 Deck &amp; Patio</div><div class="industry-tag">❄️ HVAC</div><div class="industry-tag">🏠 Roofing</div><div class="industry-tag">🔧 Plumbing</div><div class="industry-tag">🐛 Pest Control</div><div class="industry-tag">🍂 Gutter Cleaning</div><div class="industry-tag">🎨 Painting</div><div class="industry-tag">🪟 Window Cleaning</div><div class="industry-tag">🌲 Tree Care</div><div class="industry-tag">🧽 Pressure Washing</div><div class="industry-tag">🗑️ Junk Removal</div><div class="industry-tag">🪨 Concrete/Coatings</div>
+      <!-- Duplicate for infinite scroll -->
+      <div class="industry-tag">🧹 Carpet Cleaning</div><div class="industry-tag">🌿 Lawn Care</div><div class="industry-tag">🏊 Pool Cleaning</div><div class="industry-tag">🐾 Pet Care</div><div class="industry-tag">📦 Moving and Packing</div><div class="industry-tag">🪵 Deck &amp; Patio</div><div class="industry-tag">❄️ HVAC</div><div class="industry-tag">🏠 Roofing</div><div class="industry-tag">🔧 Plumbing</div><div class="industry-tag">🐛 Pest Control</div><div class="industry-tag">🍂 Gutter Cleaning</div><div class="industry-tag">🎨 Painting</div><div class="industry-tag">🪟 Window Cleaning</div><div class="industry-tag">🌲 Tree Care</div><div class="industry-tag">🧽 Pressure Washing</div><div class="industry-tag">🗑️ Junk Removal</div><div class="industry-tag">🪨 Concrete/Coatings</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="section-inner">
+    <div class="section-label" style="text-align:center">Pricing</div>
+    <h2 style="text-align:center">Pricing</h2>
+    <p class="section-sub" style="margin:0 auto 32px;text-align:center">Pricing is based on number of new requests you'd like to send each month. All plans come with 1 initial review reactivation. Follow-up messages are included and not counted towards your monthly limit.</p>
+    <div class="pricing-toggle">
+      <button class="toggle-btn active" id="btn-monthly" onclick="switchPricing('monthly')">Monthly</button>
+      <button class="toggle-btn" id="btn-annual" onclick="switchPricing('annual')">Annually</button>
+      <span class="save-badge">2 months free!</span>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-tier">Starter</div>
+        <h3>Starter</h3>
+        <div class="pricing-requests">Up to 50 requests per month</div>
+        <div class="pricing-price" id="price-starter">$84<span>/month</span></div>
+        <div class="pricing-period" id="period-starter">billed monthly</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Get 4x More Reviews</li>
+          <li>Automated Text &amp; Emails</li>
+          <li>Review Reactivation</li>
+          <li>Dynamic Review Follow-ups</li>
+          <li>AI Smart Messaging</li>
+          <li>Personalized Image Requests</li>
+          <li>Auto AI Review Replies</li>
+          <li>Social Media Review Posting</li>
+          <li>Custom CRM Integration</li>
+          <li>Access to Zapier</li>
+          <li>Unlimited Users</li>
+          <li>1-1 Setup Call</li>
+        </ul>
+        <a class="pricing-cta" href="#">Start 10-Day Free Trial</a>
+      </div>
+      <div class="pricing-card popular">
+        <div class="popular-badge">Most Popular</div>
+        <div class="pricing-tier">Growth</div>
+        <h3>Growth</h3>
+        <div class="pricing-requests">50-100 requests per month</div>
+        <div class="pricing-price" id="price-growth">$150<span>/month</span></div>
+        <div class="pricing-period" id="period-growth">billed monthly</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Get 4x More Reviews</li>
+          <li>Automated Text &amp; Emails</li>
+          <li>Review Reactivation</li>
+          <li>Dynamic Review Follow-ups</li>
+          <li>AI Smart Messaging</li>
+          <li>Personalized Image Requests</li>
+          <li>Auto AI Review Replies</li>
+          <li>Social Media Review Posting</li>
+          <li>Custom CRM Integration</li>
+          <li>Access to Zapier</li>
+          <li>Unlimited Users</li>
+          <li>1-1 Setup Call</li>
+        </ul>
+        <a class="pricing-cta" href="#">Start 10-Day Free Trial</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">Pro</div>
+        <h3>Pro</h3>
+        <div class="pricing-requests">100-300 requests per month</div>
+        <div class="pricing-price" id="price-pro">$233<span>/month</span></div>
+        <div class="pricing-period" id="period-pro">billed monthly</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Get 4x More Reviews</li>
+          <li>Automated Text &amp; Emails</li>
+          <li>Review Reactivation</li>
+          <li>Dynamic Review Follow-ups</li>
+          <li>AI Smart Messaging</li>
+          <li>Personalized Image Requests</li>
+          <li>Auto AI Review Replies</li>
+          <li>Social Media Review Posting</li>
+          <li>Custom CRM Integration</li>
+          <li>Access to Zapier</li>
+          <li>Unlimited Users</li>
+          <li>1-1 Setup Call</li>
+        </ul>
+        <a class="pricing-cta" href="#">Start 10-Day Free Trial</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="section-inner">
+    <div class="section-label" style="text-align:center">FAQ</div>
+    <h2 style="text-align:center;margin-bottom:40px">Frequently asked questions</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Who is Review Bloom for? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Review Bloom is built for local business owners who want more 5-star Google reviews without the hassle. We work with home service businesses, tourism/rental businesses, and even franchises. Whether you're a solo service provider or managing multiple locations, if you want more reviews without the hassle — Review Bloom is for you.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do you integrate with my CRM? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">We integrate with most major CRMs, booking tools, and invoicing platforms. Including Jobber, Quickbooks Online, Housecall Pro, Workiz, Sweep &amp; Go, Square, Zapier, and thousands more. If you're not sure, search for your software <a href="https://zapier.com/apps" target="_blank">here</a>.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How long does it take to set up? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Most businesses are fully set up in under 30 minutes. Just connect your Google profile, connect your CRM, and upload your personalized image. Then you're good to go!</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How long does it take to start getting reviews? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">On average our users receive their first reviews less than 24 hours after launching their review reactivation. It depends on the number of customers you have but we move fast.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Is there a contract? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">No. We like to say we are easy to work with and easy to get rid of. You can cancel your plan within the dashboard in just a few clicks.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">When do you bill? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">You're billed 10 days after you start your free trial, then every month after that.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How many reviews should I expect? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Most users see anywhere from 10%-15% of their previous customer base leave a review during the reactivation. If you have 1,000 previous customers we'll get you about 100-150 reviews in the first 4-6 weeks. We expect over 20-30% of new customers to leave a review after service — many of our users see over 50%.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Can you keep bad reviews from Google? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">No, we can't block or filter reviews — that's against Google's policy. But we can help you proactively ask the right customers at the right time to maximize your chances of great reviews. A couple of negative reviews won't ruin your business, but getting your profile shut down permanently will.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What countries do you currently support? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Right now, we only support businesses in the United States, Canada, and Mexico. This is due to SMS compliance regulations — we want to ensure every message we send meets strict carrier guidelines in each country.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do you offer franchise/multi-location pricing? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">We offer bundle pricing for multi-location or franchise businesses. <a href="mailto:carly@reviewbloom.com">Contact our team here</a> and we'll tailor a plan that works for you.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <div class="section-inner">
+    <div class="section-label" style="color:rgba(255,255,255,.5)">Get Started</div>
+    <h2>Ready to boost your business?</h2>
+    <p>Start seeing reviews within the first week and never miss a new review again.</p>
+    <a class="btn-primary-lg" href="#">Start Getting Reviews</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <img class="footer-logo" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/68e4e7f542b11adbc9ebda67_RH%20Primary%20LogoGreen%201.webp" alt="Review Bloom"/>
+        <p style="font-size:14px;color:rgba(255,255,255,.5);line-height:1.6;max-width:300px">Review Bloom helps service businesses automate reviews, rank higher on Google, and win more customers.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#">Features</a>
+        <a href="#">Case Studies</a>
+        <a href="#">Resources</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">Affiliate Agreement</a>
+      </div>
+      <div class="footer-col">
+        <h4>Stay in the loop</h4>
+        <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:12px">Tips and best practices on boosting your business with reviews</p>
+        <div class="footer-newsletter">
+          <input type="email" placeholder="Your email address"/>
+          <button>Subscribe</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <p class="footer-legal">This site is not a part of the Facebook™ website or Facebook Inc. FACEBOOK™ is a trademark of FACEBOOK™, Inc. By entering your information, you agree to receive messages from Review Bloom via email and/or SMS. Message and data rates may apply.</p>
+      <div class="footer-copy">Review Bloom 2025 All rights reserved</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+
+const prices={
+  monthly:{starter:'$84',growth:'$150',pro:'$233',period:'billed monthly'},
+  annual:{starter:'$69',growth:'$125',pro:'$194',period:'billed annually'}
+};
+function switchPricing(mode){
+  const p=prices[mode];
+  document.getElementById('price-starter').innerHTML=p.starter+'<span>/month</span>';
+  document.getElementById('price-growth').innerHTML=p.growth+'<span>/month</span>';
+  document.getElementById('price-pro').innerHTML=p.pro+'<span>/month</span>';
+  ['starter','growth','pro'].forEach(t=>document.getElementById('period-'+t).textContent=p.period);
+  document.getElementById('btn-monthly').classList.toggle('active',mode==='monthly');
+  document.getElementById('btn-annual').classList.toggle('active',mode==='annual');
+}
+</script>
+</body>
+</html>
