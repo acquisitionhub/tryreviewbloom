@@ -1076,13 +1076,96 @@ footer{background:#fff;border-top:1px solid var(--border);padding:60px 40px 28px
 <!-- FINAL CTA -->
 <div class="cta-final">
   <div class="cta-inner">
-    <img class="cta-logo" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/68e4e7f542b11adbc9ebda67_RH%20Primary%20LogoGreen%201.webp" alt="Review Harvest"/>
-    <h2>Ready to boost<br>your business?</h2>
+    <img class="cta-logo" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258b9e/68e4e7f542b11adbc9ebda67_RH%20Primary%20LogoGreen%201.webp" alt="Review Harvest" />
+    <h2>Ready to boost<br><span>your business?</span></h2>
     <p>Start seeing reviews within the first week and never miss a new review again</p>
-    <a href="https://acquisitionhub.github.io/reviewbloom/" class="btn-primary" target="_blank">Start Getting Reviews</a>
+    <a href="https://acquisitionhub.github.io/reviewbloom/" class="btn-primary" target="_blank" rel="noopener noreferrer">Start Getting Reviews</a>
   </div>
 </div>
-
+<style>
+  .cta-final {
+    background: #D9DEE8;
+    padding: 100px 24px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Figtree', system-ui, sans-serif;
+  }
+  .cta-final::before {
+    content: '';
+    position: absolute;
+    top: -150px; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 600px;
+    background: radial-gradient(circle, rgba(124,58,237,0.13) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .cta-final::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .cta-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+  }
+  .cta-inner h2 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #111827;
+    margin: 0;
+  }
+  .cta-inner h2 span {
+    background: linear-gradient(135deg, #9D5FF3, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .cta-inner p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #4b5563;
+    max-width: 440px;
+    margin: 0;
+  }
+  .cta-inner .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #7C3AED;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 15px 32px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+    box-shadow: 0 4px 24px rgba(124,58,237,0.35);
+    margin-top: 8px;
+  }
+  .cta-inner .btn-primary:hover {
+    background: #9D5FF3;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(124,58,237,0.45);
+  }
+</style>
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
