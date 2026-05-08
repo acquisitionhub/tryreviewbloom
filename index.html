@@ -485,12 +485,112 @@ footer{background:#fff;border-top:1px solid var(--border);padding:60px 40px 28px
       <div>
         <h2>How we fix that with reviews</h2>
         <p class="sec-sub" style="margin-bottom:28px">Reviews are one of the most under utilized growth levers in any businesses' toolbox. In the past, this was a time consuming and slow process that took away valuable time from you and your team. As your trusted review partner, we get it running then you never worry about reviews again.</p>
-        <div class="benefits-grid">
+        <!---<div class="benefits-grid">
           <div class="benefit"><h4>Win More Customers</h4><p>People trust businesses with strong reviews, and the right reputation makes you the obvious choice.</p></div>
           <div class="benefit"><h4>Boost Local Rankings</h4><p>Reviews help your business climb Google search results, putting you in front of more buyers.</p></div>
           <div class="benefit"><h4>Build Trust Instantly</h4><p>Social proof from happy customers gives prospects confidence to choose you over competitors.</p></div>
           <div class="benefit"><h4>Stand Out On Google</h4><p>Reviews make your business the obvious choice over your competition.</p></div>
-        </div>
+        </div>--->
+        <!-- Benefits Grid Section -->
+<div class="benefits-section">
+  <div class="benefits-grid">
+    <div class="benefit">
+      <div class="benefit-icon"><i class="ti ti-users"></i></div>
+      <h4>Win More Customers</h4>
+      <p>People trust businesses with strong reviews, and the right reputation makes you the obvious choice.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon"><i class="ti ti-trending-up"></i></div>
+      <h4>Boost Local Rankings</h4>
+      <p>Reviews help your business climb Google search results, putting you in front of more buyers.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon"><i class="ti ti-shield-check"></i></div>
+      <h4>Build Trust Instantly</h4>
+      <p>Social proof from happy customers gives prospects confidence to choose you over competitors.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon"><i class="ti ti-star"></i></div>
+      <h4>Stand Out On Google</h4>
+      <p>Reviews make your business the obvious choice over your competition.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .benefits-section {
+    background: #F9FAFB;
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .benefits-section::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 500px;
+    background: radial-gradient(ellipse at center, rgba(124,58,237,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .benefit {
+    background: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .benefit::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #7C3AED, transparent);
+    opacity: 0.7;
+  }
+  .benefit-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(124,58,237,0.09);
+    border: 1px solid rgba(124,58,237,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .benefit-icon i {
+    font-size: 19px;
+    color: #7C3AED;
+  }
+  .benefit h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 8px;
+  }
+  .benefit p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #6B7280;
+    margin: 0;
+  }
+</style>
+
+<!-- Tabler Icons (add to <head> if not already included) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
         <div class="inline-ctas">
          <a href="https://acquisitionhub.github.io/reviewbloom" class="btn-primary" target="_blank" rel="noopener noreferrer">Start getting reviews</a>
           <a href="https://acquisitionhub.github.io/reviewbloom" class="btn-outline" target="_blank">Book a demo</a>
