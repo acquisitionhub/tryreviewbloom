@@ -347,11 +347,134 @@ footer{background:#fff;border-top:1px solid var(--border);padding:60px 40px 28px
   <div class="sec-inner sec-center">
     <h2>Your Business Deserves More Reviews</h2>
     <p class="sec-sub">Your customers are happy. You make sure the job is done right. But when it comes time to get a review... crickets.</p>
-    <div class="pain-grid">
+    <!---<div class="pain-grid">
       <div class="pain-card"><h3>No Reviews</h3><p>You have lots of happy customers but only a few reviews to show for it. So you have to prove yourself to new leads.</p></div>
       <div class="pain-card"><h3>No Time</h3><p>As a business owner, you don't have the time to chase customers down to ask for a review. You're wearing enough hats already.</p></div>
       <div class="pain-card"><h3>No Visibility On Google</h3><p>Your ideal customers are choosing your competition over you just because of their reviews. You know you do better work, but new customers don't.</p></div>
+    </div>--->
+    <!-- Pain Cards Section -->
+<section class="section-wrap">
+  <h2 class="section-heading">Your Business Deserves More Reviews</h2>
+  <p class="section-sub">Your customers are happy. You make sure the job is done right. But when it comes time to get a review... crickets.</p>
+  <div class="cards-grid">
+    <div class="pain-card">
+      <div class="icon-wrap"><i class="ti ti-star-off"></i></div>
+      <h3>No Reviews</h3>
+      <p>You have lots of happy customers but only a few reviews to show for it. So you have to prove yourself to new leads.</p>
     </div>
+    <div class="pain-card">
+      <div class="icon-wrap"><i class="ti ti-clock-x"></i></div>
+      <h3>No Time</h3>
+      <p>As a business owner, you don't have the time to chase customers down to ask for a review. You're wearing enough hats already.</p>
+    </div>
+    <div class="pain-card">
+      <div class="icon-wrap"><i class="ti ti-eye-off"></i></div>
+      <h3>No Visibility On Google</h3>
+      <p>Your ideal customers are choosing your competition over you just because of their reviews. You know you do better work, but new customers don't.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-wrap {
+    background: #F9FAFB;
+    padding: 80px 40px;
+    font-family: system-ui, -apple-system, sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-wrap::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 500px;
+    background: radial-gradient(ellipse at center, rgba(124,58,237,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .section-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse at center, rgba(124,58,237,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .section-heading {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 12px;
+    letter-spacing: -0.5px;
+  }
+  .section-sub {
+    text-align: center;
+    color: #6B7280;
+    font-size: 17px;
+    margin: 0 0 56px;
+  }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .pain-card {
+    background: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pain-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #7C3AED, transparent);
+    opacity: 0.7;
+  }
+  .icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(124,58,237,0.09);
+    border: 1px solid rgba(124,58,237,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .icon-wrap i {
+    font-size: 20px;
+    color: #7C3AED;
+  }
+  .pain-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 10px;
+  }
+  .pain-card p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #6B7280;
+    margin: 0;
+  }
+</style>
+
+<!-- Tabler Icons (add to your <head> if not already included) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   </div>
 </section>
 
