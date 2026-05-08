@@ -566,9 +566,35 @@ footer{background:#fff;border-top:1px solid var(--border);padding:60px 40px 28px
     margin: 0;
   }
 </style>--->
+    <div class="inline-ctas">
+  <a href="https://acquisitionhub.github.io/reviewbloom"
+     class="btn-primary"
+     target="_blank"
+     rel="noopener noreferrer">Start getting reviews</a>
 
+  <!-- ⚠️ 1. Missing rel="noopener noreferrer" on target="_blank" — security risk -->
+  <a href="https://acquisitionhub.github.io/reviewbloom"
+     class="btn-outline"
+     target="_blank"
+     rel="noopener noreferrer">Book a demo</a>  <!-- ✅ fixed -->
+</div>
 
-        <div class="inline-ctas">
+</div> <!-- ⚠️ 2. Orphan closing div — check your opening tags, this may not match anything -->
+
+<div class="vid-embed">
+  <!-- ⚠️ 3. iframe missing title attribute — accessibility/SEO issue -->
+  <iframe
+    title="Review Bloom Demo Video"
+    src="https://www.youtube.com/embed/mCVP0j9sypY"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+    loading="lazy">
+  </iframe>
+</div>
+
+  </div>
+</section>
+ <!--- <div class="inline-ctas">
          <a href="https://acquisitionhub.github.io/reviewbloom" class="btn-primary" target="_blank" rel="noopener noreferrer">Start getting reviews</a>
           <a href="https://acquisitionhub.github.io/reviewbloom" class="btn-outline" target="_blank">Book a demo</a>
         </div>
@@ -577,7 +603,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:60px 40px 28px
         <iframe src="https://www.youtube.com/embed/mCVP0j9sypY" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
       </div>
     </div>
-  </div>
+  </div>--->
 </section>
 
 <!-- CASE STUDIES -->
