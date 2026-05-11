@@ -56,7 +56,7 @@ nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;
 .mobile-nav a:hover{background:var(--bg2)}
 .mobile-nav .btn-nav-cta{text-align:center;margin-top:6px}
 
-/* ── HERO (LIGHT) ── */
+/* ── HERO ── */
 .hero-dark{background:#D9DEE8;padding:100px 40px 0;overflow:hidden;position:relative}
 .hero-dark::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 0%,rgba(105,53,156,.15),transparent 70%);pointer-events:none}
 .hero-dark-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative}
@@ -155,12 +155,13 @@ nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;
 .cs-list{display:flex;flex-direction:column;gap:32px}
 .cs-item{background:#fff;border-radius:16px;border:1px solid var(--border);display:grid;grid-template-columns:340px 1fr;overflow:hidden;transition:box-shadow .2s}
 .cs-item:hover{box-shadow:0 8px 40px rgba(0,0,0,.09)}
+
+/* VIDEO SIDE — fixed */
 .cs-video-side{position:relative;background:#000;overflow:hidden}
-.cs-video-side img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
-.cs-item:hover .cs-video-side img{transform:scale(1.03)}
-.cs-play-btn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)}
-.cs-play-circle{width:60px;height:60px;background:rgba(255,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.cs-play-circle svg{width:24px;height:24px;fill:var(--purple);margin-left:4px}
+.cs-video-side.ratio-short{aspect-ratio:9/16}
+.cs-video-side.ratio-wide{aspect-ratio:16/9;align-self:center}
+.cs-video-side iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:block}
+
 .cs-badge-pill{background:var(--purple-light);color:var(--purple-dark);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;display:inline-block;margin-bottom:12px}
 .cs-content{padding:36px}
 .cs-content h3{font-size:20px;font-weight:800;margin-bottom:12px}
@@ -170,7 +171,7 @@ nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;
 .cs-author-name{font-size:14px;font-weight:700}
 .cs-author-biz{font-size:12px;color:var(--text3)}
 
-/* ── CTA FINAL (matches main site) ── */
+/* ── CTA FINAL ── */
 .cta-final{background:#D9DEE8;padding:100px 24px;position:relative;overflow:hidden;font-family:'Figtree',system-ui,sans-serif}
 .cta-final::before{content:'';position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:700px;height:600px;background:radial-gradient(circle,rgba(124,58,237,0.13) 0%,transparent 65%);pointer-events:none}
 .cta-final::after{content:'';position:absolute;bottom:-100px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(124,58,237,0.08) 0%,transparent 65%);pointer-events:none}
@@ -211,7 +212,8 @@ footer{background:#fff;border-top:1px solid var(--border);padding:60px 40px 28px
   .tab-visual{display:none}
   .try-inner,.why-grid{grid-template-columns:1fr}
   .cs-item{grid-template-columns:1fr}
-  .cs-video-side{height:260px}
+  .cs-video-side.ratio-short{aspect-ratio:9/16;max-height:400px}
+  .cs-video-side.ratio-wide{aspect-ratio:16/9}
   .footer-top{grid-template-columns:1fr 1fr}
 }
 @media(max-width:768px){
@@ -447,69 +449,61 @@ footer{background:#fff;border-top:1px solid var(--border);padding:60px 40px 28px
   <div class="cs-sec-inner">
     <h2>Loved by local businesses</h2>
     <div class="cs-list">
+
+      <!-- Case Study 1 — Healing Hands (Short 9:16) -->
       <div class="cs-item">
-        <div class="cs-video-side">
-          <img src="" alt="Trees Plus" loading="lazy"/>
-         <iframe 
-  width="100%" 
-  height="560" 
-  src="https://www.youtube.com/embed/qBW9_oidy-E" 
-  title="YouTube Short" 
-  frameborder="0" 
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-  allowfullscreen>
-</iframe>
-          <div class="cs-play-btn"><div class="cs-play-circle"><svg viewBox="0 0 24 24"><path d="M6 12V5.01C6 4.05 7.04 3.45 7.87 3.93L20.1 10.91C20.94 11.39 20.94 12.61 20.1 13.09L7.87 20.07C7.04 20.55 6 19.95 6 18.99V12Z"/></svg></div></div>
+        <div class="cs-video-side ratio-short">
+          <iframe
+            src="https://www.youtube.com/embed/qBW9_oidy-E"
+            title="Healing Hands Short"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
         </div>
         <div class="cs-content">
           <span class="cs-badge-pill">Healing Hands</span>
           <h3>Your Local Chiropractor</h3>
-          <p>89% of consumers expect it. 97% of review readers also read responses. And responding to all reviews correlates with up to an 18% increase in revenue. There is no easier, higher-ROI marketing activity available to most local businesses.</p>
+          <p>Consumer behavior and trust
+81% of consumers use Google reviews to evaluate local businesses (Sixth City Marketing).
+88% read Google reviews before selecting a business (SocialPilot).
+54.7% of consumers check at least 4 reviews before making a purchase decision (WiserNotify).
+74% trust businesses more if they have positive Google reviews (SocialPilot).
+88% trust online reviews as much as personal recommendations (Podium).</p>
           <div class="cs-author">
-            <img class="cs-author-photo" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258be3/69a0b7b5b6a9f826c657636c_Screenshot%202026-02-26%20at%203.14.24%E2%80%AFPM.png" alt="George Smith" loading="lazy"/>
+            <img class="cs-author-photo" src="https://cdn.prod.website-files.com/65a6d3cbc6489c13a6258be3/69a0b7b5b6a9f826c657636c_Screenshot%202026-02-26%20at%203.14.24%E2%80%AFPM.png" alt="Healing Hands" loading="lazy"/>
             <div><div class="cs-author-name">Healing Hands</div><div class="cs-author-biz">Richmond</div></div>
           </div>
         </div>
       </div>
+
+      <!-- Case Study 2 — Bodyshop (regular 16:9) -->
       <div class="cs-item">
-        <div class="cs-video-side">
-          <img src="" alt="Optimum Cleaning" loading="lazy"/>
-          <iframe 
-  width="100%" 
-  height="560" 
-  src="https://www.youtube.com/embed/7d3NJTx7iw4" 
-  title="YouTube Short" 
-  frameborder="0" 
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-  allowfullscreen>
-</iframe>
-          <div class="cs-play-btn"><div class="cs-play-circle"><svg viewBox="0 0 24 24"><path d="M6 12V5.01C6 4.05 7.04 3.45 7.87 3.93L20.1 10.91C20.94 11.39 20.94 12.61 20.1 13.09L7.87 20.07C7.04 20.55 6 19.95 6 18.99V12Z"/></svg></div></div>
+        <div class="cs-video-side ratio-short">
+          <iframe
+            src="https://www.youtube.com/embed/7d3NJTx7iw4"
+            title="Wrench Studio"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
         </div>
         <div class="cs-content">
           <span class="cs-badge-pill">Bodyshop</span>
           <h3>Wrench Studio</h3>
-          <p>73% of consumers don’t trust reviews older than a month. A review from October 2025 might as well not exist for a consumer searching today. Steady fresh reviews outperform a large pile of old ones every time.</p>
+          <p>Google is the default discovery engine for local intent. Reviews on your Google Business Profile (GBP) impact:
+
+Visibility: Reviews and ratings are a known local ranking input (~10%).
+Click-through: Rich snippets, star ratings, and review count increase CTR and map pack selection.
+Trust and conversion: Social proof reduces perceived risk, especially when reviews are recent and responded to.
+Revenue: Positive review profiles correlate with measurable revenue lift.</p>
           <div class="cs-author">
             <img class="cs-author-photo" src="https://acquisitionhub.github.io/reviewbloom/sarah.png" loading="lazy"/>
             <div><div class="cs-author-name">Your Local</div><div class="cs-author-biz">Auto bodyshop</div></div>
           </div>
         </div>
       </div>
-      <div class="cs-item">
-        <div class="cs-video-side">
-          <img src="" alt="Maid Brigade" loading="lazy"/>
-          <div class="cs-play-btn"><div class="cs-play-circle"><svg viewBox="0 0 24 24"><path d="M6 12V5.01C6 4.05 7.04 3.45 7.87 3.93L20.1 10.91C20.94 11.39 20.94 12.61 20.1 13.09L7.87 20.07C7.04 20.55 6 19.95 6 18.99V12Z"/></svg></div></div>
-        </div>
-       <!-- <div class="cs-content">
-          <span class="cs-badge-pill"></span>
-          <h3>Maria Sanchez</h3>
-          <p>Consumers trust businesses more when they see a mix of positive and negative feedback. A 4.5 with honest feedback converts better than a suspicious 5.0. What matters is that you respond well to the negatives.</p>
-          <div class="cs-author">
-            <img class="cs-author-photo" src="https://acquisitionhub.github.io/reviewbloom/maria.png" alt="Maria Sanchez" loading="lazy"/>
-            <div><div class="cs-author-name">Maria Sanchez</div><div class="cs-author-biz">Brightside Dental Care</div></div>
-          </div>-->
-        </div>
-      </div>
+
     </div>
   </div>
 </section>
