@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 280" width="1000" height="280">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@700&amp;display=swap');
+    </style>
+    <linearGradient id="outerBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f3d27"/>
+      <stop offset="100%" style="stop-color:#0a2b1c"/>
+    </linearGradient>
+    <linearGradient id="squareBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e8f52"/>
+      <stop offset="100%" style="stop-color:#155f36"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="280" fill="url(#outerBg)" rx="28"/>
+
+  <!-- Green rounded square icon -->
+  <rect x="40" y="60" width="160" height="160" rx="36" ry="36" fill="url(#squareBg)"/>
+  <rect x="40" y="60" width="160" height="160" rx="36" ry="36"
+    fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+
+  <!-- Leaf emoji in the square -->
+  <text
+    x="120" y="158"
+    font-size="96"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif">🌿</text>
+
+  <!-- "Review Bloom" wordmark -->
+  <text
+    x="240" y="148"
+    font-family="Fraunces, Georgia, 'Times New Roman', serif"
+    font-size="96"
+    font-weight="700"
+    fill="#ffffff"
+    dominant-baseline="middle">Review Bloom</text>
+
+  <!-- Subtle tagline -->
+  <text
+    x="242" y="208"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="22"
+    font-weight="400"
+    fill="rgba(255,255,255,0.4)"
+    letter-spacing="3">GOOGLE REVIEW AUTOMATION · LONDON</text>
+</svg>
