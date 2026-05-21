@@ -1,0 +1,1936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Google Review Automation for London Local Businesses | Try Review Bloom</title>
+<meta name="description" content="Try Review Bloom helps London local service businesses and tradespeople get more 5-star Google reviews on autopilot. Rank higher on Google Maps, optimise your Google Business Profile, and win more customers. SMS & email automation, AI replies, GBP optimisation, and local SEO." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:    #0d1a12;
+    --forest: #0f3d27;
+    --green:  #1a7a45;
+    --lime:   #3ec96e;
+    --gold:   #f0c040;
+    --cream:  #f8f4ed;
+    --white:  #ffffff;
+    --muted:  #5a6e62;
+    --border: #d4e4da;
+    --card:   #f1f7f3;
+    --r: 12px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  h1, h2, h3, h4 { font-family: 'Fraunces', serif; line-height: 1.15; }
+  h1 { font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 900; }
+  h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; }
+  h3 { font-size: clamp(1.15rem, 2vw, 1.45rem); font-weight: 600; }
+  p  { color: var(--muted); line-height: 1.75; }
+
+  em { font-style: italic; color: var(--green); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 96px 0; }
+  section.tight { padding: 64px 0; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1rem;
+    padding: 14px 28px; border-radius: 50px; text-decoration: none;
+    transition: transform .2s, box-shadow .2s, background .2s;
+    cursor: pointer; border: none;
+  }
+  .btn-primary {
+    background: var(--green); color: var(--white);
+    box-shadow: 0 4px 20px rgba(26,122,69,.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(26,122,69,.45); background: #15683a; }
+  .btn-outline {
+    background: transparent; color: var(--green);
+    border: 2px solid var(--green);
+  }
+  .btn-outline:hover { background: var(--green); color: var(--white); transform: translateY(-2px); }
+  .btn-lg { padding: 18px 36px; font-size: 1.1rem; }
+  .btn-gold { background: var(--gold); color: var(--ink); box-shadow: 0 4px 20px rgba(240,192,64,.35); }
+  .btn-gold:hover { transform: translateY(-2px); background: #e8b030; box-shadow: 0 8px 28px rgba(240,192,64,.5); }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em;
+    padding: 5px 14px; border-radius: 50px;
+    background: rgba(62,201,110,.15); color: var(--green); border: 1px solid rgba(62,201,110,.3);
+  }
+
+  /* ══════════════════════════════════
+     NAV
+  ══════════════════════════════════ */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,.92); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; max-width: 1160px; margin: 0 auto; height: 68px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-icon {
+    width: 36px; height: 36px; background: var(--green); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .nav-logo-text { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.15rem; color: var(--ink); }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: .9rem; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--green); }
+  .nav-cta { display: flex; align-items: center; gap: 12px; }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-cta .btn-outline { display: none; }
+  }
+
+  /* ══════════════════════════════════
+     HERO
+  ══════════════════════════════════ */
+  .hero {
+    background: linear-gradient(160deg, var(--forest) 0%, #0a2b1c 100%);
+    color: var(--white); padding: 100px 0 80px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 30%, rgba(62,201,110,.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(240,192,64,.08) 0%, transparent 60%);
+  }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; position: relative; }
+  .hero-eyebrow { margin-bottom: 24px; }
+  .hero h1 { color: var(--white); margin-bottom: 24px; }
+  .hero h1 em { color: var(--lime); font-style: italic; }
+  .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,.72); margin-bottom: 36px; max-width: 480px; }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
+  .hero-trust { display: flex; gap: 24px; flex-wrap: wrap; }
+  .hero-trust-item { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: rgba(255,255,255,.65); }
+  .hero-trust-item span { color: var(--lime); font-weight: 700; font-size: .95rem; }
+
+  /* Map Pack mockup */
+  .hero-visual { position: relative; }
+  .map-pack-card {
+    background: var(--white); border-radius: 16px; overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,.4);
+    animation: floatUp .8s ease both;
+  }
+  @keyframes floatUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .map-pack-header {
+    background: #f8f9fa; padding: 12px 16px;
+    border-bottom: 1px solid #e8e8e8;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .map-pack-search {
+    background: var(--white); border: 1px solid #dadce0; border-radius: 24px;
+    padding: 8px 16px; font-size: .85rem; color: #3c4043; flex: 1;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .map-pack-search-icon { color: #4285f4; font-size: 1rem; }
+  .map-pack-label {
+    background: #e8f0fe; color: #1a73e8; font-size: .7rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 4px; letter-spacing: .04em;
+  }
+  .map-result {
+    padding: 14px 16px; border-bottom: 1px solid #f1f1f1;
+    display: flex; gap: 12px; align-items: flex-start;
+    transition: background .15s;
+  }
+  .map-result:hover { background: #f9f9f9; }
+  .map-result:last-child { border-bottom: none; }
+  .map-result-num {
+    width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: .72rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+  }
+  .map-result-num.gold { background: var(--gold); color: var(--ink); }
+  .map-result-num.silver { background: #c0c0c0; color: var(--white); }
+  .map-result-num.bronze { background: #cd7f32; color: var(--white); }
+  .map-result-info { flex: 1; }
+  .map-result-name { font-size: .9rem; font-weight: 600; color: #1a0dab; margin-bottom: 2px; }
+  .map-result-stars { display: flex; align-items: center; gap: 4px; font-size: .78rem; color: #3c4043; }
+  .map-result-stars .stars { color: #fbbc04; }
+  .map-result-tag { font-size: .72rem; color: #70757a; margin-top: 2px; }
+  .map-result-your { border-left: 3px solid var(--lime); }
+  .map-result-your .map-result-name { color: var(--green); }
+  .map-result-badge { font-size: .65rem; font-weight: 700; color: var(--green); background: rgba(62,201,110,.15); padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
+
+  .hero-badge-stack { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .stat-pill {
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+    border-radius: 50px; padding: 6px 16px; font-size: .82rem;
+    color: rgba(255,255,255,.9); display: flex; align-items: center; gap: 6px;
+  }
+  .stat-pill strong { color: var(--lime); }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+  }
+
+  /* ══════════════════════════════════
+     TRUST BAR
+  ══════════════════════════════════ */
+  .trust-bar { background: var(--cream); padding: 48px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .trust-bar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center; }
+  .trust-stat-num { font-family: 'Fraunces', serif; font-size: 2.6rem; font-weight: 900; color: var(--green); line-height: 1; }
+  .trust-stat-label { font-size: .85rem; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+  .trust-stat-source { font-size: .7rem; color: #9aab9e; margin-top: 4px; }
+  @media (max-width: 700px) { .trust-bar-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ══════════════════════════════════
+     PROBLEM
+  ══════════════════════════════════ */
+  .problem { background: var(--white); }
+  .section-label { text-align: center; margin-bottom: 16px; }
+  .section-title { text-align: center; margin-bottom: 16px; }
+  .section-sub { text-align: center; max-width: 600px; margin: 0 auto 56px; font-size: 1.05rem; }
+  .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .problem-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+    padding: 32px 28px;
+  }
+  .problem-icon { font-size: 2rem; margin-bottom: 16px; }
+  .problem-card h3 { margin-bottom: 10px; }
+  @media (max-width: 700px) { .problem-grid { grid-template-columns: 1fr; } }
+
+  /* ══════════════════════════════════
+     HOW IT WORKS
+  ══════════════════════════════════ */
+  .how { background: var(--forest); color: var(--white); }
+  .how h2 { color: var(--white); }
+  .how h2 em { color: var(--lime); }
+  .how .section-sub { color: rgba(255,255,255,.65); }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .step {
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+    border-radius: var(--r); padding: 36px 28px; position: relative;
+  }
+  .step-num {
+    width: 44px; height: 44px; background: var(--lime); color: var(--ink);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-weight: 900; font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  .step h3 { color: var(--white); margin-bottom: 12px; }
+  .step p { color: rgba(255,255,255,.6); }
+  @media (max-width: 700px) { .steps { grid-template-columns: 1fr; } }
+
+  /* ══════════════════════════════════
+     GBP / MAP PACK / ORGANIC SECTION
+  ══════════════════════════════════ */
+  .rank-section { background: var(--cream); }
+  .rank-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .rank-grid.flip { direction: rtl; }
+  .rank-grid.flip > * { direction: ltr; }
+  .rank-content h2 { margin-bottom: 20px; }
+  .rank-content p { margin-bottom: 20px; font-size: 1rem; }
+  .rank-points { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+  .rank-points li { display: flex; align-items: flex-start; gap: 12px; font-size: .95rem; color: var(--ink); }
+  .rank-points li::before { content: '✓'; color: var(--green); font-weight: 700; font-size: 1rem; margin-top: 1px; flex-shrink: 0; }
+
+  .gbp-card {
+    background: var(--white); border-radius: 16px; overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,.1);
+  }
+  .gbp-header {
+    background: var(--forest); color: var(--white); padding: 18px 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .gbp-icon { font-size: 1.5rem; }
+  .gbp-header-text { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1rem; }
+  .gbp-header-sub { font-size: .78rem; opacity: .7; }
+  .gbp-body { padding: 20px; }
+  .gbp-stars { color: #fbbc04; font-size: 1.1rem; margin-bottom: 4px; }
+  .gbp-rating { font-size: .85rem; color: #3c4043; margin-bottom: 14px; }
+  .gbp-bar-row { margin-bottom: 8px; }
+  .gbp-bar-label { display: flex; justify-content: space-between; font-size: .75rem; color: #70757a; margin-bottom: 3px; }
+  .gbp-bar-track { height: 6px; background: #e8e8e8; border-radius: 4px; }
+  .gbp-bar-fill { height: 6px; background: #fbbc04; border-radius: 4px; transition: width 1s ease; }
+  .gbp-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
+  .gbp-tag { background: #e8f5e9; color: #1b7a45; font-size: .72rem; font-weight: 600; padding: 4px 10px; border-radius: 50px; }
+
+  .serp-card {
+    background: var(--white); border-radius: 16px; padding: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.1);
+  }
+  .serp-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 12px; }
+  .serp-result { padding: 14px 0; border-bottom: 1px solid #f1f1f1; }
+  .serp-result:last-child { border-bottom: none; }
+  .serp-result-url { font-size: .72rem; color: #0d652d; margin-bottom: 2px; }
+  .serp-result-title { font-size: .95rem; color: #1a0dab; font-weight: 600; margin-bottom: 3px; }
+  .serp-result-title.yours { color: var(--green); }
+  .serp-result-stars { display: inline-flex; align-items: center; gap: 4px; font-size: .75rem; color: #3c4043; }
+  .serp-result-stars .s { color: #fbbc04; }
+  .serp-result-snippet { font-size: .8rem; color: #3c4043; margin-top: 3px; line-height: 1.5; }
+  .serp-result-yours-badge { background: var(--lime); color: var(--ink); font-size: .65rem; font-weight: 800; padding: 2px 7px; border-radius: 4px; margin-left: 6px; }
+
+  @media (max-width: 900px) {
+    .rank-grid { grid-template-columns: 1fr; gap: 40px; }
+    .rank-grid.flip { direction: ltr; }
+  }
+
+  /* ══════════════════════════════════
+     FEATURES
+  ══════════════════════════════════ */
+  .features { background: var(--white); }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .feature-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+    padding: 32px 28px; transition: transform .2s, box-shadow .2s;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.08); }
+  .feature-icon { font-size: 1.8rem; margin-bottom: 16px; }
+  .feature-card h3 { margin-bottom: 10px; }
+  @media (max-width: 700px) { .features-grid { grid-template-columns: 1fr; } }
+
+  /* ══════════════════════════════════
+     RESULTS / CASE STUDIES
+  ══════════════════════════════════ */
+  .results { background: var(--cream); }
+  .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .result-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
+    padding: 28px; overflow: hidden; position: relative;
+  }
+  .result-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--green), var(--lime));
+  }
+  .result-biz { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .result-biz-icon { font-size: 1.6rem; }
+  .result-biz-name { font-weight: 700; font-size: .95rem; }
+  .result-biz-type { font-size: .78rem; color: var(--muted); }
+  .result-num { font-family: 'Fraunces', serif; font-size: 2.4rem; font-weight: 900; color: var(--green); line-height: 1; margin-bottom: 6px; }
+  .result-desc { font-size: .88rem; color: var(--muted); }
+  @media (max-width: 700px) { .results-grid { grid-template-columns: 1fr; } }
+
+  /* ══════════════════════════════════
+     DASHBOARD
+  ══════════════════════════════════ */
+  .dashboard-section { background: var(--ink); }
+  .dashboard-section h2 { color: var(--white); text-align: center; margin-bottom: 12px; }
+  .dashboard-section h2 em { color: var(--lime); }
+  .dashboard-section .section-sub { color: rgba(255,255,255,.6); }
+  .dash-card {
+    background: #1a2920; border: 1px solid rgba(255,255,255,.1);
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,.5);
+    max-width: 700px; margin: 0 auto;
+  }
+  .dash-header {
+    background: var(--green); padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .dash-header-title { color: var(--white); font-weight: 700; font-size: .95rem; }
+  .dash-dots { display: flex; gap: 6px; }
+  .dash-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.4); }
+  .dash-body { padding: 24px; }
+  .dash-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+  .dash-kpi {
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 10px; padding: 16px 14px; text-align: center;
+  }
+  .dash-kpi-num { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 900; color: var(--lime); }
+  .dash-kpi-label { font-size: .72rem; color: rgba(255,255,255,.5); margin-top: 4px; }
+  .dash-kpi-delta { font-size: .72rem; color: var(--lime); font-weight: 600; }
+  .dash-reviews { display: flex; flex-direction: column; gap: 12px; }
+  .dash-review {
+    background: rgba(255,255,255,.05); border-radius: 10px; padding: 14px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .dash-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--green); color: var(--white); font-weight: 700; font-size: .85rem;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .dash-review-name { color: rgba(255,255,255,.9); font-weight: 600; font-size: .85rem; }
+  .dash-review-stars { color: #fbbc04; font-size: .75rem; }
+  .dash-review-text { font-size: .78rem; color: rgba(255,255,255,.55); margin-top: 3px; }
+  .dash-ai-badge { font-size: .65rem; color: var(--lime); font-weight: 600; margin-top: 5px; }
+  .dash-checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 24px; }
+  .dash-check { display: flex; align-items: center; gap: 8px; font-size: .82rem; color: rgba(255,255,255,.7); }
+  .dash-check-icon { color: var(--lime); font-weight: 700; }
+
+  /* ══════════════════════════════════
+     INDUSTRIES TICKER
+  ══════════════════════════════════ */
+  .industries { background: var(--cream); padding: 48px 0; overflow: hidden; }
+  .industries h3 { text-align: center; margin-bottom: 28px; font-size: 1rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; }
+  .ticker-track { display: flex; gap: 0; }
+  .ticker-list {
+    display: flex; gap: 0; animation: ticker 30s linear infinite; white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .ticker-list:nth-child(2) { animation-delay: -15s; }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-100%); }
+  }
+  .industry-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 22px; background: var(--white); border: 1px solid var(--border);
+    border-radius: 50px; font-size: .88rem; font-weight: 500; color: var(--ink);
+    margin-right: 12px; white-space: nowrap;
+  }
+
+  /* ══════════════════════════════════
+     DATA/STATS SECTION
+  ══════════════════════════════════ */
+  .data-section { background: var(--white); }
+  .data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .data-card {
+    border: 1px solid var(--border); border-radius: var(--r); padding: 28px;
+    position: relative; overflow: hidden;
+  }
+  .data-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--lime));
+  }
+  .data-card-icon { font-size: 1.6rem; margin-bottom: 12px; }
+  .data-card-num { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 900; color: var(--green); line-height: 1; margin-bottom: 8px; }
+  .data-card-text { font-size: .9rem; color: var(--ink); font-weight: 500; margin-bottom: 6px; }
+  .data-card-source { font-size: .72rem; color: var(--muted); }
+  @media (max-width: 700px) { .data-grid { grid-template-columns: 1fr; } }
+
+  /* ══════════════════════════════════
+     PRICING
+  ══════════════════════════════════ */
+  .pricing { background: var(--cream); }
+  .pricing-toggle { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 48px; }
+  .toggle-label { font-size: .9rem; color: var(--muted); font-weight: 500; }
+  .toggle-label.active { color: var(--ink); font-weight: 600; }
+  .toggle-switch {
+    width: 52px; height: 28px; background: var(--green); border-radius: 50px;
+    position: relative; cursor: pointer; transition: background .2s;
+  }
+  .toggle-knob {
+    width: 22px; height: 22px; background: var(--white); border-radius: 50%;
+    position: absolute; top: 3px; left: 3px; transition: left .2s;
+  }
+  .toggle-switch.annual .toggle-knob { left: 27px; }
+  .save-badge {
+    background: var(--gold); color: var(--ink); font-size: .72rem; font-weight: 700;
+    padding: 3px 10px; border-radius: 50px;
+  }
+
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .plan {
+    background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
+    padding: 36px 32px; position: relative;
+  }
+  .plan.popular {
+    border-color: var(--green); border-width: 2px;
+    box-shadow: 0 8px 32px rgba(26,122,69,.15);
+  }
+  .plan-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--green); color: var(--white); font-size: .72rem; font-weight: 700;
+    padding: 4px 16px; border-radius: 50px; white-space: nowrap;
+  }
+  .plan-name { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; }
+  .plan-desc { font-size: .85rem; color: var(--muted); margin-bottom: 20px; }
+  .plan-price { margin-bottom: 6px; }
+  .plan-price-num { font-family: 'Fraunces', serif; font-size: 2.8rem; font-weight: 900; color: var(--ink); }
+  .plan-price-period { font-size: .9rem; color: var(--muted); }
+  .plan-volume { font-size: .82rem; color: var(--muted); margin-bottom: 28px; }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .plan-features li { display: flex; align-items: flex-start; gap: 10px; font-size: .88rem; color: var(--ink); }
+  .plan-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+  .plan-cta { width: 100%; text-align: center; justify-content: center; }
+  .plan-trial { text-align: center; font-size: .78rem; color: var(--muted); margin-top: 12px; }
+  @media (max-width: 700px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+  /* ══════════════════════════════════
+     FAQ
+  ══════════════════════════════════ */
+  .faq { background: var(--white); }
+  .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+  .faq-item {
+    border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
+  }
+  .faq-q {
+    padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; font-weight: 600; font-size: .95rem;
+    user-select: none; transition: background .15s;
+  }
+  .faq-q:hover { background: var(--card); }
+  .faq-q::after { content: '+'; font-size: 1.3rem; color: var(--green); transition: transform .2s; }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s ease; }
+  .faq-item.open .faq-a { max-height: 300px; }
+  .faq-a-inner { padding: 0 24px 20px; font-size: .9rem; color: var(--muted); }
+
+  /* ══════════════════════════════════
+     FINAL CTA
+  ══════════════════════════════════ */
+  .final-cta {
+    background: linear-gradient(135deg, var(--forest) 0%, #0a2b1c 100%);
+    padding: 100px 0; text-align: center; position: relative; overflow: hidden;
+  }
+  .final-cta::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(62,201,110,.1), transparent);
+  }
+  .final-cta h2 { color: var(--white); margin-bottom: 20px; position: relative; }
+  .final-cta h2 em { color: var(--lime); }
+  .final-cta p { color: rgba(255,255,255,.65); max-width: 520px; margin: 0 auto 36px; font-size: 1.05rem; position: relative; }
+  .final-cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+  .final-trust { display: flex; justify-content: center; gap: 32px; margin-top: 36px; flex-wrap: wrap; position: relative; }
+  .final-trust-item { font-size: .82rem; color: rgba(255,255,255,.55); display: flex; align-items: center; gap: 6px; }
+  .final-trust-item::before { content: '✓'; color: var(--lime); font-weight: 700; }
+
+  /* ══════════════════════════════════
+     FOOTER
+  ══════════════════════════════════ */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,.5);
+    padding: 48px 0 32px;
+  }
+  .footer-inner { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 32px; }
+  .footer-logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.1rem; color: var(--white); margin-bottom: 8px; }
+  .footer-tagline { font-size: .82rem; max-width: 220px; }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-links a { color: rgba(255,255,255,.5); text-decoration: none; font-size: .85rem; transition: color .2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom { margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.1); font-size: .8rem; text-align: center; }
+
+  /* ══════════════════════════════════
+     CAROUSEL
+  ══════════════════════════════════ */
+  .carousel-section {
+    background: var(--forest);
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .carousel-track-outer {
+    overflow: hidden;
+    position: relative;
+  }
+  .carousel-track {
+    display: flex;
+    transition: transform .6s cubic-bezier(.4,0,.2,1);
+  }
+  .carousel-slide {
+    min-width: 100%;
+    position: relative;
+    height: 520px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--forest);
+    display: flex;
+    align-items: stretch;
+  }
+  .carousel-slide img {
+    display: none;
+  }
+  .carousel-image-half {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  .carousel-image-half img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+  .carousel-overlay {
+    width: 440px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #0a2b1c 0%, #0f3d27 100%);
+    display: flex;
+    align-items: center;
+    padding: 48px 40px;
+    position: relative;
+  }
+  .carousel-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0; right: -1px; bottom: 0;
+    width: 60px;
+    background: linear-gradient(to right, #0f3d27, transparent);
+    pointer-events: none;
+  }
+  .carousel-caption {
+    width: 100%;
+    color: var(--white);
+  }
+  .carousel-caption .slide-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+    padding: 5px 14px; border-radius: 50px;
+    background: rgba(62,201,110,.2); color: var(--lime);
+    border: 1px solid rgba(62,201,110,.35);
+    margin-bottom: 16px;
+  }
+  .carousel-caption h3 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.3rem, 2vw, 1.9rem);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.25;
+  }
+  .carousel-caption h3 em { color: var(--lime); font-style: italic; }
+  .carousel-caption p {
+    font-size: .88rem;
+    color: rgba(255,255,255,.68);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+  .carousel-caption .slide-stat {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+    border-radius: 50px; padding: 8px 18px;
+    font-size: .85rem; color: rgba(255,255,255,.9);
+  }
+  .carousel-caption .slide-stat strong { color: var(--lime); font-size: 1rem; }
+
+  /* Nav arrows */
+  .carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+    color: var(--white); font-size: 1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10; transition: background .2s, transform .2s;
+    backdrop-filter: blur(6px);
+  }
+  .carousel-btn:hover { background: rgba(255,255,255,.28); transform: translateY(-50%) scale(1.08); }
+  .carousel-btn.prev { left: 450px; }
+  .carousel-btn.next { right: 16px; }
+
+  /* Dots */
+  .carousel-dots {
+    position: absolute; bottom: 16px; right: 24px;
+    display: flex; gap: 8px; z-index: 10;
+  }
+  .carousel-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,.35); border: none; cursor: pointer;
+    transition: background .3s, transform .3s; padding: 0;
+  }
+  .carousel-dot.active {
+    background: var(--lime); transform: scale(1.3);
+  }
+
+  /* Progress bar */
+  .carousel-progress {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: transparent; z-index: 10; overflow: hidden;
+  }
+  .carousel-progress::after {
+    content: ''; display: block; height: 100%;
+    background: var(--lime); width: 0%;
+    transition: width linear;
+  }
+
+  @media (max-width: 900px) {
+    .carousel-slide { height: auto; flex-direction: column; }
+    .carousel-overlay { width: 100%; padding: 32px 24px; }
+    .carousel-overlay::after { display: none; }
+    .carousel-image-half { height: 280px; }
+    .carousel-btn.prev { left: 10px; top: 140px; }
+    .carousel-btn.next { right: 10px; top: 140px; }
+    .carousel-dots { bottom: 12px; right: 50%; transform: translateX(50%); }
+  }
+
+  @media (max-width: 640px) {
+    .carousel-image-half { height: 220px; }
+    .carousel-overlay { padding: 24px 20px; }
+    .carousel-caption h3 { font-size: 1.2rem; }
+    .carousel-caption p { display: none; }
+  }
+
+
+  .fade-in {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in-delay-1 { transition-delay: .1s; }
+  .fade-in-delay-2 { transition-delay: .2s; }
+  .fade-in-delay-3 { transition-delay: .3s; }
+
+  /* ══════════════════════════════════
+     HAMBURGER MENU
+  ══════════════════════════════════ */
+  .hamburger {
+    display: none; flex-direction: column; justify-content: center;
+    gap: 5px; width: 40px; height: 40px; cursor: pointer;
+    background: none; border: none; padding: 4px; border-radius: 8px;
+    transition: background .2s;
+  }
+  .hamburger:hover { background: var(--card); }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--ink); border-radius: 2px;
+    transition: transform .3s ease, opacity .3s ease;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile nav drawer */
+  .mobile-nav {
+    display: none;
+    position: fixed; top: 68px; left: 0; right: 0; bottom: 0;
+    background: rgba(255,255,255,.98); backdrop-filter: blur(16px);
+    z-index: 99; padding: 32px 24px;
+    flex-direction: column; gap: 8px;
+    transform: translateX(100%);
+    transition: transform .3s ease;
+  }
+  .mobile-nav.open {
+    transform: translateX(0);
+  }
+  .mobile-nav a {
+    display: block; padding: 16px 0;
+    font-size: 1.2rem; font-weight: 600;
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: color .2s;
+  }
+  .mobile-nav a:hover { color: var(--green); }
+  .mobile-nav .mobile-nav-ctas {
+    display: flex; flex-direction: column; gap: 12px;
+    margin-top: 24px;
+  }
+  .mobile-nav .btn { justify-content: center; width: 100%; }
+
+  /* ══════════════════════════════════
+     MOBILE BREAKPOINTS
+  ══════════════════════════════════ */
+
+  /* Tablet — 900px */
+  @media (max-width: 900px) {
+    section { padding: 64px 0; }
+
+    /* Hero */
+    .hero { padding: 64px 0 56px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 0; }
+    .hero-visual { display: none; }
+    .hero h1 { font-size: clamp(2rem, 6vw, 3rem); }
+    .hero-sub { font-size: 1rem; }
+    .hero-badge-stack { flex-wrap: wrap; }
+
+    /* Rank grids */
+    .rank-grid { grid-template-columns: 1fr; gap: 36px; }
+    .rank-grid.flip { direction: ltr; }
+
+    /* Steps */
+    .steps { grid-template-columns: 1fr; gap: 20px; }
+
+    /* Results */
+    .results-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Features */
+    .features-grid { grid-template-columns: 1fr 1fr !important; }
+
+    /* Dashboard KPIs */
+    .dash-kpis { grid-template-columns: repeat(3, 1fr); }
+
+    /* Pricing */
+    .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+
+    /* Data */
+    .data-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Timeline */
+    .timeline-grid { grid-template-columns: 1fr !important; }
+  }
+
+  /* Mobile — 640px */
+  @media (max-width: 640px) {
+    section { padding: 52px 0; }
+    .container { padding: 0 16px; }
+
+    /* Nav */
+    .hamburger { display: flex; }
+    .mobile-nav { display: flex; }
+    .nav-links { display: none !important; }
+    .nav-cta { display: none !important; }
+    .nav-inner { padding: 0 16px; }
+
+    /* Hero */
+    .hero { padding: 48px 0 44px; }
+    .hero h1 { font-size: 2rem; }
+    .hero-sub { font-size: .95rem; }
+    .hero-ctas { flex-direction: column; }
+    .hero-ctas .btn { width: 100%; justify-content: center; }
+    .hero-trust { flex-direction: column; gap: 10px; }
+    .hero-badge-stack { flex-direction: column; }
+    .stat-pill { font-size: .78rem; }
+
+    /* Trust bar */
+    .trust-bar-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .trust-stat-num { font-size: 2rem; }
+
+    /* Problem */
+    .problem-grid { grid-template-columns: 1fr; }
+
+    /* Steps */
+    .steps { grid-template-columns: 1fr; }
+    .step { padding: 24px 20px; }
+
+    /* Section headings */
+    h2 { font-size: 1.7rem; }
+    .section-sub { font-size: .95rem; margin-bottom: 36px; }
+
+    /* Rank section */
+    .rank-grid { grid-template-columns: 1fr; gap: 28px; }
+    .rank-grid.flip { direction: ltr; }
+
+    /* Features */
+    .features-grid { grid-template-columns: 1fr !important; }
+    .feature-card { padding: 24px 20px; }
+
+    /* Results */
+    .results-grid { grid-template-columns: 1fr; }
+
+    /* Dashboard */
+    .dash-kpis { grid-template-columns: 1fr; gap: 10px; }
+    .dash-card { border-radius: 14px; }
+    .dash-checklist { grid-template-columns: 1fr; }
+
+    /* Industries ticker */
+    .industries { padding: 32px 0; }
+
+    /* Data */
+    .data-grid { grid-template-columns: 1fr; }
+
+    /* Pricing */
+    .pricing-grid { grid-template-columns: 1fr; max-width: 100%; }
+    .plan { padding: 28px 20px; }
+    .pricing-toggle { flex-wrap: wrap; justify-content: center; gap: 10px; }
+
+    /* FAQ */
+    .faq-q { font-size: .9rem; padding: 16px 18px; }
+    .faq-a-inner { padding: 0 18px 16px; }
+
+    /* Carousel — handled by carousel section CSS */
+
+    /* Final CTA */
+    .final-cta { padding: 64px 0; }
+    .final-cta-btns { flex-direction: column; align-items: center; }
+    .final-cta-btns .btn { width: 100%; max-width: 320px; justify-content: center; }
+    .final-trust { gap: 16px; flex-direction: column; align-items: center; }
+
+    /* Footer */
+    .footer-inner { flex-direction: column; gap: 24px; }
+    .footer-links { flex-direction: column; gap: 12px; }
+
+    /* Rank section cards on mobile */
+    .gbp-card { margin: 0; }
+    .serp-card { margin: 0; }
+
+    /* Timeline */
+    .timeline-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+  }
+
+  /* Very small screens — 380px */
+  @media (max-width: 380px) {
+    .trust-bar-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.75rem; }
+    .plan-price-num { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <div class="nav-logo-icon">🌿</div>
+      <span class="nav-logo-text">Review Bloom</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#rank">Google Ranking</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-outline" style="border-color:var(--border);color:var(--muted);">Login</a>
+      <a href="#pricing" class="btn btn-outline">See Pricing</a>
+      <a href="#pricing" class="btn btn-primary">Start Free Trial →</a>
+    </div>
+    <!-- Hamburger (mobile only) -->
+    <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile nav drawer -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#how" onclick="closeMenu()">How It Works</a>
+  <a href="#rank" onclick="closeMenu()">Google Ranking</a>
+  <a href="#features" onclick="closeMenu()">Features</a>
+  <a href="#pricing" onclick="closeMenu()">Pricing</a>
+  <div class="mobile-nav-ctas">
+    <a href="#" class="btn btn-outline" style="border-color:var(--border);color:var(--muted);">Login</a>
+    <a href="#pricing" class="btn btn-primary" onclick="closeMenu()">Start Free Trial →</a>
+  </div>
+</div>
+
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="badge">🌿 Google Review Automation · London</span>
+        </div>
+        <h1>More 5-star reviews. Higher Google ranking. <em>More London customers.</em></h1>
+        <p class="hero-sub">
+          Try Review Bloom automates every review request so London local service businesses and tradespeople rank higher on the Google Map Pack, strengthen their Google Business Profile, and win more customers — on autopilot.
+        </p>
+        <div class="hero-ctas">
+          <a href="#pricing" class="btn btn-gold btn-lg">Start 30-Day Free Trial →</a>
+          <a href="#how" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,.4);color:#fff;">See How It Works</a>
+        </div>
+        <div class="hero-trust">
+          <div class="hero-trust-item"><span>⭐</span> First reviews within 24 hours</div>
+          <div class="hero-trust-item"><span>⚡</span> Set up in under 30 minutes</div>
+          <div class="hero-trust-item"><span>🔒</span> No long contracts</div>
+        </div>
+        <div class="hero-badge-stack">
+          <div class="stat-pill"><strong>+236%</strong> review growth in 7 days</div>
+          <div class="stat-pill"><strong>Top 3</strong> Map Pack positions reached</div>
+          <div class="stat-pill"><strong>4×</strong> more reviews vs manual</div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="map-pack-card">
+          <div class="map-pack-header">
+            <div class="map-pack-search">
+              <span class="map-pack-search-icon">🔍</span>
+              plumber near me
+            </div>
+            <span class="map-pack-label">MAP PACK</span>
+          </div>
+          <div style="padding:10px 0;">
+            <div class="map-result">
+              <div class="map-result-num gold">1</div>
+              <div class="map-result-info">
+                <div class="map-result-name">Smith & Sons Plumbing</div>
+                <div class="map-result-stars"><span class="stars">★★★★★</span> 4.9 · 312 reviews</div>
+                <div class="map-result-tag">Open · ££ · Plumber</div>
+              </div>
+            </div>
+            <div class="map-result map-result-your">
+              <div class="map-result-num silver">2</div>
+              <div class="map-result-info">
+                <div class="map-result-name">Your Business <span class="map-result-badge">↑ CLIMBING</span></div>
+                <div class="map-result-stars"><span class="stars">★★★★★</span> 4.8 · 187 reviews</div>
+                <div class="map-result-tag">Open · ££ · Plumber</div>
+              </div>
+            </div>
+            <div class="map-result">
+              <div class="map-result-num bronze">3</div>
+              <div class="map-result-info">
+                <div class="map-result-name">City Plumbing Services</div>
+                <div class="map-result-stars"><span class="stars">★★★★</span> 4.2 · 84 reviews</div>
+                <div class="map-result-tag">Open · £££ · Plumber</div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:10px 16px 16px;font-size:.75rem;color:#70757a;border-top:1px solid #f1f1f1;">
+            📍 Showing results for <strong>your area</strong> · Powered by Google Reviews
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:.82rem;color:rgba(255,255,255,.7);">
+          💡 <strong style="color:var(--lime);">More reviews = higher position.</strong> The top 3 map spots average 240+ reviews.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CAROUSEL ══ -->
+<div class="carousel-section">
+  <div class="carousel-track-outer">
+    <div class="carousel-track" id="carouselTrack">
+
+      <!-- Slide 1 -->
+      <div class="carousel-slide active">
+        <div class="carousel-overlay"><div class="carousel-caption">
+            <span class="slide-badge">🗺️ Google Map Pack</span>
+            <h3>Rank <em>#1 on Google Maps</em> for your trade in London.</h3>
+            <p>The top position on Google Maps captures more clicks, calls, and directions than positions 2 and 3 combined. Review Bloom gets you there through consistent 5-star review generation and full GBP optimisation.</p>
+            <div class="slide-stat"><strong>44%</strong> of all local search clicks go to the top 3</div>
+        </div></div>
+        <div class="carousel-image-half"><img src="carousel/1.jpg" alt="Rank #1 on Google Maps" /></div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="carousel-slide">
+        <div class="carousel-overlay"><div class="carousel-caption">
+            <span class="slide-badge">🚗 Local Search Visibility</span>
+            <h3>When customers search, <em>your business comes up first.</em></h3>
+            <p>Whether it's "BMW dealership near me" or your exact trade and borough — Review Bloom ensures your GBP has the review volume and star rating to dominate local search every time.</p>
+            <div class="slide-stat"><strong>240+</strong> reviews needed for a top 3 Map Pack position</div>
+        </div></div>
+        <div class="carousel-image-half"><img src="carousel/2.jpg" alt="BMW car dealership near me" /></div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="carousel-slide">
+        <div class="carousel-overlay"><div class="carousel-caption">
+            <span class="slide-badge">📍 Any Trade. Any Borough.</span>
+            <h3>Be the <em>obvious choice</em> when London customers search your trade.</h3>
+            <p>From "marketing agency near me" to "plumber Hackney" — businesses that appear first have the most reviews. Review Bloom automates review collection so you consistently outrank competitors.</p>
+            <div class="slide-stat"><strong>73%</strong> of customers only trust reviews from the last 30 days</div>
+        </div></div>
+        <div class="carousel-image-half"><img src="carousel/3.jpg" alt="Marketing agency near me" /></div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="carousel-slide">
+        <div class="carousel-overlay"><div class="carousel-caption">
+            <span class="slide-badge">🖼️ Personalised Image Requests</span>
+            <h3>Review requests your customers <em>actually open and act on.</em></h3>
+            <p>Generic review requests get ignored. Review Bloom sends personalised image messages with your customer's name — driving higher open rates, response rates, and 5-star reviews automatically.</p>
+            <div class="slide-stat"><strong>4×</strong> higher response rate vs generic requests</div>
+        </div></div>
+        <div class="carousel-image-half"><img src="carousel/4.jpg" alt="Personalised image review request" /></div>
+      </div>
+
+      <!-- Slide 5 -->
+      <div class="carousel-slide">
+        <div class="carousel-overlay"><div class="carousel-caption">
+            <span class="slide-badge">🏆 Competitor Benchmarking</span>
+            <h3>See exactly <em>what it takes to outrank</em> your competition.</h3>
+            <p>Review Bloom shows you how your Google reviews, star rating, and velocity compare to local rivals. Know the gap. Close it. Overtake them — systematically and permanently.</p>
+            <div class="slide-stat"><strong>+236%</strong> review growth vs competitors in 30 days</div>
+        </div></div>
+        <div class="carousel-image-half"><img src="carousel/5.jpg" alt="Your business vs competitor ranking" /></div>
+      </div>
+
+      <!-- Slide 6 -->
+      <div class="carousel-slide">
+        <div class="carousel-overlay"><div class="carousel-caption">
+            <span class="slide-badge">⭐ Google Reviews + Map Pack</span>
+            <h3>More reviews. Higher ranking. <em>More London customers.</em></h3>
+            <p>Google reviews directly determine your Map Pack position. More fresh 5-star reviews means higher on Google Maps — and more calls, directions, and website visits every single day.</p>
+            <div class="slide-stat"><strong>80</strong> extra website visits per new Google review</div>
+        </div></div>
+        <div class="carousel-image-half"><img src="carousel/6.jpg" alt="Google reviews with Google Map" /></div>
+      </div>
+
+      <!-- Slide 7 -->
+      <div class="carousel-slide">
+        <div class="carousel-overlay"><div class="carousel-caption">
+            <span class="slide-badge">🤖 AI Review Response Service</span>
+            <h3>Every review answered. <em>Zero effort from you.</em></h3>
+            <p>Review Bloom automatically responds to every Google review using AI — personalised, professional, and posted without you lifting a finger. Signals to Google your profile is actively managed.</p>
+            <div class="slide-stat"><strong>100%</strong> of reviews responded to — automatically</div>
+        </div></div>
+        <div class="carousel-image-half"><img src="carousel/7.jpg" alt="AI responses to Google reviews" /></div>
+      </div>
+
+    </div><!-- /track -->
+
+    <!-- Arrows -->
+    <button class="carousel-btn prev" onclick="carouselMove(-1)" aria-label="Previous">&#8592;</button>
+    <button class="carousel-btn next" onclick="carouselMove(1)" aria-label="Next">&#8594;</button>
+
+    <!-- Dots -->
+    <div class="carousel-dots" id="carouselDots"></div>
+
+    <!-- Progress bar -->
+    <div class="carousel-progress" id="carouselProgress"></div>
+
+  </div>
+</div>
+
+<!-- ══ TRUST BAR ══ -->
+<div class="trust-bar">
+  <div class="container">
+    <div class="trust-bar-grid">
+      <div>
+        <div class="trust-stat-num">41%</div>
+        <div class="trust-stat-label">of consumers always read reviews before choosing a local business</div>
+        <div class="trust-stat-source">BrightLocal 2026</div>
+      </div>
+      <div>
+        <div class="trust-stat-num">73%</div>
+        <div class="trust-stat-label">of all online reviews worldwide live on Google</div>
+        <div class="trust-stat-source">Sixth City Marketing 2025</div>
+      </div>
+      <div>
+        <div class="trust-stat-num">240+</div>
+        <div class="trust-stat-label">reviews is the average for Google's top 3 Map Pack positions</div>
+        <div class="trust-stat-source">Localo 2025</div>
+      </div>
+      <div>
+        <div class="trust-stat-num">80×</div>
+        <div class="trust-stat-label">more website visits per new Google review on average</div>
+        <div class="trust-stat-source">Birdeye 2025</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROBLEM ══ -->
+<section class="problem">
+  <div class="container">
+    <div class="section-label"><span class="badge">The Problem</span></div>
+    <h2 class="section-title">You do great work.<br>Your <em>Google ranking doesn't show it.</em></h2>
+    <p class="section-sub">Last month, a carpet cleaner in East London told us he'd been trading for 11 years — brilliant work, loyal customers — but new leads kept choosing his competitor. The difference? 200 more Google reviews. Sound familiar? It's fixable.</p>
+    <div class="problem-grid">
+      <div class="problem-card fade-in">
+        <div class="problem-icon">😩</div>
+        <h3>No reviews despite happy customers</h3>
+        <p>You've got hundreds of satisfied London customers — but only a handful of reviews to show for it. Happy customers don't leave reviews unless you make it effortless for them.</p>
+      </div>
+      <div class="problem-card fade-in fade-in-delay-1">
+        <div class="problem-icon">⏰</div>
+        <h3>No time to chase anyone</h3>
+        <p>London tradespeople are already wearing ten hats. Chasing every customer for a review never makes the list — and it feels awkward. There's a better way that runs itself.</p>
+      </div>
+      <div class="problem-card fade-in fade-in-delay-2">
+        <div class="problem-icon">📉</div>
+        <h3>Invisible on Google Maps & Search</h3>
+        <p>London customers are choosing competitors based purely on review count. You know you do better work — but new customers searching in your area can't see that yet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-label" style="text-align:center;margin-bottom:16px;">
+      <span class="badge" style="background:rgba(62,201,110,.2);color:var(--lime);border-color:rgba(62,201,110,.4);">How It Works</span>
+    </div>
+    <h2 class="section-title">Set it up once. <em>Reviews roll in forever.</em></h2>
+    <p class="section-sub">Connect Review Bloom to your existing job software. From that moment, every completed job automatically triggers a review request — so London tradespeople collect more reviews without any extra effort.</p>
+    <div class="steps">
+      <div class="step fade-in">
+        <div class="step-num">1</div>
+        <h3>Connect your CRM</h3>
+        <p>We integrate with Jobber, Housecall Pro, Workiz, QuickBooks, and thousands more via Zapier. Connect once and your customer data syncs automatically — no manual uploads needed.</p>
+      </div>
+      <div class="step fade-in fade-in-delay-1">
+        <div class="step-num">2</div>
+        <h3>Personalised requests go out</h3>
+        <p>The moment a job is marked complete, your customer receives a personalised SMS or email — their name, your branding. If they don't respond, a gentle follow-up nudges them. No chasing from you.</p>
+      </div>
+      <div class="step fade-in fade-in-delay-2">
+        <div class="step-num">3</div>
+        <h3>Rank higher. Win more jobs.</h3>
+        <p>Fresh 5-star reviews push you up Google Maps and boost your organic search ranking. We also auto-respond to every review and turn your best ones into branded social posts — all without any effort from you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GOOGLE RANKING SECTION ══ -->
+<section class="rank-section" id="rank">
+  <div class="container">
+
+    <!-- Block 1: Google Business Profile -->
+    <div class="rank-grid" style="margin-bottom:80px;">
+      <div class="rank-content fade-in">
+        <span class="badge" style="margin-bottom:20px;display:inline-flex;">📌 Google Business Profile Optimisation</span>
+        <h2>Your Google Business Profile is your most valuable <em>free marketing asset.</em></h2>
+        <p>We fully optimise your Google Business Profile — categories, services, photos, service areas, and Q&A — so Google ranks you higher in local map results. More visibility means more calls from London customers searching for your trade.</p>
+        <ul class="rank-points">
+          <li>Fresh reviews signal activity to Google's algorithm, improving your GBP visibility across London</li>
+          <li>AI-generated responses to every review show Google your profile is actively managed</li>
+          <li>Higher star ratings increase click-through rates from both Maps and Search results</li>
+          <li>Review volume and recency directly influence your position in Google's Local Pack</li>
+          <li>Regular review responses improve your local Google rankings and show customers you care</li>
+        </ul>
+      </div>
+      <div class="fade-in fade-in-delay-1">
+        <div class="gbp-card">
+          <div class="gbp-header">
+            <div class="gbp-icon">📍</div>
+            <div>
+              <div class="gbp-header-text">Your Business Name</div>
+              <div class="gbp-header-sub">Local Service · Open now</div>
+            </div>
+          </div>
+          <div class="gbp-body">
+            <div class="gbp-stars">★★★★★</div>
+            <div class="gbp-rating">4.9 · <strong>187 reviews</strong> on Google</div>
+            <div class="gbp-bar-row">
+              <div class="gbp-bar-label"><span>5 ★</span><span>158</span></div>
+              <div class="gbp-bar-track"><div class="gbp-bar-fill" style="width:88%"></div></div>
+            </div>
+            <div class="gbp-bar-row">
+              <div class="gbp-bar-label"><span>4 ★</span><span>21</span></div>
+              <div class="gbp-bar-track"><div class="gbp-bar-fill" style="width:11%"></div></div>
+            </div>
+            <div class="gbp-bar-row">
+              <div class="gbp-bar-label"><span>3 ★</span><span>5</span></div>
+              <div class="gbp-bar-track"><div class="gbp-bar-fill" style="width:3%"></div></div>
+            </div>
+            <div class="gbp-tags">
+              <span class="gbp-tag">✓ Verified Business</span>
+              <span class="gbp-tag">✓ AI Replies Active</span>
+              <span class="gbp-tag">✓ Actively Managed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Block 2: Map Pack -->
+    <div class="rank-grid flip" style="margin-bottom:80px;">
+      <div class="rank-content fade-in">
+        <span class="badge" style="margin-bottom:20px;display:inline-flex;">🗺️ Google Maps Ranking Improvement</span>
+        <h2>The Map Pack gets <em>44% of all clicks</em> for local searches.</h2>
+        <p>When a London customer searches "plumber near me" or "best electrician [borough]", the Map Pack is the first thing they see. We improve your map pack position through review generation, GBP optimisation, and local SEO — helping London tradespeople appear where it matters most.</p>
+        <ul class="rank-points">
+          <li>The top 3 Map Pack positions average 240+ reviews — Review Bloom gets you there faster</li>
+          <li>Recency matters: 73% of consumers only trust reviews from the last 30 days</li>
+          <li>Each new Google review generates an average of 80 website visits, 63 direction requests, and 16 direct calls</li>
+          <li>Competitor review benchmarking shows you exactly what it takes to rank above rivals in your London area</li>
+        </ul>
+      </div>
+      <div class="fade-in fade-in-delay-1">
+        <div class="map-pack-card" style="box-shadow:0 8px 40px rgba(0,0,0,.12);">
+          <div class="map-pack-header">
+            <div class="map-pack-search">
+              <span class="map-pack-search-icon">🔍</span>
+              best electrician [your city]
+            </div>
+            <span class="map-pack-label">MAP PACK</span>
+          </div>
+          <div style="padding:8px 0;">
+            <div class="map-result map-result-your">
+              <div class="map-result-num gold">1</div>
+              <div class="map-result-info">
+                <div class="map-result-name">Your Business <span class="map-result-badge">YOU</span></div>
+                <div class="map-result-stars"><span class="stars">★★★★★</span> 4.9 · 243 reviews</div>
+                <div class="map-result-tag">Open · Electrician · 0.3 mi</div>
+              </div>
+            </div>
+            <div class="map-result">
+              <div class="map-result-num silver">2</div>
+              <div class="map-result-info">
+                <div class="map-result-name">City Electric Co.</div>
+                <div class="map-result-stars"><span class="stars">★★★★</span> 4.4 · 97 reviews</div>
+                <div class="map-result-tag">Open · Electrician · 0.8 mi</div>
+              </div>
+            </div>
+            <div class="map-result">
+              <div class="map-result-num bronze">3</div>
+              <div class="map-result-info">
+                <div class="map-result-name">Express Electrical</div>
+                <div class="map-result-stars"><span class="stars">★★★★</span> 4.1 · 52 reviews</div>
+                <div class="map-result-tag">Closed · Electrician · 1.2 mi</div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:10px 16px 14px;background:#f9fff9;border-top:1px solid #e8f5e9;">
+            <span style="font-size:.75rem;color:var(--green);font-weight:600;">🎯 Goal: 240+ reviews to own position #1 in your area</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Block 3: Organic Search -->
+    <div class="rank-grid">
+      <div class="rank-content fade-in">
+        <span class="badge" style="margin-bottom:20px;display:inline-flex;">🔍 Local SEO for London Service Businesses</span>
+        <h2>Reviews drive organic search traffic — not just <em>Maps rankings.</em></h2>
+        <p>We combine GBP optimisation, review generation, and local content strategy to help London home service businesses dominate their area in organic search. A full local search visibility audit identifies every gap and gives you a clear action plan to rank higher and get more calls.</p>
+        <ul class="rank-points">
+          <li>Businesses with consistent reviews rank higher in local organic results, not just Maps</li>
+          <li>45% of consumers now use AI tools to find local businesses — AI pulls from your public review data</li>
+          <li>Review keywords (e.g. "fast service", "reliable London plumber") are indexed by Google and boost relevance</li>
+          <li>Responding to reviews regularly signals engagement, improving your overall local SEO score</li>
+          <li>Social reposts of your reviews create additional backlinks and brand signals across the web</li>
+        </ul>
+      </div>
+      <div class="fade-in fade-in-delay-1">
+        <div class="serp-card">
+          <div class="serp-label">Organic Search Results</div>
+          <div class="serp-result">
+            <div class="serp-result-url">🌐 yourwebsite.co.uk</div>
+            <div class="serp-result-title yours">Your Business — Best Plumber in London <span class="serp-result-yours-badge">YOU</span></div>
+            <div class="serp-result-stars"><span class="s">★★★★★</span> 4.9 · 243 Google reviews · Local business</div>
+            <div class="serp-result-snippet">Trusted London plumber with 243 five-star reviews. Fast response, great value. Serving East London since 2013.</div>
+          </div>
+          <div class="serp-result">
+            <div class="serp-result-url">🌐 competitor1.co.uk</div>
+            <div class="serp-result-title">City Plumbing Services London</div>
+            <div class="serp-result-stars"><span class="s">★★★★</span> 4.2 · 84 Google reviews · Local business</div>
+            <div class="serp-result-snippet">Plumbing services across London. Call us today for a free quote.</div>
+          </div>
+          <div class="serp-result">
+            <div class="serp-result-url">🌐 competitor2.co.uk</div>
+            <div class="serp-result-title">Express London Plumbers Ltd</div>
+            <div class="serp-result-stars"><span class="s">★★★</span> 3.8 · 31 Google reviews · Local business</div>
+            <div class="serp-result-snippet">Emergency plumbers available 24/7 across London. Competitive rates.</div>
+          </div>
+          <div style="padding:10px 0 0;font-size:.75rem;color:var(--muted);">
+            💡 More reviews = richer snippet = higher click-through rate = more organic traffic
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ FEATURES ══ -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-label"><span class="badge">Everything Included</span></div>
+    <h2 class="section-title">One system that handles your <em>entire reputation</em></h2>
+    <p class="section-sub">Built for local service businesses — not a generic one-size-fits-all tool. Every feature is designed around how real businesses operate day to day.</p>
+    <div class="features-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="feature-card fade-in">
+        <div class="feature-icon">💬</div>
+        <h3>Automated Review Requests via SMS & Email</h3>
+        <p>Personalised review requests sent automatically after every completed job. SMS gets higher open rates than email — we send both, timed for maximum response from London customers.</p>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-1">
+        <div class="feature-icon">🖼️</div>
+        <h3>Personalised Image Review Requests</h3>
+        <p>Stand out from generic review requests with personalised image messages that include your customer's name. Higher open rates, higher response rates, more 5-star reviews — automatically.</p>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-2">
+        <div class="feature-icon">🔁</div>
+        <h3>Review Reactivation Campaign</h3>
+        <p>Turn your past customer list into a flood of fresh 5-star Google reviews. We drip personalised requests gradually so it looks natural to Google — ideal for London tradespeople with years of happy clients.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🔔</div>
+        <h3>Review Follow-Up Sequences</h3>
+        <p>Not everyone acts on the first message. Our automated follow-up sequences send gentle reminders that nudge customers — more reviews from the same customer base, no extra effort from you.</p>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-1">
+        <div class="feature-icon">🤖</div>
+        <h3>AI Review Response Service</h3>
+        <p>We automatically respond to your Google reviews using AI — personalised, professional, and posted without any effort from you. Regular responses improve your local Google rankings and build trust.</p>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-2">
+        <div class="feature-icon">🚨</div>
+        <h3>Negative Review Monitoring</h3>
+        <p>Get alerted the moment a negative review lands on your profile so you can respond fast and protect your reputation. Early response limits damage and shows future customers you take feedback seriously.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📱</div>
+        <h3>Social Media Review Posting</h3>
+        <p>Your best Google reviews automatically become branded posts on Facebook and Instagram. Build trust with potential customers on social without creating any content yourself.</p>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-1">
+        <div class="feature-icon">🔗</div>
+        <h3>CRM Integration Setup</h3>
+        <p>Works with Jobber, Housecall Pro, Workiz, QuickBooks, and thousands more via Zapier. Connect once and review requests go out automatically when a job is marked complete — no manual work ever.</p>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-2">
+        <div class="feature-icon">📊</div>
+        <h3>Review Dashboard & Reporting</h3>
+        <p>Track every request, monitor new reviews, and watch your Google reputation grow — all from one clean dashboard. See exactly how many reviews you've gained and how your ranking is trending.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📞</div>
+        <h3>Missed Call Text-Back Automation</h3>
+        <p>Never lose a lead to a missed call again. When a potential customer calls and you can't answer, our system automatically texts them back within seconds — keeping the lead warm so you win the job.</p>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-1">
+        <div class="feature-icon">🎁</div>
+        <h3>Referral Programme Automation</h3>
+        <p>After leaving a great review, customers are automatically invited to refer friends and family — generating new leads for your London home service business on autopilot. Reviews that keep on giving.</p>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-2">
+        <div class="feature-icon">🏆</div>
+        <h3>Competitor Review Benchmarking</h3>
+        <p>See exactly how your Google reviews and star rating compare to local competitors. We track competitor review counts, ratings, and velocity — so you always know what it takes to rank above them in London.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CASE STUDIES ══ -->
+<section class="results">
+  <div class="container">
+    <div class="section-label"><span class="badge">Real Results</span></div>
+    <h2 class="section-title">Transforming businesses <em>like yours</em></h2>
+    <p class="section-sub">London local service businesses and tradespeople are climbing the Google Map Pack and winning more customers every week with Review Bloom.</p>
+    <div class="results-grid">
+      <div class="result-card fade-in">
+        <div class="result-biz">
+          <div class="result-biz-icon">🏚️</div>
+          <div>
+            <div class="result-biz-name">Hudsons Property</div>
+            <div class="result-biz-type">Estate Agent · London</div>
+          </div>
+        </div>
+        <div class="result-num">+236%</div>
+        <div class="result-desc">Review growth in under 30 days. Moved from position 7 to position 2 in the Map Pack for their main local keyword.</div>
+      </div>
+      <div class="result-card fade-in fade-in-delay-1">
+        <div class="result-biz">
+          <div class="result-biz-icon">💈</div>
+          <div>
+            <div class="result-biz-name">Paul Mall Barbers</div>
+            <div class="result-biz-type">Barbers · Central London</div>
+          </div>
+        </div>
+        <div class="result-num">143</div>
+        <div class="result-desc">New reviews generated in 6 weeks from their reactivation campaign. Now consistently in the top 3 for "barber near me" searches.</div>
+      </div>
+      <div class="result-card fade-in fade-in-delay-2">
+        <div class="result-biz">
+          <div class="result-biz-icon">💆🏻‍♂️</div>
+          <div>
+            <div class="result-biz-name">Hackney Chiropractic</div>
+            <div class="result-biz-type">Chiropractor · East London</div>
+          </div>
+        </div>
+        <div class="result-num">Top 3</div>
+        <div class="result-desc">Google Map Pack position reached in 45 days. New patient enquiries up 40% month-on-month since using Review Bloom.</div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div style="margin-top:64px;background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:40px 40px 32px;">
+      <h3 style="text-align:center;margin-bottom:36px;">What you could achieve in 7 days</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;">
+        <div style="text-align:center;">
+          <div style="width:44px;height:44px;background:var(--green);border-radius:50%;color:var(--white);font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">1</div>
+          <div style="font-weight:600;margin-bottom:6px;">Today — Sign Up & Connect</div>
+          <p style="font-size:.88rem;">Onboard in minutes, connect your CRM, and launch your reactivation campaign for past customers.</p>
+        </div>
+        <div style="text-align:center;">
+          <div style="width:44px;height:44px;background:var(--green);border-radius:50%;color:var(--white);font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">3</div>
+          <div style="font-weight:600;margin-bottom:6px;">Day 3 — Reviews Start Rolling</div>
+          <p style="font-size:.88rem;">Previous customers start leaving reviews. We reply and repost to social automatically. No effort needed from you.</p>
+        </div>
+        <div style="text-align:center;">
+          <div style="width:44px;height:44px;background:var(--green);border-radius:50%;color:var(--white);font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">7</div>
+          <div style="font-weight:600;margin-bottom:6px;">Day 7 — Win Jobs Again</div>
+          <p style="font-size:.88rem;">Your business ranks higher on Google Maps. New customers find you first. Less time building trust, more time closing deals.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DASHBOARD ══ -->
+<section class="dashboard-section">
+  <div class="container">
+    <div class="section-label" style="text-align:center;margin-bottom:16px;">
+      <span class="badge" style="background:rgba(62,201,110,.15);color:var(--lime);border-color:rgba(62,201,110,.3);">Your Dashboard</span>
+    </div>
+    <h2>Everything in <em>one place</em></h2>
+    <p class="section-sub">Track every request, monitor new reviews, and watch your reputation grow.</p>
+    <div class="dash-card">
+      <div class="dash-header">
+        <div class="dash-header-title">🌿 Review Bloom — Dashboard</div>
+        <div class="dash-dots"><div class="dash-dot"></div><div class="dash-dot"></div><div class="dash-dot"></div></div>
+      </div>
+      <div class="dash-body">
+        <div class="dash-kpis">
+          <div class="dash-kpi">
+            <div class="dash-kpi-num">443</div>
+            <div class="dash-kpi-label">Total Reviews</div>
+            <div class="dash-kpi-delta">↑ +28 this week</div>
+          </div>
+          <div class="dash-kpi">
+            <div class="dash-kpi-num">4.9⭐</div>
+            <div class="dash-kpi-label">Avg Rating</div>
+            <div class="dash-kpi-delta">↑ +0.2 this month</div>
+          </div>
+          <div class="dash-kpi">
+            <div class="dash-kpi-num">#2</div>
+            <div class="dash-kpi-label">Map Pack Position</div>
+            <div class="dash-kpi-delta">↑ from #7 last month</div>
+          </div>
+        </div>
+        <div class="dash-reviews">
+          <div class="dash-review">
+            <div class="dash-avatar">JH</div>
+            <div>
+              <div class="dash-review-name">James H.</div>
+              <div class="dash-review-stars">★★★★★</div>
+              <div class="dash-review-text">Brilliant service, highly recommend!</div>
+              <div class="dash-ai-badge">🤖 AI Reply sent automatically</div>
+            </div>
+          </div>
+          <div class="dash-review">
+            <div class="dash-avatar" style="background:#1a4d7a;">SM</div>
+            <div>
+              <div class="dash-review-name">Sarah M.</div>
+              <div class="dash-review-stars">★★★★★</div>
+              <div class="dash-review-text">Absolutely fantastic, 10/10!</div>
+              <div class="dash-ai-badge">🤖 AI Reply sent · 📱 Reposted to Instagram</div>
+            </div>
+          </div>
+        </div>
+        <div class="dash-checklist">
+          <div class="dash-check"><span class="dash-check-icon">✓</span> Real-time review notifications</div>
+          <div class="dash-check"><span class="dash-check-icon">✓</span> Campaign analytics</div>
+          <div class="dash-check"><span class="dash-check-icon">✓</span> AI-powered review replies</div>
+          <div class="dash-check"><span class="dash-check-icon">✓</span> Social media auto-posting</div>
+          <div class="dash-check"><span class="dash-check-icon">✓</span> GBP performance tracking</div>
+          <div class="dash-check"><span class="dash-check-icon">✓</span> Unlimited team members</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INDUSTRIES ══ -->
+<section class="industries">
+  <div class="container" style="overflow:visible;">
+    <h3>Every type of local service business</h3>
+  </div>
+  <div class="ticker-track">
+    <div class="ticker-list">
+      <span class="industry-pill">🔧 Plumbers</span>
+      <span class="industry-pill">⚡ Electricians</span>
+      <span class="industry-pill">🏠 Roofers</span>
+      <span class="industry-pill">🌿 Landscapers</span>
+      <span class="industry-pill">🧹 Cleaners</span>
+      <span class="industry-pill">❄️ HVAC Engineers</span>
+      <span class="industry-pill">💇 Hair Salons</span>
+      <span class="industry-pill">💅 Beauty & Nail Salons</span>
+      <span class="industry-pill">🐾 Pet Groomers</span>
+      <span class="industry-pill">🦷 Dentists</span>
+      <span class="industry-pill">🏚️ Estate Agents</span>
+      <span class="industry-pill">💆 Chiropractors</span>
+      <span class="industry-pill">💈 Barbers</span>
+      <span class="industry-pill">🪟 Window Cleaners</span>
+      <span class="industry-pill">🎨 Painters & Decorators</span>
+      <span class="industry-pill">🌲 Tree Surgeons</span>
+      <span class="industry-pill">💪 Personal Trainers</span>
+      <span class="industry-pill">🔩 Builders</span>
+      <span class="industry-pill">🍕 Restaurants</span>
+      <span class="industry-pill">🚿 Pressure Washers</span>
+    </div>
+    <div class="ticker-list" aria-hidden="true">
+      <span class="industry-pill">🔧 Plumbers</span>
+      <span class="industry-pill">⚡ Electricians</span>
+      <span class="industry-pill">🏠 Roofers</span>
+      <span class="industry-pill">🌿 Landscapers</span>
+      <span class="industry-pill">🧹 Cleaners</span>
+      <span class="industry-pill">❄️ HVAC Engineers</span>
+      <span class="industry-pill">💇 Hair Salons</span>
+      <span class="industry-pill">💅 Beauty & Nail Salons</span>
+      <span class="industry-pill">🐾 Pet Groomers</span>
+      <span class="industry-pill">🦷 Dentists</span>
+      <span class="industry-pill">🏚️ Estate Agents</span>
+      <span class="industry-pill">💆 Chiropractors</span>
+      <span class="industry-pill">💈 Barbers</span>
+      <span class="industry-pill">🪟 Window Cleaners</span>
+      <span class="industry-pill">🎨 Painters & Decorators</span>
+      <span class="industry-pill">🌲 Tree Surgeons</span>
+      <span class="industry-pill">💪 Personal Trainers</span>
+      <span class="industry-pill">🔩 Builders</span>
+      <span class="industry-pill">🍕 Restaurants</span>
+      <span class="industry-pill">🚿 Pressure Washers</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DATA ══ -->
+<section class="data-section">
+  <div class="container">
+    <div class="section-label"><span class="badge">The Data Is Clear</span></div>
+    <h2 class="section-title">Why local businesses can't afford to <em>ignore reviews</em></h2>
+    <p class="section-sub">BrightLocal, Birdeye, Podium and Localo paint one consistent picture — the review gap between you and your competitors widens every single week you wait.</p>
+    <div class="data-grid">
+      <div class="data-card fade-in">
+        <div class="data-card-icon">📈</div>
+        <div class="data-card-num">45%</div>
+        <div class="data-card-text">of consumers now use AI tools to find local businesses — AI pulls from your public review data</div>
+        <div class="data-card-source">BrightLocal 2026 (↑ from 6% in 2025)</div>
+      </div>
+      <div class="data-card fade-in fade-in-delay-1">
+        <div class="data-card-icon">💷</div>
+        <div class="data-card-num">+22%</div>
+        <div class="data-card-text">more customers will pay a premium for a business with a strong reputation. Rises to +31% for "excellent" reviews</div>
+        <div class="data-card-source">LocaliQ 2025</div>
+      </div>
+      <div class="data-card fade-in fade-in-delay-2">
+        <div class="data-card-icon">😬</div>
+        <div class="data-card-num">94%</div>
+        <div class="data-card-text">of consumers say a single bad review is enough to avoid a business. A flood of 5-stars is your best defence</div>
+        <div class="data-card-source">Bridge Media · BrightLocal 2025</div>
+      </div>
+      <div class="data-card fade-in">
+        <div class="data-card-icon">⭐</div>
+        <div class="data-card-num">31%</div>
+        <div class="data-card-text">of consumers will only use a business rated 4.5★ or above — nearly double last year's figure</div>
+        <div class="data-card-source">BrightLocal 2026 (↑ from 17% in 2025)</div>
+      </div>
+      <div class="data-card fade-in fade-in-delay-1">
+        <div class="data-card-icon">⏱️</div>
+        <div class="data-card-num">73%</div>
+        <div class="data-card-text">of consumers only trust reviews from the last 30 days. Old reviews — even great ones — are invisible to buyers</div>
+        <div class="data-card-source">Sixth City Marketing · Trustmary 2025</div>
+      </div>
+      <div class="data-card fade-in fade-in-delay-2">
+        <div class="data-card-icon">📞</div>
+        <div class="data-card-num">80</div>
+        <div class="data-card-text">additional website visits generated per new Google review. Plus 63 direction requests and 16 direct calls</div>
+        <div class="data-card-source">Birdeye Google Business Profile Study 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRICING ══ -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-label"><span class="badge">Pricing</span></div>
+    <h2 class="section-title">Simple, transparent <em>pricing</em></h2>
+    <p class="section-sub">Based on monthly review requests. All plans include 1 full review reactivation campaign. Follow-up messages never count toward your monthly limit.</p>
+
+    <div class="pricing-toggle">
+      <span class="toggle-label active" id="monthly-label">Monthly</span>
+      <div class="toggle-switch" id="billing-toggle" onclick="toggleBilling()">
+        <div class="toggle-knob"></div>
+      </div>
+      <span class="toggle-label" id="annual-label">Annual</span>
+      <span class="save-badge">Save £600/yr</span>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="plan fade-in">
+        <div class="plan-name">Starter</div>
+        <div class="plan-desc">Perfect for smaller local businesses just getting started</div>
+        <div class="plan-price">
+          <span class="plan-price-num" id="starter-price">£197</span>
+          <span class="plan-price-period">/month</span>
+        </div>
+        <div class="plan-volume">Up to 50 review requests/month</div>
+        <ul class="plan-features">
+          <li>Get 2× more reviews vs manual</li>
+          <li>Automated SMS & email requests</li>
+          <li>1× full review reactivation campaign</li>
+          <li>Dynamic follow-up reminders</li>
+          <li>AI Smart Messaging</li>
+          <li>Personalised image requests</li>
+          <li>Auto AI review replies</li>
+          <li>Social media review posting</li>
+          <li>Custom CRM integration</li>
+          <li>Zapier access</li>
+          <li>1 user seat</li>
+          <li>1-to-1 setup call</li>
+        </ul>
+        <a href="#" class="btn btn-outline plan-cta btn-lg">Start 30-Day Free Trial</a>
+        <div class="plan-trial">No credit card required</div>
+      </div>
+
+      <div class="plan popular fade-in fade-in-delay-1">
+        <div class="plan-badge">⭐ Most Popular</div>
+        <div class="plan-name">Growth</div>
+        <div class="plan-desc">For established businesses ready to dominate their local area</div>
+        <div class="plan-price">
+          <span class="plan-price-num" id="growth-price">£497</span>
+          <span class="plan-price-period">/month</span>
+        </div>
+        <div class="plan-volume">50–100 review requests/month</div>
+        <ul class="plan-features">
+          <li>Get 4× more reviews vs manual</li>
+          <li>Automated SMS & email requests</li>
+          <li>1× full review reactivation campaign</li>
+          <li>Dynamic follow-up reminders</li>
+          <li>AI Smart Messaging</li>
+          <li>Personalised image requests</li>
+          <li>Auto AI review replies</li>
+          <li>Social media review posting</li>
+          <li>Custom CRM integration</li>
+          <li>Zapier access</li>
+          <li>5 user seats</li>
+          <li>1-to-1 setup call</li>
+        </ul>
+        <a href="#" class="btn btn-primary plan-cta btn-lg">Start 30-Day Free Trial</a>
+        <div class="plan-trial">No credit card required</div>
+      </div>
+
+      <div class="plan fade-in fade-in-delay-2">
+        <div class="plan-name">Pro</div>
+        <div class="plan-desc">For multi-location businesses or high-volume service companies</div>
+        <div class="plan-price">
+          <span class="plan-price-num" id="pro-price">£797</span>
+          <span class="plan-price-period">/month</span>
+        </div>
+        <div class="plan-volume">100–300 review requests/month</div>
+        <ul class="plan-features">
+          <li>Get 8× more reviews vs manual</li>
+          <li>Automated SMS & email requests</li>
+          <li>1× full review reactivation campaign</li>
+          <li>Dynamic follow-up reminders</li>
+          <li>AI Smart Messaging</li>
+          <li>Personalised image requests</li>
+          <li>Auto AI review replies</li>
+          <li>Social media review posting</li>
+          <li>Custom CRM integration</li>
+          <li>Zapier access</li>
+          <li>Unlimited user seats</li>
+          <li>Priority 1-to-1 setup call</li>
+        </ul>
+        <a href="#" class="btn btn-outline plan-cta btn-lg">Start 30-Day Free Trial</a>
+        <div class="plan-trial">No credit card required</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="faq">
+  <div class="container">
+    <div class="section-label"><span class="badge">FAQs</span></div>
+    <h2 class="section-title" style="margin-bottom:48px;">Frequently asked <em>questions</em></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How quickly will I see results?</div>
+        <div class="faq-a"><div class="faq-a-inner">Most clients see their first new reviews within 24 hours of launching their reactivation campaign. Within 7 days you'll typically have a meaningful new batch of reviews. Google Map Pack ranking improvements usually begin within 2–4 weeks depending on your starting position and competition.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Does this work with my existing software?</div>
+        <div class="faq-a"><div class="faq-a-inner">Yes — we integrate directly with Jobber, Housecall Pro, Workiz, QuickBooks, and thousands of other platforms via Zapier. If you use any job management or CRM software, there's a very high chance we can connect to it. Our setup call walks you through the whole process.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Is this against Google's terms of service?</div>
+        <div class="faq-a"><div class="faq-a-inner">No. Asking your real customers to leave a review is completely legitimate and encouraged by Google. What Review Bloom does is make that process systematic and easy — we never fake reviews or pay for them. Every review generated is from a genuine customer who experienced your service.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What if I get a negative review?</div>
+        <div class="faq-a"><div class="faq-a-inner">Negative reviews are rare when you're consistently delivering good service. But when they happen, our AI automatically drafts a professional, empathetic response. The best defence against one bad review is a large volume of positive ones — which is exactly what Review Bloom builds for you.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How does the review reactivation work?</div>
+        <div class="faq-a"><div class="faq-a-inner">You provide us with your past customer contact list. We then drip personalised SMS and email review requests to them gradually — this looks natural to Google and generates a steady flow of fresh reviews rather than an unnatural spike. Typically 20–30% of past customers who receive a request leave a review.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is the Missed Call Text-Back feature?</div>
+        <div class="faq-a"><div class="faq-a-inner">When a potential London customer calls your business and you can't answer, our system automatically sends them a personalised text message within seconds — keeping the lead warm and giving you the best chance of winning the job. For London tradespeople on the tools all day, this can be the difference between winning and losing a job to a competitor who picked up.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Do you offer a local search visibility audit?</div>
+        <div class="faq-a"><div class="faq-a-inner">Yes — we conduct a full audit of how your business appears in local Google search results across London. We identify gaps in your GBP setup, review profile, and local SEO, then give you a clear action plan to rank higher and get more calls. This is included as part of your onboarding setup call.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How does Review Bloom help with Google Map Pack rankings specifically?</div>
+        <div class="faq-a"><div class="faq-a-inner">Google's Map Pack algorithm heavily weights review volume, recency, and response rate. Review Bloom addresses all three: it continuously generates new reviews from London customers, keeps them fresh and recent, and AI-responds to every review automatically. We also fully optimise your Google Business Profile — categories, service areas, photos, and Q&A — which is a separate ranking signal many London tradespeople overlook. Our competitor benchmarking tool also shows you exactly how many reviews you need to overtake rivals in your specific London area.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FINAL CTA ══ -->
+<section class="final-cta">
+  <div class="container">
+    <h2>You do great work.<br>Let's make sure <em>London knows it.</em></h2>
+    <p>London customers are choosing your competitors based on review count — not quality of work. The only thing missing is a system that turns your satisfied customers into 5-star reviews new leads can actually see. Set it up once. Watch the reviews come in. Win more jobs.</p>
+    <div class="final-cta-btns">
+      <a href="#" class="btn btn-gold btn-lg">Start 30-Day Free Trial →</a>
+      <a href="mailto:hello@tryreviewbloom.com" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,.4);color:#fff;">Contact Us</a>
+    </div>
+    <div class="final-trust">
+      <div class="final-trust-item">First reviews within 24 hours</div>
+      <div class="final-trust-item">Set up in under 30 minutes</div>
+      <div class="final-trust-item">No long contracts</div>
+      <div class="final-trust-item">No credit card required</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">🌿 Review Bloom</div>
+        <div class="footer-tagline">Automated Google reviews for local service businesses. Rank higher. Win more jobs.</div>
+      </div>
+      <div class="footer-links">
+        <a href="#how">How It Works</a>
+        <a href="#rank">Google Ranking</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="mailto:hello@tryreviewbloom.com">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Try Review Bloom. All rights reserved. A service of <strong style="color:rgba(255,255,255,.7);">Patient Acquisition Hub Ltd</strong> · Registered in England & Wales · Company No. 15431935
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── HAMBURGER MENU ──
+  function toggleMenu() {
+    const nav = document.getElementById('mobileNav');
+    const btn = document.getElementById('hamburger');
+    const open = nav.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  function closeMenu() {
+    document.getElementById('mobileNav').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Close on scroll
+  window.addEventListener('scroll', () => {
+    if (document.getElementById('mobileNav').classList.contains('open')) closeMenu();
+  }, { passive: true });
+
+  // ── FADE IN ON SCROLL ──
+  const faders = document.querySelectorAll('.fade-in');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: .12 });
+  faders.forEach(el => io.observe(el));
+
+  // ── BILLING TOGGLE ──
+  let annual = false;
+  const prices = { starter: [197, 147], growth: [497, 447], pro: [797, 730] };
+  function toggleBilling() {
+    annual = !annual;
+    const toggle = document.getElementById('billing-toggle');
+    toggle.classList.toggle('annual', annual);
+    document.getElementById('monthly-label').classList.toggle('active', !annual);
+    document.getElementById('annual-label').classList.toggle('active', annual);
+    const idx = annual ? 1 : 0;
+    document.getElementById('starter-price').textContent = `£${prices.starter[idx]}`;
+    document.getElementById('growth-price').textContent = `£${prices.growth[idx]}`;
+    document.getElementById('pro-price').textContent = `£${prices.pro[idx]}`;
+  }
+
+  // ── FAQ TOGGLE ──
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // ── CAROUSEL ──
+  (function() {
+    const track    = document.getElementById('carouselTrack');
+    const dotsWrap = document.getElementById('carouselDots');
+    const progress = document.getElementById('carouselProgress');
+    const slides   = track ? track.querySelectorAll('.carousel-slide') : [];
+    const total    = slides.length;
+    if (!total) return;
+
+    let current  = 0;
+    let timer    = null;
+    let progTimer = null;
+    const DURATION = 5000;
+
+    // Build dots
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Slide ' + (i + 1));
+      d.onclick = () => goTo(i);
+      dotsWrap.appendChild(d);
+    });
+
+    function updateDots() {
+      dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) =>
+        d.classList.toggle('active', i === current));
+    }
+
+    function startProgress() {
+      if (progress) {
+        progress.style.transition = 'none';
+        progress.style.width = '0%';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            progress.style.transition = `width ${DURATION}ms linear`;
+            progress.style.width = '100%';
+          });
+        });
+      }
+    }
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      current = (idx + total) % total;
+      slides[current].classList.add('active');
+      track.style.transform = `translateX(-${current * 100}%)`;
+      updateDots();
+      clearInterval(timer);
+      startProgress();
+      timer = setInterval(() => goTo(current + 1), DURATION);
+    }
+
+    // Auto-play
+    startProgress();
+    timer = setInterval(() => goTo(current + 1), DURATION);
+
+    // Pause on hover
+    track.parentElement.addEventListener('mouseenter', () => {
+      clearInterval(timer);
+      if (progress) { progress.style.transition = 'none'; }
+    });
+    track.parentElement.addEventListener('mouseleave', () => {
+      startProgress();
+      timer = setInterval(() => goTo(current + 1), DURATION);
+    });
+
+    // Touch swipe support
+    let touchStartX = 0;
+    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
+    });
+
+    // Expose for buttons
+    window.carouselMove = (dir) => goTo(current + dir);
+  })();
+
+
+  const gbpBars = document.querySelectorAll('.gbp-bar-fill');
+  const gbpObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.width = e.target.style.width; // trigger repaint
+        gbpObserver.unobserve(e.target);
+      }
+    });
+  });
+  gbpBars.forEach(b => gbpObserver.observe(b));
+</script>
+</body>
+</html>
