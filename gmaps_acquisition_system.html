@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Google Maps Client Acquisition System™ — Get More Calls, Bookings & Customers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0d1117;
+  --ink2: #1c2330;
+  --mid: #2a3444;
+  --teal: #0ea472;
+  --teal-light: #12c989;
+  --teal-glow: rgba(14,164,114,0.18);
+  --gold: #f5a623;
+  --gold2: #fbbf24;
+  --cream: #faf8f4;
+  --white: #ffffff;
+  --muted: #8b9ab0;
+  --border: rgba(255,255,255,0.08);
+  --card-bg: rgba(255,255,255,0.04);
+  --r: 12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--ink);color:var(--white);line-height:1.6;overflow-x:hidden}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:999;background:rgba(13,17,23,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 5vw}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:20px}
+.nav-logo{font-family:'Fraunces',serif;font-weight:700;font-size:18px;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-logo span{color:var(--teal-light)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13.5px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{background:var(--teal);color:var(--white);border:none;border-radius:8px;padding:9px 22px;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .2s,transform .15s}
+.nav-cta:hover{background:var(--teal-light);transform:translateY(-1px)}
+@media(max-width:700px){.nav-links{display:none}}
+
+/* HERO */
+.hero{padding:80px 5vw 90px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(14,164,114,0.14) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(14,164,114,0.12);border:1px solid rgba(14,164,114,0.3);border-radius:40px;padding:6px 18px;font-size:12.5px;font-weight:600;color:var(--teal-light);letter-spacing:.04em;text-transform:uppercase;margin-bottom:28px;animation:fadeUp .7s ease both}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(36px,6vw,72px);font-weight:700;line-height:1.08;max-width:900px;margin:0 auto 24px;animation:fadeUp .7s .1s ease both}
+.hero h1 em{font-style:italic;color:var(--teal-light)}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--muted);max-width:640px;margin:0 auto 36px;font-weight:400;line-height:1.65;animation:fadeUp .7s .2s ease both}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;animation:fadeUp .7s .3s ease both}
+.btn-primary{background:var(--teal);color:#fff;border:none;border-radius:10px;padding:16px 34px;font-size:16px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-primary:hover{background:var(--teal-light);transform:translateY(-2px);box-shadow:0 12px 32px rgba(14,164,114,0.35)}
+.btn-secondary{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;padding:16px 34px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-secondary:hover{border-color:rgba(255,255,255,0.5);transform:translateY(-2px)}
+.hero-trust{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;font-size:13px;color:var(--muted);animation:fadeUp .7s .4s ease both}
+.hero-trust span{display:flex;align-items:center;gap:6px}
+.hero-trust .dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}
+
+/* MOCK PHONE */
+.phone-wrap{animation:fadeUp .8s .5s ease both;margin:0 auto;max-width:340px}
+.phone{background:var(--ink2);border:1.5px solid var(--border);border-radius:28px;padding:20px;position:relative;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.5)}
+.phone::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:100px;height:3px;border-radius:0 0 4px 4px;background:var(--mid);margin-top:8px}
+.notif{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;animation:slideIn .6s ease both}
+.notif:nth-child(2){animation-delay:.2s}
+.notif:nth-child(3){animation-delay:.4s}
+.notif-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.notif-icon.green{background:rgba(14,164,114,0.2)}
+.notif-icon.gold{background:rgba(245,166,35,0.2)}
+.notif-icon.blue{background:rgba(96,165,250,0.2)}
+.notif-text{flex:1}
+.notif-title{font-size:12.5px;font-weight:700;color:var(--white);margin-bottom:2px}
+.notif-desc{font-size:11.5px;color:var(--muted)}
+.notif-time{font-size:10px;color:var(--muted);margin-left:auto;flex-shrink:0}
+
+/* SECTION COMMON */
+section{padding:80px 5vw}
+.container{max-width:1100px;margin:0 auto}
+.section-tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-light);margin-bottom:18px}
+.section-tag::before{content:'';display:inline-block;width:20px;height:2px;background:var(--teal)}
+h2{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,50px);font-weight:700;line-height:1.12;margin-bottom:16px}
+h2 em{font-style:italic;color:var(--teal-light)}
+.section-sub{font-size:17px;color:var(--muted);max-width:580px;line-height:1.65;margin-bottom:48px}
+
+/* DIVIDER */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 5vw}
+
+/* THE QUESTION */
+.question-section{background:var(--ink2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.question-inner{max-width:780px;margin:0 auto;text-align:center;padding:80px 5vw}
+.question-inner h2{font-family:'Fraunces',serif;font-size:clamp(26px,4vw,46px);line-height:1.2;margin-bottom:24px}
+.question-inner h2 em{color:var(--gold2);font-style:italic}
+.vs-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:40px}
+.vs-card{flex:1;min-width:200px;max-width:280px;padding:28px 24px;border-radius:var(--r);text-align:center;border:1.5px solid}
+.vs-card.lose{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.05)}
+.vs-card.win{border-color:rgba(14,164,114,.35);background:rgba(14,164,114,.08)}
+.vs-card .big{font-size:36px;margin-bottom:10px}
+.vs-card h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.vs-card p{font-size:13px;color:var(--muted)}
+.vs-card.win h3{color:var(--teal-light)}
+.vs-card.lose h3{color:#f87171}
+
+/* STATS STRIP */
+.stats-strip{background:var(--teal);padding:28px 5vw}
+.stats-inner{max-width:1100px;margin:0 auto;display:flex;gap:0;flex-wrap:wrap;justify-content:space-around}
+.stat-item{text-align:center;padding:12px 20px}
+.stat-num{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,48px);font-weight:700;color:#fff;line-height:1}
+.stat-label{font-size:12px;font-weight:500;color:rgba(255,255,255,.75);margin-top:4px;max-width:140px;margin-left:auto;margin-right:auto}
+
+/* BENEFITS */
+.benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.benefit-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--r);padding:30px 28px;transition:border-color .2s,transform .2s}
+.benefit-card:hover{border-color:rgba(14,164,114,.4);transform:translateY(-3px)}
+.benefit-icon{font-size:28px;margin-bottom:16px}
+.benefit-card h3{font-size:17px;font-weight:700;margin-bottom:10px}
+.benefit-card p{font-size:14px;color:var(--muted);line-height:1.65}
+.result-tag{display:inline-block;margin-top:16px;padding:5px 14px;border-radius:6px;font-size:12px;font-weight:700;background:var(--teal-glow);color:var(--teal-light);border:1px solid rgba(14,164,114,.25)}
+
+/* IMAGINE */
+.imagine-section{text-align:center}
+.imagine-list{display:flex;flex-direction:column;gap:14px;max-width:540px;margin:36px auto 0}
+.imagine-item{display:flex;align-items:center;gap:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:16px 22px;font-size:15px;font-weight:500;text-align:left;transition:border-color .2s}
+.imagine-item:hover{border-color:rgba(14,164,114,.4)}
+.imagine-item .check{width:28px;height:28px;border-radius:50%;background:var(--teal-glow);border:1.5px solid var(--teal);display:flex;align-items:center;justify-content:center;color:var(--teal-light);font-size:14px;flex-shrink:0}
+
+/* HOW IT WORKS */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;position:relative}
+.steps::before{content:'';position:absolute;top:36px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent);pointer-events:none}
+.step{text-align:center;padding:32px 24px;position:relative}
+.step-num{width:72px;height:72px;border-radius:50%;background:var(--ink2);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--teal-light);position:relative;z-index:1}
+.step h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.step p{font-size:13.5px;color:var(--muted);line-height:1.6}
+
+/* PROOF / TESTIMONIALS */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.testi-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--r);padding:28px}
+.stars{color:var(--gold2);font-size:15px;margin-bottom:14px;letter-spacing:1px}
+.testi-body{font-size:15px;line-height:1.7;color:rgba(255,255,255,.85);margin-bottom:20px;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:12px}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--teal-glow);border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:var(--teal-light)}
+.author-name{font-weight:700;font-size:14px}
+.author-biz{font-size:12.5px;color:var(--muted)}
+.testi-tag{margin-top:14px;padding:4px 12px;border-radius:4px;font-size:11px;font-weight:600;background:var(--teal-glow);color:var(--teal-light);display:inline-block}
+
+/* COMPARISON TABLE */
+.compare-wrap{overflow-x:auto}
+table.compare{width:100%;border-collapse:collapse;min-width:520px}
+table.compare th, table.compare td{padding:16px 20px;text-align:left;font-size:14px;border-bottom:1px solid var(--border)}
+table.compare thead th{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border)}
+table.compare thead th.highlight{color:var(--teal-light)}
+table.compare td.feature{font-weight:500;color:rgba(255,255,255,.8)}
+table.compare td.yes{color:var(--teal-light);font-weight:700}
+table.compare td.no{color:#f87171}
+table.compare tbody tr:last-child td{border-bottom:none}
+table.compare .col-us{background:rgba(14,164,114,.06);border-left:1px solid rgba(14,164,114,.25);border-right:1px solid rgba(14,164,114,.25)}
+table.compare thead th.col-us{border-top:2px solid var(--teal)}
+
+/* WHY US */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:600px){.why-grid{grid-template-columns:1fr}}
+.why-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--r);padding:26px}
+.why-card h3{font-size:16px;font-weight:700;margin:12px 0 8px;display:flex;align-items:center;gap:10px}
+.why-card p{font-size:13.5px;color:var(--muted);line-height:1.65}
+
+/* PROMISE */
+.promise{background:linear-gradient(135deg,rgba(14,164,114,0.12) 0%,rgba(14,164,114,0.04) 100%);border:1px solid rgba(14,164,114,0.25);border-radius:20px;padding:60px 48px;text-align:center;max-width:800px;margin:0 auto}
+.promise h2{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,46px);font-weight:700;line-height:1.15;margin-bottom:20px}
+.promise h2 em{color:var(--teal-light);font-style:italic}
+.promise-outcomes{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:32px 0}
+.outcome-pill{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;padding:12px 20px;font-size:14px;font-weight:600}
+.promise-sub{font-size:15px;color:var(--muted);max-width:520px;margin:0 auto 36px}
+
+/* CTA SECTION */
+.cta-section{text-align:center;padding:100px 5vw}
+.cta-box{background:var(--ink2);border:1px solid var(--border);border-radius:20px;padding:64px 48px;max-width:760px;margin:0 auto;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;bottom:-80px;right:-80px;width:260px;height:260px;background:radial-gradient(circle,rgba(14,164,114,0.15),transparent 70%);pointer-events:none}
+.cta-box h2{font-family:'Fraunces',serif;font-size:clamp(26px,4vw,42px);font-weight:700;line-height:1.15;margin-bottom:16px}
+.cta-box h2 em{font-style:italic;color:var(--teal-light)}
+.cta-box p{font-size:16px;color:var(--muted);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto}
+.cta-inputs{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:480px;margin:0 auto 24px}
+.cta-inputs input{flex:1;min-width:200px;background:rgba(255,255,255,.06);border:1.5px solid var(--border);border-radius:10px;padding:14px 18px;font-size:15px;color:var(--white);outline:none;font-family:inherit}
+.cta-inputs input:focus{border-color:rgba(14,164,114,.5)}
+.cta-inputs input::placeholder{color:var(--muted)}
+.cta-trust{font-size:12.5px;color:var(--muted);display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+.cta-trust span{display:flex;align-items:center;gap:5px}
+
+/* FAQ */
+.faq-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:2px}
+.faq-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:6px}
+.faq-q{width:100%;background:var(--card-bg);border:none;color:var(--white);text-align:left;padding:20px 24px;font-size:15px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:inherit;transition:background .2s}
+.faq-q:hover{background:rgba(255,255,255,.06)}
+.faq-arrow{color:var(--teal-light);font-size:20px;transition:transform .3s;flex-shrink:0}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;font-size:14px;color:var(--muted);line-height:1.7;padding:0 24px}
+.faq-item.open .faq-a{max-height:300px;padding:16px 24px 22px}
+.faq-item.open .faq-arrow{transform:rotate(45deg)}
+
+/* FOOTER */
+footer{background:var(--ink2);border-top:1px solid var(--border);padding:48px 5vw 32px}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-top{display:flex;gap:40px;flex-wrap:wrap;justify-content:space-between;margin-bottom:40px}
+.footer-brand p{font-size:13.5px;color:var(--muted);max-width:260px;margin-top:12px;line-height:1.65}
+.footer-links h4{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.footer-links ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-links a{font-size:13.5px;color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--white)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12.5px;color:var(--muted)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* FACTOR BARS */
+.factor-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.factor-label{font-size:13.5px;font-weight:500;color:rgba(255,255,255,.85);min-width:240px;display:flex;align-items:center;gap:0}
+.factor-icon{margin-right:8px;font-size:15px}
+.factor-bar-wrap{flex:1;display:flex;align-items:center;gap:10px;min-width:160px}
+.factor-bar{height:10px;border-radius:6px;transition:width 1s ease}
+.factor-pct{font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--white);min-width:38px}
+
+/* TICKER */
+.ticker-wrap{background:var(--teal);padding:10px 0;overflow:hidden;position:relative}
+.ticker-track{display:flex;gap:0;animation:ticker 30s linear infinite;width:max-content}
+.ticker-item{padding:0 32px;font-size:13px;font-weight:600;white-space:nowrap;color:var(--ink);display:flex;align-items:center;gap:8px}
+.ticker-item::after{content:'·';margin-left:32px;font-size:20px;color:rgba(0,0,0,.3)}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">📍 <span>MapsAcquisition</span>™</a>
+    <ul class="nav-links">
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#cta" class="nav-cta">📅 Book Free Strategy Call</a>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item">📞 More calls from Google Maps</span>
+    <span class="ticker-item">⭐ 5-Star reviews on autopilot</span>
+    <span class="ticker-item">📍 Rank above your competitors</span>
+    <span class="ticker-item">📅 More booked appointments</span>
+    <span class="ticker-item">🚫 No ad spend required</span>
+    <span class="ticker-item">📈 Predictable customer flow</span>
+    <span class="ticker-item">📞 More calls from Google Maps</span>
+    <span class="ticker-item">⭐ 5-Star reviews on autopilot</span>
+    <span class="ticker-item">📍 Rank above your competitors</span>
+    <span class="ticker-item">📅 More booked appointments</span>
+    <span class="ticker-item">🚫 No ad spend required</span>
+    <span class="ticker-item">📈 Predictable customer flow</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🗺️ The Google Maps Client Acquisition System™</div>
+  <h1>Get More Calls, More Bookings<br>&amp; More Customers From<br><em>Google Maps</em></h1>
+  <p class="hero-sub">Without spending more on ads. We turn your Google Business Profile into a predictable engine for leads, calls, and booked appointments — every single week.</p>
+  <div class="hero-ctas">
+    <a href="#cta" class="btn-primary">📅 Get My Free Strategy Call →</a>
+    <a href="#how" class="btn-secondary">See How It Works</a>
+  </div>
+  <div class="hero-trust">
+    <span><span class="dot"></span> No long contracts</span>
+    <span><span class="dot"></span> Results in the first 30 days</span>
+    <span><span class="dot"></span> No ad budget required</span>
+  </div>
+
+  <!-- PHONE MOCK -->
+  <div style="margin-top:56px" class="phone-wrap">
+    <div class="phone">
+      <div style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.05em">YOUR PHONE — THIS WEEK</div>
+      <div class="notif">
+        <div class="notif-icon green">📞</div>
+        <div class="notif-text">
+          <div class="notif-title">New call from Google Maps</div>
+          <div class="notif-desc">"Found you on Google, want to book"</div>
+        </div>
+        <div class="notif-time">2m ago</div>
+      </div>
+      <div class="notif">
+        <div class="notif-icon gold">⭐</div>
+        <div class="notif-text">
+          <div class="notif-title">New 5-star review received</div>
+          <div class="notif-desc">Sarah M. — "Absolutely brilliant, 10/10!"</div>
+        </div>
+        <div class="notif-time">1h ago</div>
+      </div>
+      <div class="notif">
+        <div class="notif-icon blue">📅</div>
+        <div class="notif-text">
+          <div class="notif-title">New appointment booked</div>
+          <div class="notif-desc">James T. — Initial consultation, Fri 10am</div>
+        </div>
+        <div class="notif-time">3h ago</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num">32%</div><div class="stat-label">of Map Pack ranking driven by GBP signals alone — the single biggest factor</div></div>
+    <div class="stat-item"><div class="stat-num">20%</div><div class="stat-label">of Map Pack ranking driven by review signals — up from 16% in 2023</div></div>
+    <div class="stat-item"><div class="stat-num">68%</div><div class="stat-label">of local queries now trigger AI Overviews — reviews are a key AI ranking signal</div></div>
+    <div class="stat-item"><div class="stat-num">55%</div><div class="stat-label">of local ranking decisions influenced by proximity — the rest you can control</div></div>
+  </div>
+  <div style="text-align:center;padding:6px 0 10px;font-size:11px;color:rgba(13,17,23,0.55);letter-spacing:.04em">Source: Whitespark Local Search Ranking Factors 2026 — 47 experts · 187 factors · whitespark.ca/local-search-ranking-factors</div>
+</div>
+
+<!-- THE QUESTION -->
+<div class="question-section">
+  <div class="question-inner">
+    <div class="section-tag">The Real Question</div>
+    <h2>When someone searches for your service,<br>will they call <em>you</em> — or your competitor?</h2>
+    <p style="color:var(--muted);font-size:16px">People searching on Google are already ready to buy. The only question is who they call. Visibility and trust determine the answer.</p>
+    <div class="vs-row">
+      <div class="vs-card lose">
+        <div class="big">😩</div>
+        <h3>Without the System</h3>
+        <p>You're buried on page 2. Competitors rank higher. You're losing customers who don't even know you exist.</p>
+      </div>
+      <div class="vs-card win">
+        <div class="big">📱</div>
+        <h3>With the System</h3>
+        <p>You appear at the top. You have more reviews. More trust. Your phone rings more. Without spending on ads.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGINE -->
+<section class="imagine-section" id="results">
+  <div class="container">
+    <div class="section-tag">What This Means For You</div>
+    <h2>Imagine opening your phone and seeing…</h2>
+    <div class="imagine-list reveal">
+      <div class="imagine-item"><div class="check">✓</div>New calls coming in every single week</div>
+      <div class="imagine-item"><div class="check">✓</div>More appointment requests from people already searching for you</div>
+      <div class="imagine-item"><div class="check">✓</div>A growing stream of 5-star reviews building trust automatically</div>
+      <div class="imagine-item"><div class="check">✓</div>More visibility than your competitors on Google Maps</div>
+      <div class="imagine-item"><div class="check">✓</div>A predictable source of customers — not just referrals</div>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="#cta" class="btn-primary">I Want This For My Business →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BENEFITS -->
+<section id="how">
+  <div class="container">
+    <div class="section-tag">What We Help You Achieve</div>
+    <h2>Five pillars that turn Google Maps<br>into your <em>best salesperson</em></h2>
+    <p class="section-sub">Each pillar works independently — together, they compound into a dominant local presence that keeps growing.</p>
+    <div class="benefits-grid reveal">
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🗺️</div>
+        <h3>Become One of the First Businesses Seen</h3>
+        <p>Visibility is everything. If you're not near the top, you're losing customers before they know you exist. We position your business where buying decisions happen.</p>
+        <div class="result-tag">→ More visibility · More calls · More customers</div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">⭐</div>
+        <h3>Build a 5-Star Reputation That Sells For You</h3>
+        <p>Most customers decide who to call before visiting a website. They look at ratings and reviews. We help you consistently generate and manage reviews so your reputation becomes a competitive advantage.</p>
+        <div class="result-tag">→ More trust · Higher conversion rates · More bookings</div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">📍</div>
+        <h3>Turn Your Profile Into a Sales Asset</h3>
+        <p>Most Google Business Profiles are incomplete, outdated, and underperforming. We optimise every element so your profile works like a 24/7 salesperson — even while you sleep.</p>
+        <div class="result-tag">→ More clicks · More inquiries · More revenue</div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">⚙️</div>
+        <h3>Stay Active Without Doing the Work</h3>
+        <p>Google rewards businesses that remain active and relevant. We handle the ongoing optimisation, updates, content, and profile management for you — completely hands-off.</p>
+        <div class="result-tag">→ Better rankings without adding to your workload</div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🏆</div>
+        <h3>Outrank Local Competitors</h3>
+        <p>We monitor competitors, identify gaps, and implement strategies designed to help you take market share. Know the gap. Close it. Overtake them — systematically.</p>
+        <div class="result-tag">→ More local visibility · Stronger market position</div>
+      </div>
+
+      <div class="benefit-card" style="background:var(--teal-glow);border-color:rgba(14,164,114,.3)">
+        <div class="benefit-icon">📞</div>
+        <h3>Our Only Goal: Get Your Phone Ringing More</h3>
+        <p>Not impressions. Not profile views. Not vanity metrics. Our goal is simple: more calls, more leads, more booked appointments, more revenue. That's it.</p>
+        <div class="result-tag" style="background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)">→ We succeed when you win customers</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<div class="divider"></div>
+<section style="background:var(--ink2)">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px">
+      <div class="section-tag" style="justify-content:center">The System</div>
+      <h2 style="text-align:center">How the <em>Acquisition System</em> works</h2>
+      <p style="color:var(--muted);max-width:560px;margin:0 auto;font-size:16px">We take care of every moving part — so your Google presence becomes a growth engine that runs without you.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Full Audit & Setup</h3>
+        <p>We analyse your current Google profile, competitors, and ranking gaps. Then we build your personalised acquisition blueprint.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Profile Optimisation</h3>
+        <p>Every element of your Google Business Profile is overhauled — categories, services, photos, posts, Q&amp;A — to maximise ranking signals.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Review Generation</h3>
+        <p>Automated review requests go out to your customers. Past clients are reactivated. Responses go back out. Volume and velocity build.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Ongoing Management</h3>
+        <p>We keep your profile active, respond to reviews, post updates, and monitor competitors — every month, on autopilot.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<div class="divider"></div>
+<section>
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="section-tag" style="justify-content:center">Why Choose Us</div>
+      <h2 style="text-align:center">What you get vs doing it yourself</h2>
+    </div>
+    <div class="compare-wrap reveal">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th>Feature / Outcome</th>
+            <th>DIY / Doing Nothing</th>
+            <th class="highlight col-us">📍 With Our System</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="feature">Google Maps ranking position</td><td class="no">Page 2 or invisible</td><td class="yes col-us">Top 3 in your area</td></tr>
+          <tr><td class="feature">Review generation</td><td class="no">Sporadic, manual, forgotten</td><td class="yes col-us">Automated, consistent, growing</td></tr>
+          <tr><td class="feature">Review responses</td><td class="no">Ignored or missed</td><td class="yes col-us">Every review responded to</td></tr>
+          <tr><td class="feature">Profile completeness</td><td class="no">Outdated &amp; generic</td><td class="yes col-us">Fully optimised 24/7 salesperson</td></tr>
+          <tr><td class="feature">Competitor monitoring</td><td class="no">No visibility</td><td class="yes col-us">Monthly benchmarking report</td></tr>
+          <tr><td class="feature">Time investment from you</td><td class="no">Hours per week</td><td class="yes col-us">Zero — we handle it all</td></tr>
+          <tr><td class="feature">Incoming calls from Google</td><td class="no">Unpredictable</td><td class="yes col-us">Growing week-on-week</td></tr>
+          <tr><td class="feature">Ad spend required</td><td class="no">Expensive or zero results</td><td class="yes col-us">None — organic growth only</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- WHITESPARK DATA SECTION -->
+<div class="divider"></div>
+<section style="background:var(--ink2)" id="why">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:16px">
+      <div class="section-tag" style="justify-content:center">The Research Backs This Up</div>
+      <h2 style="text-align:center">What the data says about <em>Google Maps rankings</em></h2>
+      <p style="color:var(--muted);font-size:15px;max-width:620px;margin:0 auto 48px">From the Whitespark 2026 Local Search Ranking Factors Report — the world's largest annual study of local SEO, compiled by 47 experts across 187 ranking signals.</p>
+    </div>
+
+    <!-- RANKING FACTOR BREAKDOWN -->
+    <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;padding:36px 36px 28px;margin-bottom:24px" class="reveal">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px">
+        <span style="font-size:22px">📊</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-light)">Map Pack Ranking Signal Breakdown</div>
+          <div style="font-size:12.5px;color:var(--muted);margin-top:2px">Whitespark 2026 · 47 experts · 187 factors</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="factor-row">
+          <div class="factor-label"><span class="factor-icon">📍</span> GBP Signals <span style="color:var(--teal-light);font-size:11px;margin-left:6px">#1 individual factor: Primary Category</span></div>
+          <div class="factor-bar-wrap"><div class="factor-bar" style="width:32%;background:var(--teal)"></div><span class="factor-pct">32%</span></div>
+        </div>
+        <div class="factor-row">
+          <div class="factor-label"><span class="factor-icon">⭐</span> Review Signals <span style="color:var(--gold2);font-size:11px;margin-left:6px">↑ up from 16% in 2023</span></div>
+          <div class="factor-bar-wrap"><div class="factor-bar" style="width:20%;background:var(--gold2)"></div><span class="factor-pct">20%</span></div>
+        </div>
+        <div class="factor-row">
+          <div class="factor-label"><span class="factor-icon">🌐</span> On-Page Signals</div>
+          <div class="factor-bar-wrap"><div class="factor-bar" style="width:15%;background:#60a5fa"></div><span class="factor-pct">15%</span></div>
+        </div>
+        <div class="factor-row">
+          <div class="factor-label"><span class="factor-icon">👆</span> Behavioural Signals <span style="color:var(--muted);font-size:11px;margin-left:6px">clicks, calls, directions</span></div>
+          <div class="factor-bar-wrap"><div class="factor-bar" style="width:9%;background:#a78bfa"></div><span class="factor-pct">9%</span></div>
+        </div>
+        <div class="factor-row">
+          <div class="factor-label"><span class="factor-icon">🔗</span> Link Signals</div>
+          <div class="factor-bar-wrap"><div class="factor-bar" style="width:8%;background:#fb7185"></div><span class="factor-pct">8%</span></div>
+        </div>
+        <div class="factor-row">
+          <div class="factor-label"><span class="factor-icon">📋</span> Citation Signals</div>
+          <div class="factor-bar-wrap"><div class="factor-bar" style="width:6%;background:#94a3b8"></div><span class="factor-pct">6%</span></div>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px">
+        <div style="background:var(--teal-glow);border:1px solid rgba(14,164,114,.3);border-radius:8px;padding:10px 16px;font-size:13px;font-weight:700;color:var(--teal-light)">GBP + Reviews = 52% of your Map Pack position</div>
+        <div style="font-size:13px;color:var(--muted)">— the two factors we are specifically built to dominate.</div>
+      </div>
+    </div>
+
+    <!-- STAT CARDS GRID -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px" class="reveal">
+
+      <div class="testi-card" style="border-color:rgba(14,164,114,.2)">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-light);margin-bottom:12px">⭐ Review Recency</div>
+        <div style="font-family:'Fraunces',serif;font-size:42px;font-weight:700;color:var(--white);line-height:1;margin-bottom:10px">74%</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.8);margin-bottom:12px">of consumers only trust reviews written in the last 3 months. Older reviews become invisible.</div>
+        <div style="font-size:11.5px;color:var(--muted)">→ Review recency is the <strong style="color:var(--white)">#1 individual ranking factor</strong> in the Whitespark 2026 survey — above even review volume.</div>
+        <div class="testi-tag">Whitespark 2026</div>
+      </div>
+
+      <div class="testi-card" style="border-color:rgba(251,191,36,.2)">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:12px">⭐ Star Rating Floor</div>
+        <div style="font-family:'Fraunces',serif;font-size:42px;font-weight:700;color:var(--white);line-height:1;margin-bottom:10px">31%</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.8);margin-bottom:12px">of consumers will only use businesses rated 4.5 stars or higher — up from 17% just one year ago.</div>
+        <div style="font-size:11.5px;color:var(--muted)">→ 68% won't consider any business below 4 stars. Your star rating is now a <strong style="color:var(--white)">hard filter</strong> before people even read your profile.</div>
+        <div class="testi-tag" style="background:rgba(251,191,36,.1);color:var(--gold2);border-color:rgba(251,191,36,.2)">BrightLocal 2026 LCRS</div>
+      </div>
+
+      <div class="testi-card" style="border-color:rgba(96,165,250,.2)">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#60a5fa;margin-bottom:12px">🤖 AI Search — New 2026</div>
+        <div style="font-family:'Fraunces',serif;font-size:42px;font-weight:700;color:var(--white);line-height:1;margin-bottom:10px">68%</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.8);margin-bottom:12px">of local search queries now trigger AI Overviews. Reviews are a primary signal for AI recommendations.</div>
+        <div style="font-size:11.5px;color:var(--muted)">→ 45% of consumers now use ChatGPT for local business recommendations — up from 6% in 2024. Reviews influence all of it.</div>
+        <div class="testi-tag" style="background:rgba(96,165,250,.1);color:#60a5fa;border-color:rgba(96,165,250,.2)">Whitespark 2026 · BrightLocal 2026</div>
+      </div>
+
+      <div class="testi-card" style="border-color:rgba(167,139,250,.2)">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#a78bfa;margin-bottom:12px">👆 Behavioural Signals</div>
+        <div style="font-family:'Fraunces',serif;font-size:42px;font-weight:700;color:var(--white);line-height:1;margin-bottom:10px">8 of 10</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.8);margin-bottom:12px">of the top 10 individual Map Pack ranking signals come directly from your Google Business Profile.</div>
+        <div style="font-size:11.5px;color:var(--muted)">→ Owner responses within 48 hours is now tracked as a <strong style="color:var(--white)">separate behavioural ranking signal</strong> in the 2026 report.</div>
+        <div class="testi-tag" style="background:rgba(167,139,250,.1);color:#a78bfa;border-color:rgba(167,139,250,.2)">Whitespark 2026</div>
+      </div>
+
+      <div class="testi-card" style="border-color:rgba(14,164,114,.2)">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-light);margin-bottom:12px">📍 GBP Primary Category</div>
+        <div style="font-family:'Fraunces',serif;font-size:42px;font-weight:700;color:var(--white);line-height:1;margin-bottom:10px">#1</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.8);margin-bottom:12px">The single most important individual ranking factor across all 187 factors in the Whitespark study is your GBP primary category.</div>
+        <div style="font-size:11.5px;color:var(--muted)">→ Most businesses have this wrong. A miscategorised profile loses ranking no matter how many reviews you have.</div>
+        <div class="testi-tag">Whitespark 2026</div>
+      </div>
+
+      <div class="testi-card" style="border-color:rgba(251,191,36,.2)">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:12px">📈 Review Velocity</div>
+        <div style="font-family:'Fraunces',serif;font-size:42px;font-weight:700;color:var(--white);line-height:1;margin-bottom:10px">≥4/mo</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.8);margin-bottom:12px">Sustained minimum of 4 new reviews per month is the operational target — not a one-time push to accumulate count.</div>
+        <div style="font-size:11.5px;color:var(--muted)">→ "Recency now outweighs volume. A steady weekly flow beats occasional bursts every time." — Whitespark 2026</div>
+        <div class="testi-tag" style="background:rgba(251,191,36,.1);color:var(--gold2);border-color:rgba(251,191,36,.2)">Whitespark 2026</div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:32px;padding:20px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.02)">
+      <div style="font-size:13px;color:var(--muted)">All data from: <a href="https://whitespark.ca/local-search-ranking-factors/" target="_blank" style="color:var(--teal-light);text-decoration:none;font-weight:600">Whitespark Local Search Ranking Factors 2026</a> &amp; <a href="https://www.brightlocal.com/research/local-consumer-review-survey/" target="_blank" style="color:var(--teal-light);text-decoration:none;font-weight:600">BrightLocal 2026 Local Consumer Review Survey</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CLIENTS CHOOSE -->
+<div class="divider"></div>
+<section>
+  <div class="container">
+    <div style="max-width:700px;margin:0 auto 48px">
+      <div class="section-tag">Why Clients Choose This</div>
+      <h2>They don't need another<br>marketing service. They need <em>customers.</em></h2>
+      <p style="color:var(--muted);font-size:16px;margin-top:16px">Our clients are busy professionals. They don't have time to learn SEO, chase reviews, or manage a Google profile. They need a system that works — reliably, predictably, without their time.</p>
+    </div>
+    <div class="why-grid reveal">
+      <div class="why-card"><div style="font-size:28px">🎯</div><h3>Outcome-Focused</h3><p>We don't report on impressions or reach. We report on calls, bookings, and revenue. If your phone isn't ringing more, we're not doing our job.</p></div>
+      <div class="why-card"><div style="font-size:28px">🤝</div><h3>Done-For-You, Not Done-With-You</h3><p>You don't need to learn anything, attend meetings, or manage tasks. We handle everything end-to-end. Your only job is to answer the phone.</p></div>
+      <div class="why-card"><div style="font-size:28px">📊</div><h3>Transparent Reporting</h3><p>Monthly reports show exactly where you rank, how many calls came from Google, new reviews gained, and competitor movement. No guesswork.</p></div>
+      <div class="why-card"><div style="font-size:28px">🚀</div><h3>Results Without Ad Spend</h3><p>Google Maps is free — the businesses that win are those who are optimised. We make sure you're one of them, without burning budget on paid ads.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- THE PROMISE -->
+<div class="divider"></div>
+<section style="padding:60px 5vw">
+  <div class="container">
+    <div class="promise reveal">
+      <div class="section-tag" style="justify-content:center">The Promise</div>
+      <h2>If people in your area are searching<br>for your services, we'll make sure<br>they find <em>you first.</em></h2>
+      <div class="promise-outcomes">
+        <div class="outcome-pill">📞 More Calls</div>
+        <div class="outcome-pill">📋 More Leads</div>
+        <div class="outcome-pill">📅 More Booked Appointments</div>
+        <div class="outcome-pill">💰 More Revenue</div>
+      </div>
+      <p class="promise-sub">Without spending thousands every month on advertising. Organic. Predictable. Sustainable.</p>
+      <a href="#cta" class="btn-primary" style="font-size:17px;padding:18px 38px">📅 Claim Your Free Strategy Call →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<div class="divider"></div>
+<section id="faq" style="background:var(--ink2)">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="section-tag" style="justify-content:center">FAQ</div>
+      <h2 style="text-align:center">Frequently asked <em>questions</em></h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How quickly will I see results? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">Most clients see their Google ranking begin to move within the first 2–4 weeks. New reviews typically start arriving in the first week. Meaningful increases in calls and bookings are usually visible within 30–60 days depending on your starting position and local competition.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do I need to do anything? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">Very little. We handle the optimisation, posting, review requests, and responses. You'll need a short onboarding call (30 minutes), and we may occasionally ask for a photo or a quick update. Beyond that, you focus on running your business.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Is this against Google's rules? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">No. Everything we do is fully compliant with Google's guidelines. We ask your real customers to leave real reviews — we never fake reviews or use tactics that could get your profile penalised. Google explicitly encourages businesses to ask for reviews.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What if I already have a Google profile? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">Even better. We start with a full audit of your existing profile, identify every gap and opportunity, and optimise from there. Most profiles we review are missing critical elements that are hurting their rankings. We fix all of it.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What types of businesses does this work for? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">Any local service business where customers search on Google Maps — physiotherapists, chiropractors, dentists, solicitors, tradespeople, clinics, salons, and more. If customers search for what you do on Google, this works for you.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What does it cost? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">Pricing depends on your business size, location, and the level of competition in your area. We discuss all of this on the free strategy call — where we'll also show you your current ranking position and exactly what it would take to outrank your competitors.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-box reveal">
+    <div style="font-size:36px;margin-bottom:16px">📍</div>
+    <h2>Ready to turn Google Maps into your<br><em>best lead source?</em></h2>
+    <p>Book your free strategy call. We'll audit your current profile, show you exactly where you're losing customers, and map out what it takes to outrank your competitors.</p>
+    <div class="cta-inputs">
+      <input type="text" placeholder="Your name">
+      <input type="tel" placeholder="Your phone number">
+    </div>
+    <a href="#" class="btn-primary" style="font-size:17px;padding:18px 40px;margin-bottom:20px;display:inline-flex">📅 Book My Free Strategy Call →</a>
+    <div class="cta-trust">
+      <span>✓ Free, no obligation</span>
+      <span>✓ 30-minute call</span>
+      <span>✓ We'll show your current ranking live</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo" style="font-family:'Fraunces',serif;font-weight:700;font-size:18px">📍 <span style="color:var(--teal-light)">MapsAcquisition</span>™</div>
+        <p>Helping local service businesses dominate Google Maps and convert searches into booked appointments — without ad spend.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="#results">Results</a></li>
+          <li><a href="#why">Why Us</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#cta">Book a Call</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Works For</h4>
+        <ul>
+          <li><a href="#">Physiotherapists</a></li>
+          <li><a href="#">Chiropractors</a></li>
+          <li><a href="#">Dentists</a></li>
+          <li><a href="#">Tradespeople</a></li>
+          <li><a href="#">Local Clinics</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Google Maps Client Acquisition System™. All rights reserved.</span>
+      <span style="display:flex;gap:20px"><a href="#" style="color:var(--muted);text-decoration:none">Privacy Policy</a><a href="#" style="color:var(--muted);text-decoration:none">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// FAQ toggle
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
