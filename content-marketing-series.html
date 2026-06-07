@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Marketing Series — Patient Acquisition Hub & Try Review Bloom</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a6b6b;
+    --teal-light: #2a9090;
+    --teal-pale: #e8f4f4;
+    --teal-ultra: #f0fafa;
+    --green: #2d7a4a;
+    --green-light: #e8f5ee;
+    --gold: #c9952a;
+    --gold-light: #fdf4e3;
+    --ink: #0f1f1f;
+    --ink-mid: #2c3e3e;
+    --ink-soft: #4a6060;
+    --mist: #8aabab;
+    --border: #d4e8e8;
+    --white: #ffffff;
+    --off-white: #f7fbfb;
+    --pah-brand: #1a6b6b;
+    --bloom-brand: #2d7a4a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0a1515 0%, #0f2525 40%, #102020 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 80px 40px 60px;
+    text-align: center;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 30%, rgba(26,107,107,0.25) 0%, transparent 70%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(26,107,107,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,107,107,0.08) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-brands {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 2;
+    flex-wrap: wrap;
+  }
+  .brand-pill {
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .brand-pill.pah { background: rgba(26,107,107,0.3); border: 1px solid rgba(26,107,107,0.6); color: #7dd4d4; }
+  .brand-pill.bloom { background: rgba(45,122,74,0.3); border: 1px solid rgba(45,122,74,0.6); color: #7dd4a4; }
+  .brand-sep { color: var(--mist); font-size: 18px; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 900;
+    line-height: 1.1;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 16px;
+  }
+  .hero h1 em { font-style: italic; color: #7dd4d4; }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--mist);
+    max-width: 580px;
+    margin: 0 auto 40px;
+    position: relative;
+    z-index: 2;
+    line-height: 1.6;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #7dd4d4;
+    line-height: 1;
+  }
+  .hero-stat .lbl { font-size: 11px; color: var(--mist); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+
+  /* ── NAV ── */
+  .nav-tabs {
+    background: #0f2020;
+    border-bottom: 1px solid rgba(26,107,107,0.3);
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    flex-shrink: 0;
+    padding: 16px 20px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mist);
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+  }
+  .nav-tab:hover { color: #7dd4d4; }
+  .nav-tab.active { color: #7dd4d4; border-bottom-color: var(--teal-light); }
+
+  /* ── MAIN CONTENT ── */
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* ── SECTION ── */
+  .section { display: none; animation: fadeUp 0.35s ease both; }
+  .section.visible { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PILLAR HEADER ── */
+  .pillar-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 36px;
+    padding: 28px 28px;
+    background: linear-gradient(135deg, rgba(26,107,107,0.15) 0%, rgba(26,107,107,0.05) 100%);
+    border: 1px solid rgba(26,107,107,0.25);
+    border-radius: 16px;
+  }
+  .pillar-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--teal-light);
+    letter-spacing: 0.12em;
+    background: rgba(26,107,107,0.25);
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+  .pillar-title-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .pillar-title-block h2 em { font-style: italic; color: #7dd4d4; }
+  .pillar-tagline { color: var(--mist); font-size: 14px; line-height: 1.5; }
+
+  /* ── PLATFORM BADGES ── */
+  .platform-badges { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .pbadge {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+  }
+  .pbadge.ig { background: rgba(225,48,108,0.15); border: 1px solid rgba(225,48,108,0.4); color: #f48fb1; }
+  .pbadge.li { background: rgba(10,102,194,0.15); border: 1px solid rgba(10,102,194,0.4); color: #90caf9; }
+  .pbadge.both { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #ccc; }
+
+  /* ── POSTS GRID ── */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  /* ── POST CARD ── */
+  .post-card {
+    background: #0d1e1e;
+    border: 1px solid rgba(26,107,107,0.2);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .post-card:hover { border-color: rgba(26,107,107,0.5); transform: translateY(-2px); }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px 0;
+  }
+  .post-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mist);
+    letter-spacing: 0.1em;
+  }
+  .format-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .ft-reel { background: rgba(225,48,108,0.15); color: #f48fb1; border: 1px solid rgba(225,48,108,0.3); }
+  .ft-carousel { background: rgba(255,152,0,0.12); color: #ffcc80; border: 1px solid rgba(255,152,0,0.3); }
+  .ft-article { background: rgba(10,102,194,0.12); color: #90caf9; border: 1px solid rgba(10,102,194,0.3); }
+  .ft-stat { background: rgba(45,122,74,0.15); color: #a5d6a7; border: 1px solid rgba(45,122,74,0.35); }
+  .ft-story { background: rgba(156,39,176,0.12); color: #ce93d8; border: 1px solid rgba(156,39,176,0.3); }
+
+  .card-body { padding: 12px 16px 16px; }
+  .card-hook {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .card-hook em { font-style: italic; color: #7dd4d4; }
+
+  .card-expand { overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
+  .card-expand.open { max-height: 1000px; }
+
+  .card-content { padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 12px; }
+
+  .caption-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal-light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .caption-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #b0c8c8;
+    white-space: pre-line;
+  }
+  .caption-text strong { color: var(--white); }
+  .caption-text em { color: #7dd4d4; font-style: normal; }
+
+  .slides-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 14px 0 6px;
+  }
+  .slides-list { list-style: none; counter-reset: slide; }
+  .slides-list li {
+    counter-increment: slide;
+    font-size: 12px;
+    color: #b0c8c8;
+    padding: 6px 0 6px 28px;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    line-height: 1.4;
+  }
+  .slides-list li:last-child { border-bottom: none; }
+  .slides-list li::before {
+    content: counter(slide);
+    position: absolute;
+    left: 0;
+    top: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    background: rgba(201,149,42,0.15);
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 18px;
+  }
+
+  .hashtags {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(125,212,212,0.5);
+    margin-top: 10px;
+    line-height: 1.8;
+    word-break: break-word;
+  }
+
+  .cta-line {
+    font-size: 12px;
+    color: #7dd4d4;
+    font-weight: 600;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: rgba(26,107,107,0.12);
+    border-radius: 6px;
+    border-left: 2px solid var(--teal-light);
+  }
+
+  .toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--teal-light);
+    cursor: pointer;
+    padding: 8px 16px 14px;
+    letter-spacing: 0.04em;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+  }
+  .toggle-btn:hover { color: #7dd4d4; }
+  .toggle-icon { transition: transform 0.25s; font-size: 13px; }
+  .toggle-icon.open { transform: rotate(180deg); }
+
+  /* ── SEQUENCE BLOCK ── */
+  .sequence-block {
+    background: rgba(26,107,107,0.08);
+    border: 1px solid rgba(26,107,107,0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .seq-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .seq-meta { font-size: 12px; color: var(--mist); margin-bottom: 16px; }
+  .seq-steps { display: flex; gap: 0; flex-direction: column; }
+  .seq-step {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    align-items: flex-start;
+  }
+  .seq-step:last-child { border-bottom: none; }
+  .seq-step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal-light);
+    background: rgba(26,107,107,0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  .seq-step-body { flex: 1; }
+  .seq-step-hook { font-weight: 600; font-size: 14px; margin-bottom: 4px; color: var(--white); }
+  .seq-step-detail { font-size: 12px; color: var(--mist); line-height: 1.5; }
+
+  /* ── CALENDAR TABLE ── */
+  .cal-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+  .cal-table th {
+    background: rgba(26,107,107,0.2);
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    text-align: left;
+    border-bottom: 1px solid rgba(26,107,107,0.3);
+  }
+  .cal-table td {
+    padding: 12px 14px;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: top;
+    color: #b0c8c8;
+  }
+  .cal-table tr:hover td { background: rgba(26,107,107,0.06); }
+  .cal-table td:first-child { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--mist); white-space: nowrap; }
+  .cal-table td strong { color: var(--white); }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 36px 0 16px;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(26,107,107,0.3);
+  }
+
+  /* ── OVERVIEW GRID ── */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .overview-card {
+    background: #0d1e1e;
+    border: 1px solid rgba(26,107,107,0.2);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .overview-card:hover { border-color: var(--teal-light); transform: translateY(-2px); }
+  .ov-pill-row { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .ov-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal-light);
+    background: rgba(26,107,107,0.2);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .ov-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .ov-tagline { font-size: 12px; color: var(--mist); line-height: 1.4; }
+  .ov-count { font-size: 11px; color: var(--teal-light); margin-top: 10px; font-weight: 600; }
+
+  /* ── BLOCKER INTRO ── */
+  .intro-box {
+    background: linear-gradient(135deg, rgba(26,107,107,0.12), rgba(26,107,107,0.04));
+    border: 1px solid rgba(26,107,107,0.25);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #b0c8c8;
+  }
+  .intro-box strong { color: var(--white); }
+
+  /* ── SCROLLTOP ── */
+  .scroll-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: var(--teal);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    border: none;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+  }
+  .scroll-top.visible { opacity: 1; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero { padding: 48px 20px 40px; }
+    main { padding: 24px 16px 60px; }
+    .posts-grid { grid-template-columns: 1fr; }
+    .pillar-header { flex-direction: column; gap: 12px; }
+    .cal-table { font-size: 12px; }
+    .cal-table th, .cal-table td { padding: 8px 10px; }
+    .hero-stats { gap: 24px; }
+  }
+
+  /* ── PRINT BUTTON ── */
+  .print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: rgba(26,107,107,0.2);
+    border: 1px solid rgba(26,107,107,0.4);
+    border-radius: 8px;
+    color: #7dd4d4;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    margin-bottom: 32px;
+  }
+  .print-btn:hover { background: rgba(26,107,107,0.35); }
+
+  /* brand accent */
+  .bloom-accent { color: #7dd4a4; }
+  .pah-accent { color: #7dd4d4; }
+
+  @media print {
+    body { background: white; color: black; }
+    .nav-tabs, .scroll-top, .print-btn { display: none; }
+    .section { display: block !important; }
+    .card-expand { max-height: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-brands">
+    <span class="brand-pill pah">Patient Acquisition Hub</span>
+    <span class="brand-sep">×</span>
+    <span class="brand-pill bloom">🌱 Try Review Bloom</span>
+  </div>
+  <h1>Content Marketing<br><em>Series</em></h1>
+  <p class="hero-sub">7 pillars. 49 posts. Instagram &amp; LinkedIn. Ready to publish — from visibility to lifetime patient value.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">7</div><div class="lbl">Pillars</div></div>
+    <div class="hero-stat"><div class="num">49</div><div class="lbl">Posts</div></div>
+    <div class="hero-stat"><div class="num">12</div><div class="lbl">Weeks</div></div>
+    <div class="hero-stat"><div class="num">2</div><div class="lbl">Platforms</div></div>
+  </div>
+</div>
+
+<div class="nav-tabs" id="navTabs">
+  <button class="nav-tab active" onclick="showSection('overview', this)">Overview</button>
+  <button class="nav-tab" onclick="showSection('p1', this)">P1 · Visibility</button>
+  <button class="nav-tab" onclick="showSection('p2', this)">P2 · Journey</button>
+  <button class="nav-tab" onclick="showSection('p3', this)">P3 · Qualify</button>
+  <button class="nav-tab" onclick="showSection('p4', this)">P4 · Nurture</button>
+  <button class="nav-tab" onclick="showSection('p5', this)">P5 · Retention</button>
+  <button class="nav-tab" onclick="showSection('p6', this)">P6 · Founder</button>
+  <button class="nav-tab" onclick="showSection('p7', this)">P7 · Proof</button>
+  <button class="nav-tab" onclick="showSection('calendar', this)">📅 Calendar</button>
+</div>
+
+<main>
+
+<!-- ══════════════════════════════════════════════
+     OVERVIEW
+══════════════════════════════════════════════ -->
+<div class="section visible" id="section-overview">
+  <div class="intro-box">
+    <strong>The strategic arc:</strong> Every post fits one of three jobs — <strong>Attract</strong> (make them aware they have a problem), <strong>Convert</strong> (show them the solution is yours), or <strong>Retain</strong> (make them feel they'd be mad to leave). The series runs for <strong>12 weeks</strong> at 4 posts/week across Instagram and LinkedIn. Each pillar has 7 posts — one per week of the cycle, with every post fully scripted with hook, caption, slides (where applicable), CTA, and hashtags.
+  </div>
+
+  <div class="overview-grid">
+    <div class="overview-card" onclick="showSection('p1', document.querySelectorAll('.nav-tab')[1])">
+      <div class="ov-pill-row"><span class="ov-num">P1</span><span class="pbadge ig">IG</span><span class="pbadge li">LI</span></div>
+      <div class="ov-title">The Visibility Wake-Up Call</div>
+      <div class="ov-tagline">"You're invisible and you don't know it." Pattern-interrupt content for practice owners.</div>
+      <div class="ov-count">7 posts → Click to expand</div>
+    </div>
+    <div class="overview-card" onclick="showSection('p2', document.querySelectorAll('.nav-tab')[2])">
+      <div class="ov-pill-row"><span class="ov-num">P2</span><span class="pbadge ig">IG</span><span class="pbadge li">LI</span></div>
+      <div class="ov-title">The Patient Journey Decoded</div>
+      <div class="ov-tagline">Map every stage from Google search to loyal patient. Education + authority.</div>
+      <div class="ov-count">7 posts → Click to expand</div>
+    </div>
+    <div class="overview-card" onclick="showSection('p3', document.querySelectorAll('.nav-tab')[3])">
+      <div class="ov-pill-row"><span class="ov-num">P3</span><span class="pbadge ig">IG</span><span class="pbadge li">LI</span></div>
+      <div class="ov-title">Qualify the Right Patient</div>
+      <div class="ov-tagline">Not all enquiries deserve the same energy. Tyre-kicker vs. buyer-in-heat — for dental.</div>
+      <div class="ov-count">7 posts → Click to expand</div>
+    </div>
+    <div class="overview-card" onclick="showSection('p4', document.querySelectorAll('.nav-tab')[4])">
+      <div class="ov-pill-row"><span class="ov-num">P4</span><span class="pbadge ig">IG</span><span class="pbadge li">LI</span></div>
+      <div class="ov-title">Nurture &amp; Trust Building</div>
+      <div class="ov-tagline">The practice patients return to is the one they trust — not just the one they found.</div>
+      <div class="ov-count">7 posts → Click to expand</div>
+    </div>
+    <div class="overview-card" onclick="showSection('p5', document.querySelectorAll('.nav-tab')[5])">
+      <div class="ov-pill-row"><span class="ov-num">P5</span><span class="pbadge ig">IG</span><span class="pbadge li">LI</span></div>
+      <div class="ov-title">Retention &amp; Lifetime Value</div>
+      <div class="ov-tagline">Acquiring a patient is expensive. Losing one silently is more expensive.</div>
+      <div class="ov-count">7 posts → Click to expand</div>
+    </div>
+    <div class="overview-card" onclick="showSection('p6', document.querySelectorAll('.nav-tab')[6])">
+      <div class="ov-pill-row"><span class="ov-num">P6</span><span class="pbadge li">LI</span></div>
+      <div class="ov-title">The Founder Story</div>
+      <div class="ov-tagline">Paris → London → BJJ → building systems dentists didn't know they needed.</div>
+      <div class="ov-count">7 posts → Click to expand</div>
+    </div>
+    <div class="overview-card" onclick="showSection('p7', document.querySelectorAll('.nav-tab')[7])">
+      <div class="ov-pill-row"><span class="ov-num">P7</span><span class="pbadge ig">IG</span><span class="pbadge li">LI</span></div>
+      <div class="ov-title">Social Proof &amp; Results</div>
+      <div class="ov-tagline">Show the result before you talk about the cost. Data, before/afters, and testimonials.</div>
+      <div class="ov-count">7 posts → Click to expand</div>
+    </div>
+  </div>
+
+  <div class="section-title">Underlying Principle</div>
+  <div class="intro-box">
+    The sales training's single most transferable idea: <strong>"60–70% of closing depends on confidence and transfer of belief."</strong><br><br>
+    In your world, that transfer doesn't happen on a Zoom call — it happens on your Google profile, in your reviews, and in your content. <strong>Every post is a rep of this belief transferred before anyone picks up the phone.</strong><br><br>
+    The three-act structure of the sales call (Discovery → Pitch → Close) maps directly onto the patient journey:<br>
+    <strong>Discovery</strong> = reviews + GBP (before they call) &nbsp;·&nbsp;
+    <strong>Pitch</strong> = new patient consultation &nbsp;·&nbsp;
+    <strong>Close</strong> = treatment plan acceptance + ongoing recall
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     PILLAR 1 — VISIBILITY
+══════════════════════════════════════════════ -->
+<div class="section" id="section-p1">
+  <div class="pillar-header">
+    <div class="pillar-num">PILLAR 01</div>
+    <div class="pillar-title-block">
+      <h2>The Visibility <em>Wake-Up Call</em></h2>
+      <div class="pillar-tagline">Pattern-interrupt content. Make practice owners feel the cost of invisibility before you mention your service. Borrow the "tyre kicker / buyer in heat" energy — patients behave exactly the same way when searching Google.</div>
+      <div class="platform-badges"><span class="pbadge ig">Instagram</span><span class="pbadge li">LinkedIn</span></div>
+    </div>
+  </div>
+
+  <div class="posts-grid">
+
+    <!-- POST 1.1 -->
+    <div class="post-card">
+      <div class="card-meta">
+        <span class="post-num">POST 1.1</span>
+        <span class="format-tag ft-reel">Reel / Talking Head</span>
+      </div>
+      <div class="card-body">
+        <div class="card-hook">Search "private dentist Camden" right now.<br>I'll wait.<br><em>That's what your patient sees.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)">
+          <span>View full post</span><span class="toggle-icon">↓</span>
+        </button>
+        <div class="card-expand">
+          <div class="card-content">
+            <div class="caption-label">Caption / Script</div>
+            <div class="caption-text">Grab your phone. Open Google Maps. Search "private dentist [your area]."
+
+<strong>The practice that comes up first isn't the best one on that street.</strong>
+It's the one with the most reviews, the strongest local signals, and a Google profile that's been actively maintained.
+
+If you're not in the top 3 — your patient just booked someone else.
+They didn't even know you existed.
+
+This is what I fix.
+
+<em>↓ Save this if you run or manage a dental practice.</em></div>
+            <div class="cta-line">CTA: "Drop your postcode below — I'll tell you where you're ranking right now."</div>
+            <div class="hashtags">#DentalMarketing #NW1Dentist #CamdenDentist #GoogleReviews #LocalSEO #DentalPractice #PatientAcquisition</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST 1.2 -->
+    <div class="post-card">
+      <div class="card-meta">
+        <span class="post-num">POST 1.2</span>
+        <span class="format-tag ft-carousel">Carousel</span>
+      </div>
+      <div class="card-body">
+        <div class="card-hook">14 reviews vs 280 reviews.<br><em>Same street. Same quality dentistry.</em><br>One practice is fully booked.</div>
+        <button class="toggle-btn" onclick="toggleCard(this)">
+          <span>View full post</span><span class="toggle-icon">↓</span>
+        </button>
+        <div class="card-expand">
+          <div class="card-content">
+            <div class="slides-label">Slide Breakdown</div>
+            <ul class="slides-list">
+              <li><strong>COVER:</strong> "14 reviews vs 280 reviews. Same street. Spot the difference."</li>
+              <li><strong>THE SEARCH:</strong> A patient searches "dentist near Chalk Farm" at 9:14am. They glance at the top 3 results. They book the first one with 200+ reviews before they even open a second tab.</li>
+              <li><strong>THE MATH:</strong> Review signals = 20% of Google Map Pack ranking (Whitespark 2026). Recency matters more than volume. Fresh beats large.</li>
+              <li><strong>THE PROBLEM:</strong> Most practices collect reviews via a laminated card at reception. That gets you 2–3 reviews a month. Top-ranked practices have a system. 20+ reviews/month.</li>
+              <li><strong>THE SOLUTION:</strong> Post-appointment SMS → one tap → Google review. Automated. Consistent. No extra effort from your team.</li>
+              <li><strong>CLOSE:</strong> "The practice two streets away isn't better than you. They just have stronger Google signals. Let's fix that." [Book a free audit → link in bio]</li>
+            </ul>
+            <div class="cta-line">CTA: "Save this post and share with your practice manager."</div>
+            <div class="hashtags">#GoogleReviews #DentalSEO #HampsteadDentist #LocalSearch #ReviewAutomation #TryReviewBloom #DentalMarketing</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST 1.3 -->
+    <div class="post-card">
+      <div class="card-meta">
+        <span class="post-num">POST 1.3</span>
+        <span class="format-tag ft-stat">Stat Post</span>
+      </div>
+      <div class="card-body">
+        <div class="card-hook"><em>45%</em> of consumers now use ChatGPT for local recommendations.<br>Up from 6% in 2024.</div>
+        <button class="toggle-btn" onclick="toggleCard(this)">
+          <span>View full post</span><span class="toggle-icon">↓</span>
+        </button>
+        <div class="card-expand">
+          <div class="card-content">
+            <div class="caption-label">Caption</div>
+            <div class="caption-text">When a Camden patient types "best private dentist near me" into ChatGPT — do you know what comes back?
+
+Not the prettiest website.
+Not the practice with the nicest waiting room.
+
+<strong>The practice with the most relevant, recent, keyword-rich reviews.</strong>
+
+Reviews now drive 16% of AI search visibility (Whitespark 2026). That number will only go up.
+
+Your Google review strategy isn't just about Google anymore.
+It's about every search surface — including the ones that didn't exist two years ago.
+
+This is why review velocity matters more than review count.</div>
+            <div class="cta-line">CTA: "I audit Google profiles for free — link in bio."</div>
+            <div class="hashtags">#AISearch #GoogleReviews #DentalMarketing #LocalSEO #ChatGPT #ReviewVelocity #NW3Dentist</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST 1.4 -->
+    <div class="post-card">
+      <div class="card-meta">
+        <span class="post-num">POST 1.4</span>
+        <span class="format-tag ft-carousel">Carousel · LinkedIn</span>
+      </div>
+      <div class="card-body">
+        <div class="card-hook">The 5 signals Google uses to rank your practice.<br><em>Most dentists have only heard of one.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)">
+          <span>View full post</span><span class="toggle-icon">↓</span>
+        </button>
+        <div class="card-expand">
+          <div class="card-content">
+            <div class="slides-label">Slide Breakdown</div>
+            <ul class="slides-list">
+              <li><strong>INTRO:</strong> "Google's 2026 Map Pack algorithm has 5 key signals. Miss two of them and you're invisible." (Whitespark 2026 data)</li>
+              <li><strong>SIGNAL 1 — GBP (32%):</strong> Your Google Business Profile is the single biggest factor. Category, services, posts, photos, Q&amp;A. Most profiles are abandoned after setup.</li>
+              <li><strong>SIGNAL 2 — Reviews (20%):</strong> Volume, recency, velocity, sentiment. Recency now outweighs total count.</li>
+              <li><strong>SIGNAL 3 — Behavioural (9%):</strong> Click-through rate, calls from GBP, direction requests. Higher star rating = higher CTR = more signals. Self-reinforcing loop.</li>
+              <li><strong>SIGNAL 4 — Citations (13%):</strong> Consistent NAP across directories. Google, Yelp, NHS.uk, Trustpilot, dental directories. One mismatch can tank your ranking.</li>
+              <li><strong>SIGNAL 5 — On-page (16%):</strong> Local keywords on your website. "Dentist Camden NW1" in headings and copy — not buried in metadata.</li>
+              <li><strong>CLOSE:</strong> "GBP + Reviews = 52% of your Map Pack position. That's where I focus." [Free audit → link]</li>
+            </ul>
+            <div class="cta-line">CTA: "Follow for weekly local SEO breakdowns for dental practices."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST 1.5 -->
+    <div class="post-card">
+      <div class="card-meta">
+        <span class="post-num">POST 1.5</span>
+        <span class="format-tag ft-reel">Reel</span>
+      </div>
+      <div class="card-body">
+        <div class="card-hook">A patient walks past your practice.<br>Googles "dentist near me."<br><em>Doesn't find you. Books someone else.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)">
+          <span>View full post</span><span class="toggle-icon">↓</span>
+        </button>
+        <div class="card-expand">
+          <div class="card-content">
+            <div class="caption-label">Script / Caption</div>
+            <div class="caption-text">This isn't hypothetical.
+
+A person steps off the Tube at Chalk Farm. They've been meaning to book a dentist for months. They open Google. They type "dentist near me."
+
+They see 3 results. They tap the first one with 200+ reviews and a 4.9 star rating.
+
+That practice is 0.4 miles further away than yours.
+
+<strong>But you're not even on the first page.</strong>
+
+Your Google Business Profile was set up three years ago and hasn't been touched since. Your last review is from 2022. You have no system to collect new ones.
+
+You're not losing patients because of bad dentistry.
+You're losing them because of weak Google signals.
+
+That's fixable. In weeks. Not months.</div>
+            <div class="cta-line">CTA: "Book a free 20-min GBP audit — link in bio."</div>
+            <div class="hashtags">#CamdenDentist #DentalMarketing #GoogleBusiness #LocalSEO #MissedPatients #PatientAcquisitionHub</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST 1.6 -->
+    <div class="post-card">
+      <div class="card-meta">
+        <span class="post-num">POST 1.6</span>
+        <span class="format-tag ft-stat">Stat · LinkedIn</span>
+      </div>
+      <div class="card-body">
+        <div class="card-hook"><em>32% of Map Pack ranking</em> is driven by GBP signals alone.<br>When did you last update yours?</div>
+        <button class="toggle-btn" onclick="toggleCard(this)">
+          <span>View full post</span><span class="toggle-icon">↓</span>
+        </button>
+        <div class="card-expand">
+          <div class="card-content">
+            <div class="caption-label">Caption</div>
+            <div class="caption-text">According to Whitespark's 2026 Local Search Ranking Factors — compiled across 47 SEO experts and 187 ranking factors — Google Business Profile signals are the single biggest driver of Map Pack position.
+
+32%.
+
+Not your website. Not your domain authority.
+
+<strong>Your Google Business Profile.</strong>
+
+Most dental practices set it up once and forget it. No posts. No Q&amp;A responses. No updated service listings. No photos added in 18 months.
+
+The practices outranking you are posting weekly. Responding to every review. Adding photos monthly. Keeping hours accurate.
+
+This is operational discipline, not marketing budget.
+
+What does your GBP look like right now?</div>
+            <div class="cta-line">CTA: "I run free GBP audits for independent London dental practices — DM me."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST 1.7 -->
+    <div class="post-card">
+      <div class="card-meta">
+        <span class="post-num">POST 1.7</span>
+        <span class="format-tag ft-carousel">Carousel</span>
+      </div>
+      <div class="card-body">
+        <div class="card-hook">3 types of patients who search "dentist near me."<br><em>Only one books immediately.</em><br>Are you visible to all three?</div>
+        <button class="toggle-btn" onclick="toggleCard(this)">
+          <span>View full post</span><span class="toggle-icon">↓</span>
+        </button>
+        <div class="card-expand">
+          <div class="card-content">
+            <div class="slides-label">Slide Breakdown (adapted from sales training's buyer types)</div>
+            <ul class="slides-list">
+              <li><strong>INTRO:</strong> "Not every patient searching for a dentist is ready to book today. But your visibility determines who finds you — across all three types."</li>
+              <li><strong>TYPE 1 — PAIN-DRIVEN (20%):</strong> They have toothache RIGHT NOW. They're booking the first practice that picks up the phone or has an online booking link. Every missed call here is a guaranteed loss.</li>
+              <li><strong>TYPE 2 — CONSIDERING (60%):</strong> They've been meaning to find a new dentist for months. They'll compare 3–5 profiles. Reviews, photos, star rating. They book the one that feels most trustworthy online.</li>
+              <li><strong>TYPE 3 — JUST BROWSING (20%):</strong> Not ready yet. But they're building a mental shortlist. If you show up consistently in local search, with strong reviews and a maintained profile — you'll be on it.</li>
+              <li><strong>CLOSE:</strong> "Google signals capture all three. Weak signals miss all three." [Free audit link]</li>
+            </ul>
+            <div class="cta-line">CTA: "Which type do you think makes up most of your new patient enquiries? Comment below."</div>
+            <div class="hashtags">#DentalMarketing #PatientJourney #GoogleReviews #LocalSearch #NW1 #NW3 #DentalPracticeGrowth</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     PILLAR 2 — PATIENT JOURNEY
+══════════════════════════════════════════════ -->
+<div class="section" id="section-p2">
+  <div class="pillar-header">
+    <div class="pillar-num">PILLAR 02</div>
+    <div class="pillar-title-block">
+      <h2>The Patient Journey <em>Decoded</em></h2>
+      <div class="pillar-tagline">Map every stage from search to loyal patient. This pillar repurposes the sales call anatomy (Intro → Discovery → Pitch → Close) onto the exact patient experience — making dentists see their practice through a patient's eyes for the first time.</div>
+      <div class="platform-badges"><span class="pbadge ig">Instagram</span><span class="pbadge li">LinkedIn</span></div>
+    </div>
+  </div>
+
+  <div class="posts-grid">
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 2.1</span><span class="format-tag ft-carousel">Carousel</span></div>
+      <div class="card-body">
+        <div class="card-hook">Your Google reviews are your sales pitch.<br><em>Before the patient ever calls you.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown</div>
+          <ul class="slides-list">
+            <li><strong>HOOK:</strong> "In sales, 60–70% of a deal closes based on trust and belief transfer. In dental, that trust transfer happens before anyone picks up the phone."</li>
+            <li><strong>STAGE 1 — THE SEARCH:</strong> Patient Googles "dentist NW3." They see your profile. In 8 seconds they decide: trustworthy or not. Star rating. Review count. Recency of last review. This is your opening impression.</li>
+            <li><strong>STAGE 2 — THE REVIEW READ:</strong> They read 3–5 reviews. They're looking for: Did people feel heard? Was the dentist gentle? Was it worth the price? These reviews are your social proof — your silent sales team.</li>
+            <li><strong>STAGE 3 — THE CALL OR BOOK:</strong> Only now do they interact with a human. But the decision was already 80% made. Your receptionist is closing a sale that started in your review section.</li>
+            <li><strong>THE LESSON:</strong> "Your reviews aren't marketing. They're the consultation before the consultation."</li>
+            <li><strong>CLOSE:</strong> "Build your review pipeline. The patients who trust you before they call are the easiest to convert." [Free audit link]</li>
+          </ul>
+          <div class="cta-line">CTA: "Save this carousel — share with anyone who thinks reviews are 'just nice to have.'"</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 2.2</span><span class="format-tag ft-reel">Reel</span></div>
+      <div class="card-body">
+        <div class="card-hook">84% of patients read Google reviews<br>before booking a dentist.<br><em>That's your first impression — not your reception team.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Script</div>
+          <div class="caption-text">Most dental practices spend all their energy on what happens inside the chair.
+
+The lighting. The equipment. The team. The treatment.
+
+But 84% of new patients have already decided whether they trust you before they walk through the door.
+
+<strong>They read your reviews.</strong>
+
+They read the most recent one first. Then they scroll. They're asking one question:
+
+"Do people like me feel safe here?"
+
+If your last review is from 8 months ago — even if it's 5 stars — they move on.
+Recency is everything.
+
+A system that puts a fresh review on your profile every week changes everything about how new patients find you.</div>
+          <div class="cta-line">CTA: "Link in bio — free GBP audit for London dental practices."</div>
+          <div class="hashtags">#GoogleReviews #DentalMarketing #NewPatients #LocalSEO #TryReviewBloom #ReviewAutomation</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 2.3</span><span class="format-tag ft-carousel">Carousel · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">The new patient consultation is a sales call.<br><em>Here's how top practices run it.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown (adapted from sales call anatomy)</div>
+          <ul class="slides-list">
+            <li><strong>INTRO:</strong> "A new patient consultation isn't just clinical. It's the moment a prospect becomes a patient for life — or walks out and books elsewhere."</li>
+            <li><strong>STAGE 1 — RAPPORT (2 min):</strong> Ask where they heard about you. Ask about their previous dental experience. Listen without rushing to examine. People who feel heard don't shop around.</li>
+            <li><strong>STAGE 2 — DISCOVERY (5 min):</strong> Ask: "What's been bothering you most?" Then: "If we could fix that — what would that mean for you?" Go emotional before going clinical. Future state first, pain second. (Roller coaster method.)</li>
+            <li><strong>STAGE 3 — PRESENT THE PLAN:</strong> Use Problem-Feature-Solution for each treatment need: "You mentioned X is bothering you. We can do Y which will give you Z." After each one: "Does that make sense?"</li>
+            <li><strong>STAGE 4 — CONFIRM &amp; BOOK:</strong> "Based on everything you've told me, does this feel like the right plan?" Then assume the next appointment. Don't ask if they want to book. Ask when.</li>
+            <li><strong>CLOSE:</strong> "The best practices don't sell dentistry. They help patients understand the value of their own health. The close is just the natural end of a well-run conversation."</li>
+          </ul>
+          <div class="cta-line">CTA: "Follow for more conversion insights for dental practice owners."</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 2.4</span><span class="format-tag ft-stat">Stat Post</span></div>
+      <div class="card-body">
+        <div class="card-hook">3–5 practices.<br>That's how many a patient compares before calling <em>any</em> of them.</div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Caption</div>
+          <div class="caption-text">Before a new patient picks up the phone — they've already visited 3 to 5 Google profiles.
+
+They're comparing:
+→ Star rating
+→ Number of reviews
+→ How recent the reviews are
+→ Whether the practice responds to reviews
+→ Photos (does it look like somewhere I'd feel comfortable?)
+
+<strong>You have about 8 seconds per visit to earn a place in their shortlist.</strong>
+
+Most practices lose patients at this stage without ever knowing it.
+No missed call. No bounce. Just... silence.
+
+The patient booked elsewhere and you never knew they were looking.
+
+Your GBP is either working for you 24/7 — or it's working against you.</div>
+          <div class="cta-line">CTA: "I offer free 20-min GBP audits. Link in bio."</div>
+          <div class="hashtags">#PatientExperience #DentalMarketing #GoogleBusiness #LocalSearch #DentistLondon</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 2.5</span><span class="format-tag ft-reel">Reel</span></div>
+      <div class="card-body">
+        <div class="card-hook">The moment most practices<br>lose a patient they'll never get back.<br><em>It happens in 4 seconds.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Script</div>
+          <div class="caption-text">The phone rings. No one gets to it.
+
+The caller hangs up.
+
+In the next 30 seconds they're back on Google, clicking the next result.
+
+<strong>That was a patient worth £500 to £3,000.</strong>
+Gone. To a competitor. Forever.
+
+At a typical NW London practice, 5 calls are missed per week.
+That's conservatively £2,500 a week walking out the door.
+
+The fix isn't hiring more reception staff.
+It's a system that sends an automatic SMS with a booking link within seconds of every missed call.
+
+Most patients self-book within 20 minutes.
+No extra effort from your team. None.
+
+The question isn't whether you can afford this system.
+It's how much longer you can afford not to have it.</div>
+          <div class="cta-line">CTA: "Book a free call — I'll show you your missed call rate in the audit."</div>
+          <div class="hashtags">#MissedCall #DentalMarketing #PatientRetention #BookingSystem #NW1Dentist #DentalPractice</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 2.6</span><span class="format-tag ft-carousel">Carousel</span></div>
+      <div class="card-body">
+        <div class="card-hook">Why patients ghost after a treatment plan quote.<br><em>And the simple fix.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown</div>
+          <ul class="slides-list">
+            <li><strong>HOOK:</strong> "You quoted them £1,800 for Invisalign. They said 'I'll think about it.' You never heard from them again. Here's why — and how to stop it happening."</li>
+            <li><strong>REASON 1 — No value stack:</strong> You presented the price before the patient emotionally connected to the outcome. Lead with the vision: "Imagine having the confidence to smile at your wedding." Then the price lands differently.</li>
+            <li><strong>REASON 2 — No follow-up system:</strong> 80% of sales happen after the 5th touchpoint. Most practices follow up once, if at all. A simple 3-message sequence over 7 days captures most of the "maybe" patients.</li>
+            <li><strong>REASON 3 — Left too many objections unaddressed:</strong> The main objections are always the same: money, time, fear, and "need to discuss with partner." Pre-handle these before you present the price.</li>
+            <li><strong>THE FIX:</strong> A post-consultation follow-up sequence. Message 1 (same day): recap + outcome focus. Message 2 (day 3): answer the most common concern. Message 3 (day 7): gentle nudge + easy booking link.</li>
+            <li><strong>CLOSE:</strong> "Most ghosting is a follow-up problem, not a price problem."</li>
+          </ul>
+          <div class="cta-line">CTA: "Save this — and DM me if you want the exact 3-message sequence."</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 2.7</span><span class="format-tag ft-article">Article · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">The 6-stage patient journey most dental practices<br>don't know they're losing patients through.</div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">LinkedIn Article Outline</div>
+          <div class="caption-text"><strong>Intro:</strong> Most dentists think patient acquisition starts when someone calls. It starts when someone types into Google.
+
+<strong>Stage 1 — Discovery:</strong> GBP, reviews, Map Pack ranking. The silent shortlist phase.
+<strong>Stage 2 — Evaluation:</strong> Reading reviews, comparing profiles, checking photos. The trust-building phase.
+<strong>Stage 3 — Contact:</strong> The call or booking. Missed here = gone forever.
+<strong>Stage 4 — Consultation:</strong> The sales conversation. Rapport → discovery → plan presentation.
+<strong>Stage 5 — Commitment:</strong> Treatment acceptance. Handled by confidence, value, and pre-handled objections.
+<strong>Stage 6 — Retention:</strong> Recall, follow-up, re-engagement. The compounding phase.
+
+<strong>Conclusion:</strong> "Practices that optimise every stage of this journey don't just acquire more patients — they keep them longer and earn more referrals from them."</div>
+          <div class="cta-line">CTA: "Follow me for weekly deep-dives on patient acquisition and local search."</div>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     PILLAR 3 — QUALIFY
+══════════════════════════════════════════════ -->
+<div class="section" id="section-p3">
+  <div class="pillar-header">
+    <div class="pillar-num">PILLAR 03</div>
+    <div class="pillar-title-block">
+      <h2>Qualify the <em>Right Patient</em></h2>
+      <div class="pillar-tagline">Not all enquiries deserve the same energy. Adapted from the "tyre kicker / buyer in power / buyer in heat" framework in the sales training — reframed entirely for dental practice owners and their reception teams.</div>
+      <div class="platform-badges"><span class="pbadge ig">Instagram</span><span class="pbadge li">LinkedIn</span></div>
+    </div>
+  </div>
+
+  <div class="posts-grid">
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 3.1</span><span class="format-tag ft-carousel">Carousel</span></div>
+      <div class="card-body">
+        <div class="card-hook">3 types of patients who call your practice.<br><em>Your receptionist is treating them all the same.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown</div>
+          <ul class="slides-list">
+            <li><strong>INTRO:</strong> "In sales, they're called 'buyer in heat,' 'buyer in power,' and 'tyre kicker.' In dental, they show up every day. Knowing the difference saves time and books more treatment."</li>
+            <li><strong>TYPE 1 — PAIN-DRIVEN (20%):</strong> They have a problem right now. Toothache. Broken crown. They want an appointment today. Don't pitch them. Just book them. Speed is everything here.</li>
+            <li><strong>TYPE 2 — CONSIDERING (60%):</strong> They've been thinking about this for a while. Maybe it's Invisalign. Maybe it's implants. They need to feel heard, feel safe, and feel confident before they commit. This is where the consultation does the work.</li>
+            <li><strong>TYPE 3 — PRICE SHOPPING (20%):</strong> They're calling 4 practices to compare prices. They're unlikely to commit on this call. Don't invest 20 minutes. Send them a clear pricing guide and follow up in a week.</li>
+            <li><strong>THE SKILL:</strong> "Identifying which type you're talking to within the first 2 minutes — and adjusting your response accordingly — is the single biggest lever for converting more enquiries."</li>
+            <li><strong>CLOSE:</strong> "Your receptionist handles this 20+ times a day. Is she trained for it?"</li>
+          </ul>
+          <div class="cta-line">CTA: "DM me the word 'QUALIFY' for the free patient enquiry cheat sheet."</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 3.2</span><span class="format-tag ft-reel">Reel</span></div>
+      <div class="card-body">
+        <div class="card-hook">Your receptionist is doing sales<br>20 times a day.<br><em>Does she know that?</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Script</div>
+          <div class="caption-text">Every time the phone rings with a new patient enquiry — that's a sales conversation.
+
+Not in a pushy way. In a human way.
+
+The patient is nervous. They're evaluating: do I trust these people? Will I feel safe here? Is this practice right for me?
+
+<strong>Your receptionist's job in that moment isn't to take a name and a number.</strong>
+
+It's to make the patient feel heard, make the practice sound worth visiting, and convert that call into a booked appointment.
+
+That's a skill. It can be trained. It can be measured.
+
+Most practices never train it. They just hope for the best.
+
+The ones that do — they convert significantly more of their inbound calls into confirmed appointments.
+
+What does your receptionist say when someone calls and asks "how much is an Invisalign consultation?"</div>
+          <div class="cta-line">CTA: "Drop your answer below — curious how practices are handling this."</div>
+          <div class="hashtags">#DentalReception #PatientConversion #DentalMarketing #NewPatients #PracticeGrowth #SalesTraining</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 3.3</span><span class="format-tag ft-carousel">Carousel · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">The pre-consultation question that filters<br>time-wasters — <em>without being rude.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown</div>
+          <ul class="slides-list">
+            <li><strong>INTRO:</strong> "In high-ticket sales, you qualify a prospect before investing 45 minutes. In dental, you should qualify a patient before investing 60 minutes on a consultation."</li>
+            <li><strong>THE QUESTION:</strong> "Before we confirm your appointment — what's the main thing you're hoping we can help you with today?" Simple. Non-threatening. Reveals intent immediately.</li>
+            <li><strong>WHAT IT TELLS YOU:</strong> Pain-driven → book fast. Cosmetic enquiry → send before/after gallery and price guide to set expectations. Price shopper → give transparent overview, don't hard sell, follow up in 5 days.</li>
+            <li><strong>THE FRAME:</strong> "If we can help with that, we'd love to book you in. If we're not the right fit, I'd rather tell you now than waste your time."</li>
+            <li><strong>WHY IT WORKS:</strong> It signals authority. It pre-qualifies without gatekeeping. And patients who feel pre-respected become the highest-trust appointments.</li>
+            <li><strong>CLOSE:</strong> "Qualification isn't about filtering out patients. It's about serving the right ones well."</li>
+          </ul>
+          <div class="cta-line">CTA: "Follow for weekly practice growth insights."</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 3.4</span><span class="format-tag ft-stat">Stat Post</span></div>
+      <div class="card-body">
+        <div class="card-hook">The average dental consultation converts<br>at under 40%.<br><em>Top practices hit 65–70%.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Caption</div>
+          <div class="caption-text">The difference between a 40% and a 65% consultation-to-treatment conversion rate is enormous.
+
+At £1,200 average treatment value, on 20 consultations a month:
+→ 40% = 8 treatments = £9,600
+→ 65% = 13 treatments = £15,600
+
+<strong>Same number of consultations. Same dentist. Same treatment options.</strong>
+
+The difference is almost entirely in the pre-consultation process, the discovery conversation, and the treatment plan presentation.
+
+Specifically:
+→ How well the patient is qualified before they arrive
+→ Whether the consultation starts with their goals (future state) before clinical needs
+→ Whether objections are handled before the price is presented
+
+These aren't expensive changes to implement.
+They're conversation changes.</div>
+          <div class="cta-line">CTA: "DM me 'CONVERT' if you want the consultation framework I use."</div>
+          <div class="hashtags">#DentalConversion #ConsultationFramework #DentalMarketing #PracticeGrowth #TreatmentAcceptance</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 3.5</span><span class="format-tag ft-reel">Reel</span></div>
+      <div class="card-body">
+        <div class="card-hook">How to tell in 2 minutes whether<br>a new patient will accept<br><em>a treatment plan.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Script</div>
+          <div class="caption-text">Within the first 2 minutes of a new patient consultation, you can tell whether they're going to accept treatment.
+
+Not by reading their mind. By asking three things:
+
+<strong>1. "What brought you in today — and how long has this been on your mind?"</strong>
+Someone who's been thinking about it for 6 months is far more motivated than someone who just wandered in.
+
+<strong>2. "What would it mean for you to get this sorted?"</strong>
+If they have a compelling reason — an event coming up, confidence issues, pain — they have motivation. No reason = no urgency.
+
+<strong>3. "Is this something you'd like to address in the next few weeks, or are you thinking longer term?"</strong>
+This one's direct. The answers tell you everything about timing and commitment.
+
+You're not qualifying them out. You're qualifying them in — to the right conversation.</div>
+          <div class="cta-line">CTA: "Save this and share it with your treatment coordinator."</div>
+          <div class="hashtags">#TreatmentAcceptance #DentalConsultation #PatientCommunication #DentalTeam #PracticeGrowth</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 3.6</span><span class="format-tag ft-carousel">Carousel</span></div>
+      <div class="card-body">
+        <div class="card-hook">The "Yes / No / Maybe" frame.<br>Why "I'll think about it"<br><em>is costing you £££ every month.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown (from sales training's Yes/No/Maybe frame)</div>
+          <ul class="slides-list">
+            <li><strong>INTRO:</strong> "'I'll think about it' is the most expensive phrase in dental. Not because patients who say it never come back — but because most practices have no system for them when they don't."</li>
+            <li><strong>THE PROBLEM:</strong> "Maybe" lives in a gap between yes and no where nothing happens. The patient doesn't book. The practice doesn't follow up. 3 months pass. The patient books elsewhere.</li>
+            <li><strong>THE FRAME:</strong> At the end of a consultation: "I just want to understand where you're at so I can best support you. Is this a yes — you'd like to move forward — or a no — this isn't right for you right now?" No pressure. Just clarity.</li>
+            <li><strong>IF THEY SAY NO:</strong> "I completely understand. Can I ask — what's the main thing holding you back?" Now you've opened the real objection. Now you can address it.</li>
+            <li><strong>IF THEY SAY YES:</strong> Don't celebrate — act. "Great. Let's get your first appointment in the diary right now." Momentum is fragile.</li>
+            <li><strong>CLOSE:</strong> "Clarity serves the patient and the practice. The best conversations end with a decision — not a maybe."</li>
+          </ul>
+          <div class="cta-line">CTA: "Double-tap if your team struggles with 'I'll think about it.'"</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 3.7</span><span class="format-tag ft-article">Article · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">Why I built a patient qualification<br>framework from a high-ticket sales methodology —<br><em>and why it works.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">LinkedIn Article Outline</div>
+          <div class="caption-text"><strong>Hook:</strong> "I spent time studying how the world's best remote closers qualify £10,000+ prospects. Then I mapped it onto how dental practices should be managing new patient enquiries."
+
+<strong>The parallel:</strong> A high-ticket remote closer identifies buyer type within 5 minutes to allocate their time. A well-run dental practice should be doing the same.
+
+<strong>The three patient types:</strong> Mapped to pain-driven / considering / price-shopping.
+
+<strong>The qualification process:</strong> Three questions, asked at booking or in the first minutes of consultation.
+
+<strong>The conversion data:</strong> What happens to consultation conversion rate when patients arrive pre-qualified vs. cold.
+
+<strong>The broader point:</strong> "Every patient interaction is a sales conversation — whether you frame it that way or not. The practices that acknowledge this and train for it grow faster."
+
+<strong>Close:</strong> Link to free consultation framework download or free audit.</div>
+          <div class="cta-line">CTA: "Follow me for more frameworks at the intersection of sales and dental practice growth."</div>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     PILLAR 4 — NURTURE
+══════════════════════════════════════════════ -->
+<div class="section" id="section-p4">
+  <div class="pillar-header">
+    <div class="pillar-num">PILLAR 04</div>
+    <div class="pillar-title-block">
+      <h2>Nurture &amp; <em>Trust Building</em></h2>
+      <div class="pillar-tagline">The practice patients return to is the one they trust, not just the one they found. Repurposes the sales training's "roller coaster discovery" (start with dream outcome → end with pain) as a communication principle for post-appointment follow-up sequences.</div>
+      <div class="platform-badges"><span class="pbadge ig">Instagram</span><span class="pbadge li">LinkedIn</span></div>
+    </div>
+  </div>
+
+  <div class="posts-grid">
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 4.1</span><span class="format-tag ft-carousel">Carousel</span></div>
+      <div class="card-body">
+        <div class="card-hook">A patient leaves your chair.<br>What happens in the next 90 days<br><em>determines if they ever refer anyone.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown</div>
+          <ul class="slides-list">
+            <li><strong>INTRO:</strong> "Most practices invest everything in getting the patient through the door. Almost nothing happens after they leave. That's where retention is won or lost."</li>
+            <li><strong>DAY 0 (same day):</strong> Automated SMS: "Thanks for coming in today, [Name]. Hope everything went well — if you have any questions don't hesitate to reach out." Simple. Human. Creates emotional connection while the visit is fresh.</li>
+            <li><strong>DAY 2:</strong> Review request via Try Review Bloom. One tap. Personalised. If they had a great experience, this is when they'll share it. If not — route them privately before they post publicly.</li>
+            <li><strong>DAY 14:</strong> Post-treatment check-in: "How's everything feeling since your visit?" Especially effective after extractions, whitening, new crowns. Shows you care beyond the chair.</li>
+            <li><strong>DAY 60:</strong> Recall reminder with relevant content. "It's been two months since your last visit. Your next hygiene appointment would typically be due around [date]. Want to get ahead of it?"</li>
+            <li><strong>DAY 90:</strong> Re-engagement — share a piece of value (tip on maintaining whitening results, for example). No hard sell. Just useful presence.</li>
+            <li><strong>CLOSE:</strong> "This sequence costs nothing to run. It earns referrals, retains patients, and generates reviews. All while you focus on dentistry."</li>
+          </ul>
+          <div class="cta-line">CTA: "Save this and DM me 'SEQUENCE' for the full 90-day template."</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 4.2</span><span class="format-tag ft-reel">Reel</span></div>
+      <div class="card-body">
+        <div class="card-hook">Most practices send a post-appointment email.<br>Almost none send<br><em>the right one.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Script</div>
+          <div class="caption-text">The typical post-appointment email from a dental practice reads:
+
+"Thank you for your visit. Please leave us a review."
+
+That's a transaction, not a relationship.
+
+Compare it to:
+
+"Hi Sarah — we hope your Invisalign fitting went well today. Most patients notice the biggest adjustment in the first 48 hours, so here's what to expect..."
+
+<strong>One of these makes Sarah feel like a patient.</strong>
+The other makes her feel like a number.
+
+The good news? The second one takes about 15 minutes to set up once — and then it runs automatically for every patient, forever.
+
+Personalised by treatment type. Timed perfectly. No manual effort.
+
+<em>This is what retention actually looks like.</em></div>
+          <div class="cta-line">CTA: "Follow for more patient retention frameworks — new post every week."</div>
+          <div class="hashtags">#PatientRetention #DentalMarketing #PatientExperience #EmailMarketing #AutomationDental</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 4.3</span><span class="format-tag ft-carousel">Carousel · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">The silence after treatment<br>is where you lose patients.<br><em>Here's how to fill it.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown (roller coaster method — future state first)</div>
+          <ul class="slides-list">
+            <li><strong>HOOK:</strong> "There's a moment after every successful treatment where a patient is at their most satisfied — and most likely to refer. Most practices let it pass silently."</li>
+            <li><strong>THE WINDOW:</strong> Day 1–3 post-treatment is peak satisfaction. This is when patients are most likely to leave a glowing review, mention you to friends, and feel positively bonded to your practice.</li>
+            <li><strong>WHAT MOST PRACTICES DO:</strong> Nothing. The appointment ends. The patient leaves. The next contact is a generic recall letter 6 months later.</li>
+            <li><strong>WHAT TOP PRACTICES DO:</strong> Day 1 — personalised check-in. Day 2 — review request (private routing if dissatisfied). Day 7 — value-add follow-up related to their treatment. Day 30 — soft referral prompt: "If anyone you know is thinking about [treatment], we'd love to help them too."</li>
+            <li><strong>THE RESULT:</strong> Higher review volume. Higher referral rate. Higher lifetime value. All from patients you already have.</li>
+            <li><strong>CLOSE:</strong> "Retention isn't a loyalty programme. It's a communication system."</li>
+          </ul>
+          <div class="cta-line">CTA: "Follow me — I post practical retention frameworks every week."</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 4.4</span><span class="format-tag ft-stat">Stat Post</span></div>
+      <div class="card-body">
+        <div class="card-hook">Review recency matters more<br>than total count.<br><em>A static 200-review profile loses to 80 fresh ones.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Caption</div>
+          <div class="caption-text">This surprises most dental practice owners.
+
+You worked hard to get 200 reviews. That's a real achievement.
+
+But if your last review was posted 5 months ago — a competitor with 80 reviews and consistent weekly additions is outranking you.
+
+<strong>Google weights recency heavily.</strong> A static review profile signals a practice that may have declined in quality, changed ownership, or stopped caring about patient experience.
+
+A steady flow of new reviews — even just 5–10 per month — tells Google (and prospective patients) that your practice is:
+→ Active
+→ Trusted
+→ Consistently delivering a good experience
+
+The good news: review velocity is the most achievable metric to improve.
+A simple automated post-appointment SMS — one tap for the patient — can generate 20+ fresh reviews a month on autopilot.</div>
+          <div class="cta-line">CTA: "This is exactly what Try Review Bloom is built for → tryreviewbloom.com (link in bio)"</div>
+          <div class="hashtags">#ReviewVelocity #GoogleReviews #TryReviewBloom #DentalMarketing #LocalSEO #ReviewRecency</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 4.5</span><span class="format-tag ft-reel">Reel</span></div>
+      <div class="card-body">
+        <div class="card-hook">How to get a patient to refer<br>3 friends —<br><em>without asking them to.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Script</div>
+          <div class="caption-text">The best referrals come from patients who feel seen — not from referral cards left on the reception desk.
+
+Here's what actually drives organic referrals:
+
+<strong>1. A check-in message after treatment.</strong>
+Not a marketing email. A genuine "how are you feeling?" message 24–48 hours after their appointment.
+
+<strong>2. A review that made them feel proud.</strong>
+When a patient writes a glowing review — and you respond personally — they feel invested in your success. They become advocates.
+
+<strong>3. A result they want to talk about.</strong>
+If you delivered a transformation — a smile they love, pain-free dentistry for the first time — they will tell people. Your job is to make it easy to share.
+
+None of this requires a referral scheme.
+It requires a communication system that treats patients as people, not appointments.</div>
+          <div class="cta-line">CTA: "Save this. The most effective referral system is a great patient experience + follow-up."</div>
+          <div class="hashtags">#DentalReferrals #PatientExperience #WordOfMouth #DentalMarketing #PatientRetention</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 4.6</span><span class="format-tag ft-carousel">Carousel</span></div>
+      <div class="card-body">
+        <div class="card-hook">What to say to a patient<br>who disappears after<br><em>a treatment plan quote.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown (the Revolver method — adapted from sales training)</div>
+          <ul class="slides-list">
+            <li><strong>HOOK:</strong> "A patient attended a consultation. You quoted them £2,200 for Invisalign. They said they'd think about it. That was 3 weeks ago. Here's the exact follow-up sequence."</li>
+            <li><strong>MESSAGE 1 (Day 3 — value focus):</strong> "Hi [Name], just checking in after your consultation last week. I wanted to share a few before/after cases from patients who had similar concerns to yours — in case it helps with your decision. No pressure at all. [Link]"</li>
+            <li><strong>MESSAGE 2 (Day 7 — address the real objection):</strong> "Hi [Name] — a lot of patients in your position wonder about the cost vs monthly budgeting. We do offer a monthly payment plan from £X/month if that would help. Happy to go over it on a quick call."</li>
+            <li><strong>MESSAGE 3 (Day 14 — clarity close):</strong> "Hi [Name] — I just want to check in one last time. Is this something you'd like to explore further, or is the timing not right at the moment? Either way, completely fine — just want to make sure I'm not leaving you hanging."</li>
+            <li><strong>WHY THIS WORKS:</strong> Silence = unaddressed objection. These messages surface the real blocker (cost, fear, timing, partner approval) without pressure — and give you a chance to address it.</li>
+            <li><strong>CLOSE:</strong> "Most 'lost' treatment plan patients aren't gone — they're waiting for someone to help them say yes."</li>
+          </ul>
+          <div class="cta-line">CTA: "DM me 'FOLLOWUP' for the full editable template."</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 4.7</span><span class="format-tag ft-article">Article · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">The 3-touchpoint patient follow-up<br>that turns a one-visit patient<br><em>into a regular.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">LinkedIn Article Outline</div>
+          <div class="caption-text"><strong>Intro:</strong> "Most patients who never return aren't unhappy — they're just unmemorable experiences. Here's the 3-touchpoint system that changes that."
+
+<strong>The principle (roller coaster method adapted):</strong> Start with the outcome (how are you feeling? how does your smile look?), then address the pain (what could we have done better?) — not the other way around.
+
+<strong>Touchpoint 1 — Day 2:</strong> Personal check-in + review request. The anatomy of a message that gets a response.
+
+<strong>Touchpoint 2 — Day 14:</strong> Value-add follow-up based on treatment type. Examples for: whitening, Invisalign, implants, hygiene.
+
+<strong>Touchpoint 3 — Day 60:</strong> Recall prompt framed as proactive care, not admin.
+
+<strong>The data:</strong> Practices running this sequence see 40%+ higher recall attendance and 3–4x review volume.
+
+<strong>Close:</strong> "This takes 15 minutes to set up. It runs forever. And it changes the relationship your patients have with your practice."</div>
+          <div class="cta-line">CTA: "Like and follow for weekly patient retention insights."</div>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     PILLAR 5 — RETENTION
+══════════════════════════════════════════════ -->
+<div class="section" id="section-p5">
+  <div class="pillar-header">
+    <div class="pillar-num">PILLAR 05</div>
+    <div class="pillar-title-block">
+      <h2>Retention &amp; <em>Lifetime Value</em></h2>
+      <div class="pillar-tagline">Acquiring a patient is expensive. Losing one silently is more expensive. Translates the sales training's "reverse-engineer your commission goal into daily activity" into practice revenue thinking — and positions your services as the infrastructure that protects it.</div>
+      <div class="platform-badges"><span class="pbadge ig">Instagram</span><span class="pbadge li">LinkedIn</span></div>
+    </div>
+  </div>
+
+  <div class="posts-grid">
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 5.1</span><span class="format-tag ft-stat">Stat / Infographic</span></div>
+      <div class="card-body">
+        <div class="card-hook">One missed call per day.<br><em>That's £200,000 a year walking out the door.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Caption</div>
+          <div class="caption-text">Let's do the maths.
+
+5 missed calls per week (conservative for a busy NW London practice)
+× £800 average patient value
+× 50 working weeks
+
+<strong>= £200,000 a year.</strong>
+
+Some of those callers will try again. Most won't. They'll search Google, find the next practice in the Map Pack, and book there.
+
+The problem isn't your dentistry. It isn't your pricing. It isn't even your reception team — they're doing their best.
+
+The problem is there's no system catching the patients who can't get through.
+
+An automated missed call SMS — sent within seconds of a missed call, with a booking link — recovers most of those patients before they move on.
+
+First recovery typically happens within 48 hours of going live.
+Zero extra work from your team.</div>
+          <div class="cta-line">CTA: "Free audit at patientacquisitionhub.com — find out your actual missed call rate."</div>
+          <div class="hashtags">#MissedCalls #DentalRevenue #PracticeGrowth #DentalMarketing #PatientAcquisitionHub #NW1Dentist</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 5.2</span><span class="format-tag ft-carousel">Carousel</span></div>
+      <div class="card-body">
+        <div class="card-hook">The 5 reasons patients leave a dental practice.<br><em>None of them are price.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown</div>
+          <ul class="slides-list">
+            <li><strong>INTRO:</strong> "Practice owners almost always assume they lost a patient on price. Almost never true. Here are the 5 real reasons — and how to stop each one."</li>
+            <li><strong>REASON 1 — Felt rushed:</strong> The appointment felt transactional. No one asked how they were doing. In and out in 20 minutes with no human connection. Fix: 2-minute rapport at the start of every appointment.</li>
+            <li><strong>REASON 2 — No follow-up:</strong> After a big treatment, silence. No check-in. No review request. No "how are you feeling?" message. The practice felt like it stopped caring the moment they left. Fix: automated post-treatment sequence.</li>
+            <li><strong>REASON 3 — Hard to reach:</strong> They called twice and couldn't get through. Never heard back. Switched. Fix: missed call recovery SMS with booking link.</li>
+            <li><strong>REASON 4 — Forgot about you:</strong> No recall. No reminders. 2 years passed. They moved on. Fix: a recall system that re-engages at 3, 6, and 12-month intervals.</li>
+            <li><strong>REASON 5 — Found someone who felt more local:</strong> A competitor with stronger local signals — reviews mentioning nearby streets, area-specific GBP content — felt more like "their dentist." Fix: hyper-local review prompts and GBP optimisation.</li>
+            <li><strong>CLOSE:</strong> "Every one of these is a system problem, not a people problem. All of them are fixable."</li>
+          </ul>
+          <div class="cta-line">CTA: "Save this — share it with your practice manager or TCO."</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 5.3</span><span class="format-tag ft-reel">Reel</span></div>
+      <div class="card-body">
+        <div class="card-hook">A private patient is worth £2,000–£6,000<br>over their lifetime.<br><em>What's your retention system worth?</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Script</div>
+          <div class="caption-text">Stop thinking about patients as single appointments.
+
+A new private patient in NW London is worth somewhere between £2,000 and £6,000 over the course of their relationship with your practice.
+
+That's hygiene visits. Check-ups. Whitening. Invisalign one day. Maybe implants.
+
+<strong>Every patient you fail to retain isn't a £200 loss. It's a £4,000 loss.</strong>
+
+Now think about how many patients quietly drift away from your practice every year because:
+→ No recall system
+→ No post-treatment follow-up
+→ No re-engagement sequence
+
+Most practices lose 15–20% of their active patient base annually to attrition. Silently. No complaint. No goodbye. They just stop coming.
+
+The practices that grow aren't always acquiring more patients.
+They're losing fewer of the ones they already have.</div>
+          <div class="cta-line">CTA: "Link in bio — free strategy call to audit your current retention rate."</div>
+          <div class="hashtags">#PatientLifetimeValue #DentalRetention #PracticeGrowth #DentalMarketing #PatientAcquisition</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 5.4</span><span class="format-tag ft-carousel">Carousel · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">Recovering 2 extra patients a month.<br><em>What it actually means for your practice P&amp;L.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown (reverse-engineer from target, adapted from sales training)</div>
+          <ul class="slides-list">
+            <li><strong>INTRO:</strong> "The best closers reverse-engineer their income goal into daily activity. The best practices reverse-engineer their growth target into systems. Here's what 2 extra patients a month means."</li>
+            <li><strong>THE BASELINE:</strong> 2 recovered patients/month × £1,000 avg treatment value = £2,000/month extra. That's £24,000 additional annual revenue from what was previously lost revenue.</li>
+            <li><strong>COMPOUND IT:</strong> If those patients become retained patients and each refers just one person over 2 years — you've added 4 patients from 2 recoveries. At £4,000 lifetime value each = £16,000 from 2 recovered calls.</li>
+            <li><strong>THE SYSTEM COST:</strong> Missed call recovery is running in the background. No staff time. No extra calls made. No new marketing spend. Just a system catching what was already falling through the cracks.</li>
+            <li><strong>NW3 UPSIDE:</strong> In Hampstead NW3, average private patient treatment value is higher. 2 recovered patients at £2,500 avg = £5,000/month = £60,000 annually.</li>
+            <li><strong>CLOSE:</strong> "The ROI conversation for this service is almost offensively simple. The harder question is why most practices don't have it yet."</li>
+          </ul>
+          <div class="cta-line">CTA: "Free audit → patientacquisitionhub.com (link in bio)"</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 5.5</span><span class="format-tag ft-stat">Stat Post</span></div>
+      <div class="card-body">
+        <div class="card-hook">Your recall system is your retention system.<br><em>Most practices have neither.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Caption</div>
+          <div class="caption-text">Here's what a proper recall system does:
+
+→ Reminds patients at 3, 6, and 12-month intervals
+→ Uses personalised messaging based on treatment history
+→ Re-engages lapsed patients (those who haven't visited in 18+ months)
+→ Turns a one-off visitor into a patient for life
+
+Here's what most dental practices have:
+
+→ A manual letter sent by the practice manager when she remembers
+→ An automated text that says "Your dental check-up is overdue" with no personalisation
+→ Nothing, for patients who've been absent over a year
+
+<strong>The difference between these two approaches is measured in patient retention rate, revenue per patient, and long-term practice value.</strong>
+
+If you ever want to sell your practice — a strong, active patient database is the most valuable asset you have. More than your equipment. More than your location.
+
+Build the system now. It compounds every month.</div>
+          <div class="cta-line">CTA: "DM me 'RECALL' — I'll share the framework I use with NW London practices."</div>
+          <div class="hashtags">#RecallSystem #PatientRetention #DentalPractice #PracticeGrowth #DentalMarketing #LTV</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 5.6</span><span class="format-tag ft-reel">Reel</span></div>
+      <div class="card-body">
+        <div class="card-hook">When to leave a dental marketing agency.<br><em>3 questions every practice owner should ask.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Script (adapted from sales training's "when to leave a company" framework)</div>
+          <div class="caption-text">If you're paying a marketing agency right now, ask yourself three questions:
+
+<strong>1. Can you earn from it?</strong>
+Are you actually getting new patients from the work they're doing? Not impressions. Not followers. Booked appointments.
+
+<strong>2. Can you learn from it?</strong>
+Do they explain what they're doing and why? Do you understand your own metrics? Or is it a black box you're paying into monthly?
+
+<strong>3. Can you grow from it?</strong>
+Is there a clear pathway for your practice to improve — more reviews, better ranking, lower missed-call rate — month by month?
+
+If two or more of those answers are no — you're paying for the comfort of having an agency, not for results.
+
+<em>I work with a small number of practices at a time, deliberately. Because every one gets my direct focus — not a handoff to a junior account manager.</em></div>
+          <div class="cta-line">CTA: "Free strategy call — no pitch deck, just clarity. Link in bio."</div>
+          <div class="hashtags">#DentalMarketing #PracticeOwner #MarketingAgency #PatientAcquisitionHub #DentalGrowth</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 5.7</span><span class="format-tag ft-article">Article · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">The 3 metrics every dental practice<br>should be tracking — <em>but almost none do.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">LinkedIn Article Outline (adapted from sales training's metric tracking framework)</div>
+          <div class="caption-text"><strong>Intro:</strong> "The best closers track three numbers daily: close rate, cash collected per call, and monthly target. The best practices should track three equivalent numbers — but most track zero."
+
+<strong>Metric 1 — New patient conversion rate:</strong> Of all new enquiries (calls + online), what % become booked appointments? Industry benchmark: 60–70%. Most practices: unknown.
+
+<strong>Metric 2 — Missed call rate:</strong> What % of inbound calls go unanswered? How many of those callers never call back? The maths of what this costs per week.
+
+<strong>Metric 3 — Review velocity:</strong> How many new Google reviews per month? Recency score (days since last review). Star rating trend. These directly drive Map Pack position.
+
+<strong>Why these three:</strong> They sit at the intersection of acquisition (getting patients in) and retention (keeping them and earning their advocacy). Each one has a direct revenue equivalent.
+
+<strong>How to start tracking them:</strong> Simple dashboard setup with Google Business Profile insights, call tracking software, and a basic CRM.
+
+<strong>Close:</strong> "You can't improve what you don't measure. And the practices that measure these three numbers consistently are the ones that grow predictably."</div>
+          <div class="cta-line">CTA: "Follow for weekly practice growth frameworks. Free audit link in comments."</div>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     PILLAR 6 — FOUNDER
+══════════════════════════════════════════════ -->
+<div class="section" id="section-p6">
+  <div class="pillar-header">
+    <div class="pillar-num">PILLAR 06</div>
+    <div class="pillar-title-block">
+      <h2>The <em>Founder Story</em></h2>
+      <div class="pillar-tagline">Paris → London → BJJ → building systems. The mindset section of the sales training (confidence, daily preparation, fighting through doubt) maps directly onto your entrepreneurial arc. This is your personal brand pillar — primarily LinkedIn, with reel versions for Instagram.</div>
+      <div class="platform-badges"><span class="pbadge li">LinkedIn</span><span class="pbadge ig">IG (Reels)</span></div>
+    </div>
+  </div>
+
+  <div class="posts-grid">
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 6.1</span><span class="format-tag ft-article">Article · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">I moved from Paris to London,<br>failed an English exam,<br><em>and ended up building systems for dentists.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">LinkedIn Article Hook + Outline</div>
+          <div class="caption-text"><strong>Opening line:</strong> "When I arrived in London from Paris, I failed the English exam. I don't tell that story to be inspiring. I tell it because it's where everything I understand about persistence actually started."
+
+<strong>The arc:</strong>
+→ Paris → London. The decision, the naivety, the reality.
+→ The English exam. What it felt like. What I did next.
+→ The freight, the training, the support work — the non-linear path.
+→ What I noticed in every job: systems work. People without systems struggle.
+→ The moment I saw independent dental practices losing patients to stronger Google signals — and knowing exactly how to fix it.
+→ Building Patient Acquisition Hub. Building Try Review Bloom because the tool I needed didn't exist.
+→ BJJ as the metaphor: you can't rush the fundamentals. Every belt is earned on the mat.
+
+<strong>The point:</strong> "I didn't set out to be a dental marketing specialist. I set out to solve a specific problem I could see clearly that others were missing."
+
+<strong>Close:</strong> "That's still what I do. One practice at a time. Direct focus, not a handoff."</div>
+          <div class="cta-line">CTA: "Follow me — I write about patient acquisition, local search, and building businesses without shortcuts."</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 6.2</span><span class="format-tag ft-reel">Reel</span></div>
+      <div class="card-body">
+        <div class="card-hook">What BJJ taught me about<br>building a client base.<br><em>You can't rush the fundamentals.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Script</div>
+          <div class="caption-text">I train Brazilian jiu-jitsu.
+
+One of the first things you learn on the mat is that you can't skip the foundations. There's no shortcut to a blue belt. No hack that gets you past someone with better base positioning.
+
+You drill the basics until they're automatic. Then you drill them again.
+
+<strong>Building a business is exactly the same.</strong>
+
+The practices I work with that grow fastest aren't the ones with the biggest marketing budget. They're the ones that mastered their foundations:
+
+→ A Google profile that's actively maintained
+→ A consistent flow of fresh reviews
+→ A system that catches every missed call
+→ A follow-up process that doesn't rely on memory
+
+These aren't exciting. They're not hacks. But they're the guard, the base, the posture that everything else is built on.
+
+Get the foundations right. Then compound from there.
+
+<em>Panta Rhei. Everything flows.</em></div>
+          <div class="cta-line">CTA: "Follow for more on building sustainable systems — in business and on the mat."</div>
+          <div class="hashtags">#BJJ #Entrepreneurship #DentalMarketing #BuildingABusiness #Foundations #PantaRhei</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 6.3</span><span class="format-tag ft-article">Article · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">The problem I couldn't find<br>a tool to solve —<br><em>so I built Try Review Bloom.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">LinkedIn Article Outline</div>
+          <div class="caption-text"><strong>Hook:</strong> "Every review automation tool I found was built for the US market, generic to any business, or priced for enterprise. None of them worked the way a dental practice actually works."
+
+<strong>The problem:</strong> Dental practices operate on appointment-based workflows. The review window is the 2 hours after a patient leaves. Generic tools miss it entirely.
+
+<strong>What Try Review Bloom does differently:</strong>
+→ Post-appointment timing (not a weekly blast)
+→ Private routing for unhappy patients before they go public
+→ Geo-keyword prompts (Camden, Hampstead, NW1) that build Map Pack signals
+→ Velocity tracking — not just total count
+
+<strong>The build process:</strong> What it took to get from "I need this tool" to a product running live across client practices.
+
+<strong>The lesson:</strong> "Sometimes the best product idea is the solution to your own client problem."
+
+<strong>Close:</strong> "tryreviewbloom.com — built for dental practices, available to any London local business."</div>
+          <div class="cta-line">CTA: "Follow me for more on building product-led service businesses."</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 6.4</span><span class="format-tag ft-reel">Reel</span></div>
+      <div class="card-body">
+        <div class="card-hook">Why I deliberately work with<br>a small number of practices<br><em>at a time.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Script</div>
+          <div class="caption-text">Most agencies scale by taking on as many clients as possible and managing them with junior account managers.
+
+I don't do that.
+
+I work with a small number of practices at a time. On purpose.
+
+<strong>Because every practice I work with gets me.</strong> Not a handoff. Not a template. Direct focus.
+
+That means when something isn't working, I know about it within hours — not the next monthly report.
+
+That means when a new review signals something worth responding to differently, I catch it.
+
+That means my clients' success is inseparable from mine.
+
+This isn't the fastest way to build a business.
+But it's the right way to build a reputation.
+
+And in a market where the best dentists are also competing on trust — I should hold myself to the same standard I'm helping them achieve.</div>
+          <div class="cta-line">CTA: "Book a free strategy call — I'll be direct about whether I can help. Link in bio."</div>
+          <div class="hashtags">#BoutiquAgency #DentalMarketing #PatientAcquisitionHub #Founder #BuildingTrust</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 6.5</span><span class="format-tag ft-article">Article · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">What a failed English exam,<br>a personal training Instagram,<br><em>and Brazilian jiu-jitsu taught me about building a business.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">LinkedIn Article (repurposed from existing article)</div>
+          <div class="caption-text"><strong>This is a condensed, punchy version of your existing LinkedIn article — reformatted for maximum LinkedIn engagement.</strong>
+
+<strong>Hook:</strong> Three things I failed at before I found what I was supposed to build.
+
+<strong>Section 1 — The English exam:</strong> What it meant to fail it. What it meant to sit it again anyway.
+
+<strong>Section 2 — The PT Instagram:</strong> What I learned about building an audience with no shortcuts. The posts that performed. The ones that bombed. What social proof actually does.
+
+<strong>Section 3 — BJJ:</strong> Panta Rhei. Everything flows. The lesson about fundamentals that I carry into everything I build.
+
+<strong>Section 4 — What I built and why:</strong> Patient Acquisition Hub. Try Review Bloom. The specific problem I saw that no one was solving for independent dental practices.
+
+<strong>Close:</strong> "The non-linear path wasn't wasted time. It was the research." Link to website.</div>
+          <div class="cta-line">CTA: "If this resonated — follow. I write about building, selling, and thinking clearly."</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 6.6</span><span class="format-tag ft-reel">Reel</span></div>
+      <div class="card-body">
+        <div class="card-hook">The mindset I bring to every<br>client engagement.<br><em>Adapted from how the best closers prepare.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Script (adapted from sales training mindset section)</div>
+          <div class="caption-text">The best closers in the world don't just wing their calls. They prepare obsessively.
+
+Before every client strategy call, I do the same:
+
+<strong>I audit before I advise.</strong> I know your review velocity, your GBP signals, your missed call rate, and your local ranking before we speak. Because showing up prepared is how you show someone you take their business seriously.
+
+<strong>I review what's working first.</strong> Before identifying problems, I understand what's already earning trust for your practice. You fix from a foundation, not from fear.
+
+<strong>I bring belief, not just data.</strong> The best dental practices I work with don't just need better systems — they need to see what's actually possible when their Google signals are working for them. My job is to show them that clearly.
+
+"Confidence is contagious. If you don't believe your practice can outrank the competitors near you — your patients won't believe it either."</div>
+          <div class="cta-line">CTA: "Free strategy call — I'll show you exactly where your practice stands. Link in bio."</div>
+          <div class="hashtags">#Founder #DentalMarketing #Mindset #Preparation #PatientAcquisitionHub #BuildingWithIntention</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 6.7</span><span class="format-tag ft-article">Article · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">Why I only focus on NW London.<br><em>And why that's a competitive advantage.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">LinkedIn Article Outline</div>
+          <div class="caption-text"><strong>Hook:</strong> "A London-wide dental marketing strategy puts you in competition with 3,000+ practices. Your actual patients are within 1.5 miles of your door. I focus on that mile."
+
+<strong>The argument for hyper-local specificity:</strong>
+When you focus on NW1, NW3, NW5, and NW6 — you're competing with 30–50 practices, not 3,000.
+The ranking battle is far more winnable.
+The content, the review prompts, the GBP posts — everything is calibrated to the specific geography where your patients actually live.
+
+<strong>The Tube station principle:</strong> A patient stepping off at Chalk Farm, Hampstead, or Belsize Park searches within their immediate area. "Dentist near Chalk Farm" is a real search. "Dentist London" is not how people book.
+
+<strong>Why this matters for my clients:</strong> I know the local competitive landscape. I know which searches matter and which don't. I know the landmarks and postcodes that patients actually use.
+
+<strong>Close:</strong> "Specificity beats scale in local search. Every time."</div>
+          <div class="cta-line">CTA: "Follow for hyper-local dental marketing insights — no generic advice."</div>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     PILLAR 7 — SOCIAL PROOF
+══════════════════════════════════════════════ -->
+<div class="section" id="section-p7">
+  <div class="pillar-header">
+    <div class="pillar-num">PILLAR 07</div>
+    <div class="pillar-title-block">
+      <h2>Social Proof <em>&amp; Results</em></h2>
+      <div class="pillar-tagline">Show the result before you talk about the cost. Directly from the sales training's "value stack before price drop" and "assume the close" methodology — applied to before/after content, data screenshots, and client outcomes.</div>
+      <div class="platform-badges"><span class="pbadge ig">Instagram</span><span class="pbadge li">LinkedIn</span></div>
+    </div>
+  </div>
+
+  <div class="posts-grid">
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 7.1</span><span class="format-tag ft-carousel">Before / After Carousel</span></div>
+      <div class="card-body">
+        <div class="card-hook">Week 1 vs Week 12.<br><em>What a practice looks like after Review Bloom goes live.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown</div>
+          <ul class="slides-list">
+            <li><strong>SLIDE 1 — BEFORE:</strong> Screenshot (or mock-up) of a GBP profile with 14 reviews, last review 8 months ago, 3.9 stars, no posts, incomplete service listings.</li>
+            <li><strong>SLIDE 2 — AFTER (week 4):</strong> 28 reviews, last review 3 days ago, 4.6 stars. Review velocity chart showing upward trend.</li>
+            <li><strong>SLIDE 3 — AFTER (week 12):</strong> 52 reviews, 4.8 stars, ranking in top 3 for target postcode terms. First missed-call recovery: week 1.</li>
+            <li><strong>SLIDE 4 — WHAT CHANGED:</strong> Post-appointment SMS via Try Review Bloom. GBP posts 2×/week. Missed call SMS live from day 1. Citations cleaned up. Nothing new paid. Just existing infrastructure working properly.</li>
+            <li><strong>SLIDE 5 — THE REAL METRIC:</strong> New patient enquiries up. Practice owner no longer worrying about their Google presence. Focus back on dentistry.</li>
+            <li><strong>CLOSE:</strong> "This is what 12 weeks looks like. Most practices have never seen their GBP in this state."</li>
+          </ul>
+          <div class="cta-line">CTA: "Free audit — link in bio. I'll show you exactly what week 1 vs week 12 could look like for your practice."</div>
+          <div class="hashtags">#BeforeAfter #DentalMarketing #GoogleReviews #TryReviewBloom #PatientAcquisitionHub #LocalSEO</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 7.2</span><span class="format-tag ft-stat">Stat / Results</span></div>
+      <div class="card-body">
+        <div class="card-hook">First missed-call recovery:<br><em>within 48 hours of going live.</em><br>Every time.</div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Caption</div>
+          <div class="caption-text">Without exception, every practice I work with recovers their first missed-call patient within 48 hours of the system going live.
+
+Not because it's magic. Because:
+
+→ The phone rings
+→ Nobody gets to it in time
+→ Within seconds, the caller gets an automatic personalised SMS with a booking link
+→ They book. Within 20 minutes.
+
+That patient was worth £500–£3,000.
+Yesterday, they would have gone to the next practice in the Map Pack.
+
+<strong>Today, they're booked in.</strong>
+
+Zero extra effort from your reception team. Zero. They never even knew the call was missed.
+
+This is what a system looks like when it works.</div>
+          <div class="cta-line">CTA: "Your first missed-call recovery is usually within 48 hours of going live. Book a free audit to find out your current missed call rate → link in bio."</div>
+          <div class="hashtags">#MissedCallRecovery #PatientAcquisition #DentalMarketing #SystemsWork #PatientAcquisitionHub</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 7.3</span><span class="format-tag ft-reel">Reel</span></div>
+      <div class="card-body">
+        <div class="card-hook">This NW3 practice had 14 reviews<br>in January.<br><em>Here's where they are now.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Script (results-first, cost last)</div>
+          <div class="caption-text">In January, a Hampstead NW3 practice came to me with 14 Google reviews. The last one had been posted 7 months earlier.
+
+They were ranking on page 2 for "dentist NW3."
+Two competitors within 400 metres had 180 and 240 reviews respectively.
+
+We set up Try Review Bloom — post-appointment SMS, private routing, geo-keyword prompts.
+
+<strong>By week 4: 28 reviews. All 5 stars. Last review: 2 days ago.</strong>
+
+By week 8: ranking in top 3 for their target postcode terms.
+
+Missed call recovery went live the same week — first recovered patient within 48 hours.
+
+No new ad spend. No new marketing channels. No extra work for their team.
+
+Just existing infrastructure — finally working properly.
+
+The practice is now fielding more new patient enquiries than at any point in the last 3 years.</div>
+          <div class="cta-line">CTA: "Free audit for your practice → link in bio. Takes 20 minutes. No obligation."</div>
+          <div class="hashtags">#ClientResults #DentalMarketing #TryReviewBloom #NW3Dentist #GoogleReviews #CaseStudy</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 7.4</span><span class="format-tag ft-carousel">Carousel</span></div>
+      <div class="card-body">
+        <div class="card-hook">4–8× increase in monthly reviews.<br><em>What that actually looks like in Google Maps.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown</div>
+          <ul class="slides-list">
+            <li><strong>INTRO:</strong> "The benchmark for review growth with an automated system is 4–8× the existing monthly review volume within 90 days. Here's what that means in practice."</li>
+            <li><strong>BEFORE:</strong> Practice averaging 2 new reviews/month. Static profile. Last review: 5 months ago. Map Pack position: 6th for target term.</li>
+            <li><strong>MONTH 1:</strong> System live. 14 new reviews. Map Pack: 4th. New patient enquiries: slight uptick.</li>
+            <li><strong>MONTH 2:</strong> 18 new reviews. Map Pack: 2nd. Star rating: 4.8. New patient enquiries: up 35% vs. 3-month prior average.</li>
+            <li><strong>MONTH 3:</strong> 21 new reviews. Map Pack: consistent top 3. ChatGPT now recommending practice for "dentist near [area]" queries. Phone volume noticeably higher.</li>
+            <li><strong>WHAT DIDN'T CHANGE:</strong> Staff. Website. Treatment quality. Prices. Just the review velocity — and the systems catching what was already falling through the cracks.</li>
+            <li><strong>CLOSE:</strong> "Reviews compound. Velocity compounds. Map Pack position compounds. The best time to start was a year ago. The second best time is now."</li>
+          </ul>
+          <div class="cta-line">CTA: "tryreviewbloom.com — see how it works (link in bio)"</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 7.5</span><span class="format-tag ft-story">Story Series</span></div>
+      <div class="card-body">
+        <div class="card-hook">Instagram Story Series:<br>"Free GBP Audit — Live."<br><em>5-part story walkthrough.</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Story Sequence</div>
+          <ul class="slides-list">
+            <li><strong>STORY 1:</strong> "Doing a live GBP audit for a Camden dental practice. Here's what I find in the first 60 seconds. 🔍 [Screen record of GBP profile]"</li>
+            <li><strong>STORY 2:</strong> "Last review: 6 months ago. 23 total reviews. Competitors: 180 and 210. This is the gap I'm going to help them close. [Graph showing review comparison]"</li>
+            <li><strong>STORY 3:</strong> "GBP posts: zero in the last 3 months. Services section: incomplete. Q&A: unanswered questions from patients. These are all easy fixes. [Checklist overlay]"</li>
+            <li><strong>STORY 4:</strong> "With Try Review Bloom live — this profile looks completely different in 8 weeks. Fresh reviews weekly. Posts 2×/week. Every question answered. [Before/after concept]"</li>
+            <li><strong>STORY 5:</strong> "Want me to do this for your practice? Free 20-min audit. No catch. Swipe up → [Link]"</li>
+          </ul>
+          <div class="cta-line">CTA: Swipe-up or link sticker to Calendly.</div>
+          <div class="hashtags">No hashtags needed for stories — use location tags instead.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 7.6</span><span class="format-tag ft-stat">Stat Post · LinkedIn</span></div>
+      <div class="card-body">
+        <div class="card-hook">£24,000 additional annual revenue.<br><em>From 2 recovered patients a month.</em><br>Conservative NW1 baseline.</div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="caption-label">Caption</div>
+          <div class="caption-text">The maths on missed call recovery is almost uncomfortably straightforward.
+
+2 recovered patients/month
+× £1,000 average treatment value (conservative NW1 baseline)
+= £2,000/month
+= <strong>£24,000 additional annual revenue</strong>
+
+For Hampstead NW3 practices where average private treatment value is higher:
+2 recovered patients × £2,500 avg = £5,000/month = £60,000/year.
+
+The cost of running the system is a fraction of the first recovered patient.
+
+And those recovered patients — if retained — are worth £2,000–£6,000 each over their lifetime.
+
+This isn't a marketing cost.
+It's infrastructure.
+
+The only question worth asking is: how many calls are you currently missing per week?
+
+(I can tell you this in a free 20-minute audit. No obligation.)</div>
+          <div class="cta-line">CTA: "Free audit → patientacquisitionhub.com"</div>
+          <div class="hashtags">#ROI #DentalMarketing #MissedCallRecovery #PatientAcquisition #DentalRevenue #NW3Dentist</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="card-meta"><span class="post-num">POST 7.7</span><span class="format-tag ft-carousel">Carousel · Testimonial</span></div>
+      <div class="card-body">
+        <div class="card-hook">What practice owners say<br>after the first 90 days.<br><em>[Client feedback carousel]</em></div>
+        <button class="toggle-btn" onclick="toggleCard(this)"><span>View full post</span><span class="toggle-icon">↓</span></button>
+        <div class="card-expand"><div class="card-content">
+          <div class="slides-label">Slide Breakdown (use real testimonials as they come in; template structure below)</div>
+          <ul class="slides-list">
+            <li><strong>SLIDE 1 — COVER:</strong> "What practice owners say after 90 days with Patient Acquisition Hub."</li>
+            <li><strong>SLIDES 2–4 — TESTIMONIALS:</strong> Each slide: photo/logo, name, practice, location, and the quote. Keep quotes focused on a specific outcome: review count, recovered patients, ranking, or team workload. Avoid vague praise.</li>
+            <li><strong>SLIDE 5 — THE PATTERN:</strong> "The thing every practice says after 90 days: 'I can't believe we were doing it the old way for so long.'"</li>
+            <li><strong>SLIDE 6 — CTA:</strong> "Want to know what 90 days could look like for your practice? Free audit. No commitment. [Link]"</li>
+          </ul>
+          <div class="caption-label" style="margin-top:12px">Until you have testimonials:</div>
+          <div class="caption-text">Replace testimonial slides with specific data points and outcomes — review count before/after, ranking before/after, first missed-call recovery timeline. Data is as convincing as social proof when it's specific.</div>
+          <div class="cta-line">CTA: "Book a free audit → link in bio."</div>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     CALENDAR
+══════════════════════════════════════════════ -->
+<div class="section" id="section-calendar">
+  <div class="intro-box">
+    <strong>12-week editorial calendar</strong> — 4 posts/week across Instagram and LinkedIn. Each week rotates through pillars to maintain variety while keeping your core message consistent. Posting cadence: Mon + Wed (Instagram), Tue + Thu (LinkedIn). Adjust to your peak engagement windows.
+  </div>
+
+  <div class="section-title">Weeks 1–4 · Phase: Attract</div>
+  <table class="cal-table">
+    <tr><th>Week</th><th>Day</th><th>Platform</th><th>Post</th><th>Pillar</th></tr>
+    <tr><td>W1 · Mon</td><td>Monday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>Search your postcode right now.</strong> (Reel — P1.1)</td><td>P1 Visibility</td></tr>
+    <tr><td>W1 · Tue</td><td>Tuesday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>The 5 signals Google uses to rank your practice.</strong> (Carousel — P1.4)</td><td>P1 Visibility</td></tr>
+    <tr><td>W1 · Wed</td><td>Wednesday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>Your Google reviews are your sales pitch.</strong> (Carousel — P2.1)</td><td>P2 Journey</td></tr>
+    <tr><td>W1 · Thu</td><td>Thursday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>Founder: Paris → London → failed English exam.</strong> (Article — P6.1)</td><td>P6 Founder</td></tr>
+
+    <tr><td>W2 · Mon</td><td>Monday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>14 reviews vs 280 reviews. Same street.</strong> (Carousel — P1.2)</td><td>P1 Visibility</td></tr>
+    <tr><td>W2 · Tue</td><td>Tuesday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>The new patient consultation is a sales call.</strong> (Carousel — P2.3)</td><td>P2 Journey</td></tr>
+    <tr><td>W2 · Wed</td><td>Wednesday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>3 types of patients who call your practice.</strong> (Carousel — P3.1)</td><td>P3 Qualify</td></tr>
+    <tr><td>W2 · Thu</td><td>Thursday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>Week 1 vs Week 12 — before/after results.</strong> (Carousel — P7.1)</td><td>P7 Proof</td></tr>
+
+    <tr><td>W3 · Mon</td><td>Monday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>45% of consumers use ChatGPT for local search.</strong> (Stat — P1.3)</td><td>P1 Visibility</td></tr>
+    <tr><td>W3 · Tue</td><td>Tuesday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>The pre-consultation question that filters time-wasters.</strong> (Article — P3.7)</td><td>P3 Qualify</td></tr>
+    <tr><td>W3 · Wed</td><td>Wednesday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>The moment most practices lose a patient — 4 seconds.</strong> (Reel — P2.5)</td><td>P2 Journey</td></tr>
+    <tr><td>W3 · Thu</td><td>Thursday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>The problem I couldn't find a tool to solve — Try Review Bloom.</strong> (Article — P6.3)</td><td>P6 Founder</td></tr>
+
+    <tr><td>W4 · Mon</td><td>Monday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>A patient leaves your chair. 90-day sequence.</strong> (Carousel — P4.1)</td><td>P4 Nurture</td></tr>
+    <tr><td>W4 · Tue</td><td>Tuesday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>The 5 reasons patients leave a dental practice.</strong> (Carousel — P5.2)</td><td>P5 Retention</td></tr>
+    <tr><td>W4 · Wed</td><td>Wednesday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>First missed-call recovery: within 48 hours.</strong> (Stat — P7.2)</td><td>P7 Proof</td></tr>
+    <tr><td>W4 · Thu</td><td>Thursday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>32% of Map Pack ranking — GBP signals.</strong> (Stat — P1.6)</td><td>P1 Visibility</td></tr>
+  </table>
+
+  <div class="section-title">Weeks 5–8 · Phase: Convert</div>
+  <table class="cal-table">
+    <tr><th>Week</th><th>Day</th><th>Platform</th><th>Post</th><th>Pillar</th></tr>
+    <tr><td>W5 · Mon</td><td>Monday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>Your receptionist is doing sales 20 times a day.</strong> (Reel — P3.2)</td><td>P3 Qualify</td></tr>
+    <tr><td>W5 · Tue</td><td>Tuesday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>6-stage patient journey most practices lose patients through.</strong> (Article — P2.7)</td><td>P2 Journey</td></tr>
+    <tr><td>W5 · Wed</td><td>Wednesday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>Most post-appointment emails are wrong — here's the right one.</strong> (Reel — P4.2)</td><td>P4 Nurture</td></tr>
+    <tr><td>W5 · Thu</td><td>Thursday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>£24,000 additional annual revenue from 2 recovered patients.</strong> (Stat — P7.6)</td><td>P7 Proof</td></tr>
+
+    <tr><td>W6 · Mon</td><td>Monday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>How to tell in 2 minutes if a patient will accept treatment.</strong> (Reel — P3.5)</td><td>P3 Qualify</td></tr>
+    <tr><td>W6 · Tue</td><td>Tuesday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>3 metrics every dental practice should track but almost none do.</strong> (Article — P5.7)</td><td>P5 Retention</td></tr>
+    <tr><td>W6 · Wed</td><td>Wednesday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>The silence after treatment — where you lose patients.</strong> (Carousel — P4.3)</td><td>P4 Nurture</td></tr>
+    <tr><td>W6 · Thu</td><td>Thursday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>What BJJ taught me about building a client base.</strong> (Reel/Post — P6.2)</td><td>P6 Founder</td></tr>
+
+    <tr><td>W7 · Mon</td><td>Monday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>One missed call per day = £200,000 a year.</strong> (Stat — P5.1)</td><td>P5 Retention</td></tr>
+    <tr><td>W7 · Tue</td><td>Tuesday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>The Yes/No/Maybe frame — why "I'll think about it" costs you £££.</strong> (Carousel — P3.6)</td><td>P3 Qualify</td></tr>
+    <tr><td>W7 · Wed</td><td>Wednesday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>84% of patients read reviews before booking.</strong> (Reel — P2.2)</td><td>P2 Journey</td></tr>
+    <tr><td>W7 · Thu</td><td>Thursday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>This NW3 practice had 14 reviews in January.</strong> (Case study — P7.3)</td><td>P7 Proof</td></tr>
+
+    <tr><td>W8 · Mon</td><td>Monday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>What to say to a patient who ghosts after a treatment plan.</strong> (Carousel — P4.6)</td><td>P4 Nurture</td></tr>
+    <tr><td>W8 · Tue</td><td>Tuesday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>The 3-touchpoint follow-up that turns one-visit patients into regulars.</strong> (Article — P4.7)</td><td>P4 Nurture</td></tr>
+    <tr><td>W8 · Wed</td><td>Wednesday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>A private patient is worth £2,000–£6,000. What's your retention system worth?</strong> (Reel — P5.3)</td><td>P5 Retention</td></tr>
+    <tr><td>W8 · Thu</td><td>Thursday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>The failed English exam article — condensed LinkedIn version.</strong> (Article — P6.5)</td><td>P6 Founder</td></tr>
+  </table>
+
+  <div class="section-title">Weeks 9–12 · Phase: Retain &amp; Re-engage</div>
+  <table class="cal-table">
+    <tr><th>Week</th><th>Day</th><th>Platform</th><th>Post</th><th>Pillar</th></tr>
+    <tr><td>W9 · Mon</td><td>Monday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>Story series: Live GBP audit walkthrough.</strong> (Stories — P7.5)</td><td>P7 Proof</td></tr>
+    <tr><td>W9 · Tue</td><td>Tuesday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>Recovering 2 extra patients/month — practice P&amp;L breakdown.</strong> (Carousel — P5.4)</td><td>P5 Retention</td></tr>
+    <tr><td>W9 · Wed</td><td>Wednesday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>3 types of patients searching "dentist near me."</strong> (Carousel — P1.7)</td><td>P1 Visibility</td></tr>
+    <tr><td>W9 · Thu</td><td>Thursday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>Why I only focus on NW London — competitive advantage.</strong> (Article — P6.7)</td><td>P6 Founder</td></tr>
+
+    <tr><td>W10 · Mon</td><td>Monday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>4–8× increase in monthly reviews — what that looks like in Maps.</strong> (Carousel — P7.4)</td><td>P7 Proof</td></tr>
+    <tr><td>W10 · Tue</td><td>Tuesday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>Patient qualification framework — adapted from high-ticket sales.</strong> (Article — P3.7)</td><td>P3 Qualify</td></tr>
+    <tr><td>W10 · Wed</td><td>Wednesday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>How to get a patient to refer 3 friends without asking.</strong> (Reel — P4.5)</td><td>P4 Nurture</td></tr>
+    <tr><td>W10 · Thu</td><td>Thursday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>When to leave a dental marketing agency — 3 questions.</strong> (Reel/Post — P5.6)</td><td>P5 Retention</td></tr>
+
+    <tr><td>W11 · Mon</td><td>Monday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>Review recency beats total count — why a static 200-review profile loses.</strong> (Stat — P4.4)</td><td>P4 Nurture</td></tr>
+    <tr><td>W11 · Tue</td><td>Tuesday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>Your recall system is your retention system. Most practices have neither.</strong> (Stat — P5.5)</td><td>P5 Retention</td></tr>
+    <tr><td>W11 · Wed</td><td>Wednesday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>The conversion rate gap: 40% vs 65%. Same consultations.</strong> (Stat — P3.4)</td><td>P3 Qualify</td></tr>
+    <tr><td>W11 · Thu</td><td>Thursday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>Client results: testimonials + outcomes carousel.</strong> (Carousel — P7.7)</td><td>P7 Proof</td></tr>
+
+    <tr><td>W12 · Mon</td><td>Monday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>Why I deliberately work with a small number of practices.</strong> (Reel — P6.4)</td><td>P6 Founder</td></tr>
+    <tr><td>W12 · Tue</td><td>Tuesday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>3–5 practices compared before any call made. Your 8-second window.</strong> (Stat — P2.4)</td><td>P2 Journey</td></tr>
+    <tr><td>W12 · Wed</td><td>Wednesday</td><td><span class="pbadge ig" style="font-size:10px">IG</span></td><td><strong>The mindset I bring to every client engagement.</strong> (Reel — P6.6)</td><td>P6 Founder</td></tr>
+    <tr><td>W12 · Thu</td><td>Thursday</td><td><span class="pbadge li" style="font-size:10px">LI</span></td><td><strong>Why patients ghost after a treatment plan quote — and the fix.</strong> (Carousel — P2.6)</td><td>P2 Journey</td></tr>
+  </table>
+
+  <div class="section-title">Notes for Execution</div>
+  <div class="intro-box">
+    <strong>Instagram:</strong> Reels > Carousels for reach. Post carousels as saves-bait (education). Reels for discovery. Stories weekly for live/behind-the-scenes content. Use location tags: Camden, Hampstead, NW1, NW3.<br><br>
+    <strong>LinkedIn:</strong> Long-form articles on Tuesdays/Thursdays for maximum professional reach. Engagement in the first hour is critical — reply to every comment. Tag geography naturally (NW London, Camden) rather than using hashtags as primary discovery.<br><br>
+    <strong>Cross-post rule:</strong> Every Instagram carousel can become a LinkedIn document post. Every LinkedIn article hook can become an Instagram caption. Repurpose — don't recreate.<br><br>
+    <strong>Review gating:</strong> Try Review Bloom is the product CTA on every review/nurture post. Free audit is the CTA on every visibility/retention post. Keep CTAs specific to the content, not generic.<br><br>
+    <strong>Cycle 2 (weeks 13–24):</strong> Repeat with updated data points, new case studies, and seasonal hooks (January: new year, new NHS changes; April: spring patient surge; September: back-to-routine).
+  </div>
+</div>
+
+</main>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  function showSection(id, tab) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+    document.getElementById('section-' + id).classList.add('visible');
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    if (tab) tab.classList.add('active');
+    window.scrollTo({top: document.querySelector('.nav-tabs').offsetTop - 10, behavior: 'smooth'});
+  }
+
+  function toggleCard(btn) {
+    const expand = btn.nextElementSibling;
+    const icon = btn.querySelector('.toggle-icon');
+    const isOpen = expand.classList.contains('open');
+    expand.classList.toggle('open', !isOpen);
+    icon.classList.toggle('open', !isOpen);
+    btn.querySelector('span:first-child').textContent = isOpen ? 'View full post' : 'Hide post';
+  }
+
+  const scrollTop = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => {
+    scrollTop.classList.toggle('visible', window.scrollY > 400);
+  });
+</script>
+</body>
+</html>
