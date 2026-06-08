@@ -1,0 +1,101 @@
+<!--
+  ============================================================
+  TRY REVIEW BLOOM — DENTAL REDIRECT BANNER
+  ============================================================
+  PLACEMENT: Paste this block INSIDE the hero section,
+  immediately BEFORE the <h1> tag.
+
+  The banner uses your existing TRB green (#16a34a / teal
+  palette). Adjust colours to match your exact CSS variables
+  if they differ.
+  ============================================================
+-->
+
+<!-- STYLES: add inside <head> or your existing <style> block -->
+<style>
+  .dental-redirect-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(22, 163, 74, 0.10);
+    border: 1px solid rgba(22, 163, 74, 0.30);
+    border-radius: 999px;
+    padding: 8px 16px 8px 12px;
+    margin-bottom: 28px;
+    font-size: 0.875rem;
+    color: #166534;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+  }
+
+  .dental-redirect-bar:hover {
+    background: rgba(22, 163, 74, 0.18);
+    border-color: rgba(22, 163, 74, 0.50);
+  }
+
+  .dental-redirect-bar .drb-icon {
+    font-size: 1rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .dental-redirect-bar .drb-text {
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .dental-redirect-bar .drb-link {
+    font-weight: 700;
+    color: #15803d;
+    white-space: nowrap;
+  }
+
+  .dental-redirect-bar .drb-arrow {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-left: 2px;
+  }
+
+  /* Dark mode — remove if your site doesn't use prefers-color-scheme */
+  @media (prefers-color-scheme: dark) {
+    .dental-redirect-bar {
+      background: rgba(134, 239, 172, 0.10);
+      border-color: rgba(134, 239, 172, 0.25);
+      color: #bbf7d0;
+    }
+    .dental-redirect-bar .drb-link {
+      color: #86efac;
+    }
+  }
+</style>
+
+<!-- BANNER HTML: paste before your <h1> -->
+<a
+  href="https://www.patientacquisitionhub.com"
+  class="dental-redirect-bar"
+  aria-label="Dental practice? Visit Patient Acquisition Hub — our dedicated dental marketing service"
+>
+  <span class="drb-icon">🦷</span>
+  <span class="drb-text">
+    Dental practice?
+    <span class="drb-link">Patient Acquisition Hub</span>
+    is our dedicated dental marketing service
+  </span>
+  <span class="drb-arrow">→</span>
+</a>
+
+<!--
+  ============================================================
+  OPTIONAL: if your hero is centred, wrap the anchor in a div:
+
+  <div style="display:flex; justify-content:center;">
+    <a class="dental-redirect-bar" href="..."> ... </a>
+  </div>
+
+  ============================================================
+  RESULT: a pill-shaped green callout line that sits between
+  your "🌿 Google Review Automation · London" label and the H1,
+  visible immediately on load without any scroll.
+  ============================================================
+-->
