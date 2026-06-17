@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Try Review Bloom — Google Maps Management for London Trades and Businesses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #1a6b4a;
+    --green-mid: #2d9966;
+    --green-light: #e8f5ef;
+    --green-pale: #f4faf7;
+    --ink: #0f1a14;
+    --ink-muted: #3d5047;
+    --ink-faint: #7a9085;
+    --border: #d0e4d9;
+    --white: #ffffff;
+    --cream: #fafcfb;
+    --gold: #c9a84c;
+    --blue-light: #e8f0fe;
+    --blue: #1a56a4;
+    --amber-light: #fef3e2;
+    --amber: #92600a;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--ink); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; color: var(--green); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.9rem; color: var(--ink-muted); text-decoration: none; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--green); }
+  .nav-cta { background: var(--green); color: var(--white); padding: 0.55rem 1.25rem; border-radius: 100px; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: background .2s, transform .15s; }
+  .nav-cta:hover { background: #155a3e; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero { background: var(--green-pale); padding: 7rem 5% 5rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(45,153,102,0.12) 0%, transparent 70%); pointer-events: none; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--green-light); color: var(--green); border: 1px solid rgba(26,107,74,0.2); font-size: 0.8rem; font-weight: 500; padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.5rem; animation: fadeUp .5s ease both; }
+  .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 700; line-height: 1.15; color: var(--ink); max-width: 820px; margin: 0 auto 1.25rem; animation: fadeUp .55s .1s ease both; }
+  .hero h1 em { color: var(--green); font-style: italic; }
+  .hero p { font-size: 1.1rem; color: var(--ink-muted); max-width: 560px; margin: 0 auto 2.5rem; animation: fadeUp .55s .2s ease both; }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeUp .55s .3s ease both; }
+  .btn-primary { background: var(--green); color: var(--white); padding: 0.85rem 2rem; border-radius: 100px; font-size: 1rem; font-weight: 500; text-decoration: none; transition: background .2s, transform .15s; box-shadow: 0 4px 20px rgba(26,107,74,0.25); display: inline-block; }
+  .btn-primary:hover { background: #155a3e; transform: translateY(-2px); }
+  .btn-ghost { border: 1.5px solid var(--border); color: var(--ink-muted); padding: 0.85rem 2rem; border-radius: 100px; font-size: 1rem; font-weight: 500; text-decoration: none; transition: border-color .2s, color .2s; }
+  .btn-ghost:hover { border-color: var(--green); color: var(--green); }
+  .hero-trust { margin-top: 2.5rem; font-size: 0.82rem; color: var(--ink-faint); display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; animation: fadeUp .55s .4s ease both; }
+  .hero-trust span { display: flex; align-items: center; gap: 5px; }
+
+  /* STATS */
+  .stats-strip { background: var(--green); padding: 2.5rem 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; text-align: center; }
+  .stat-num { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 700; color: var(--white); display: block; }
+  .stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-top: 2px; }
+
+  /* SECTIONS */
+  section { padding: 5rem 5%; }
+  .section-tag { font-size: 0.78rem; font-weight: 500; color: var(--green); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .75rem; display: block; }
+  .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .section-title em { color: var(--green); font-style: italic; }
+  .section-subtitle { font-size: 1.05rem; color: var(--ink-muted); max-width: 540px; }
+
+  /* PROBLEM */
+  .problem { background: var(--cream); }
+  .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
+  .problem-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
+  .problem-icon { font-size: 1.5rem; margin-bottom: .75rem; display: block; }
+  .problem-card h3 { font-size: 1rem; font-weight: 500; margin-bottom: .4rem; color: var(--ink); }
+  .problem-card p { font-size: 0.88rem; color: var(--ink-muted); line-height: 1.6; }
+
+  /* HOW */
+  .how { background: var(--cream); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .step { text-align: center; }
+  .step-num { width: 48px; height: 48px; border-radius: 50%; background: var(--green); color: var(--white); font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+  .step h3 { font-size: 1rem; font-weight: 500; margin-bottom: .4rem; color: var(--ink); }
+  .step p { font-size: 0.87rem; color: var(--ink-muted); }
+
+  /* FEATURES */
+  .features-intro { text-align: center; margin-bottom: 3.5rem; }
+  .features-intro .section-subtitle { margin: 0 auto; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .feature-card { border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; background: var(--white); transition: border-color .2s, transform .2s; }
+  .feature-card:hover { border-color: var(--green-mid); transform: translateY(-3px); }
+  .feature-icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: var(--green-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.2rem; }
+  .feature-card h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: .5rem; color: var(--ink); }
+  .feature-card p { font-size: 0.88rem; color: var(--ink-muted); line-height: 1.65; }
+  .feature-tag { display: inline-block; margin-top: .85rem; font-size: 0.75rem; font-weight: 500; padding: 2px 10px; border-radius: 100px; }
+  .feature-tag.included { background: var(--green-light); color: var(--green); }
+  .feature-tag.addon { background: var(--blue-light); color: var(--blue); }
+
+  /* PRICING */
+  .pricing { background: var(--green-pale); }
+  .pricing-intro { text-align: center; margin-bottom: 3rem; }
+  .pricing-intro .section-subtitle { margin: 0 auto; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+
+  .plan-card { background: var(--white); border: 1.5px solid var(--border); border-radius: 24px; padding: 2rem; display: flex; flex-direction: column; }
+  .plan-card.featured { border: 2.5px solid var(--green); position: relative; }
+  .plan-card.bundle { border: 2.5px solid var(--amber); }
+
+  .plan-popular { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--green); color: var(--white); font-size: 0.75rem; font-weight: 500; padding: 4px 16px; border-radius: 100px; white-space: nowrap; }
+  .plan-bundle-tag { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--amber); color: var(--white); font-size: 0.75rem; font-weight: 500; padding: 4px 16px; border-radius: 100px; white-space: nowrap; }
+
+  .plan-label { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+  .plan-label.base { color: var(--green); }
+  .plan-label.addon { color: var(--blue); }
+  .plan-label.bundle { color: var(--amber); }
+
+  .plan-name { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .plan-desc { font-size: 0.85rem; color: var(--ink-faint); margin-bottom: 1.25rem; }
+
+  .plan-price { display: flex; align-items: baseline; gap: 4px; margin-bottom: 4px; }
+  .plan-price-num { font-family: 'Fraunces', serif; font-size: 2.6rem; font-weight: 700; color: var(--ink); }
+  .plan-price-per { font-size: 0.9rem; color: var(--ink-faint); }
+  .plan-save { font-size: 0.78rem; color: var(--green); font-weight: 500; margin-bottom: 1.5rem; min-height: 18px; }
+
+  .plan-divider { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+
+  .plan-includes { list-style: none; padding: 0; margin: 0 0 1.5rem; flex: 1; }
+  .plan-includes li { display: flex; align-items: flex-start; gap: 9px; font-size: 0.88rem; color: var(--ink-muted); padding: 4px 0; }
+  .plan-includes li .chk { color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .plan-includes li .cross { color: var(--ink-faint); flex-shrink: 0; margin-top: 1px; }
+  .plan-includes li.faded { opacity: 0.45; }
+
+  .plan-cta { display: block; text-align: center; padding: 0.85rem; border-radius: 100px; font-size: 0.95rem; font-weight: 500; text-decoration: none; transition: background .2s, transform .15s; margin-top: auto; }
+  .plan-cta.green { background: var(--green); color: var(--white); box-shadow: 0 4px 16px rgba(26,107,74,0.2); }
+  .plan-cta.green:hover { background: #155a3e; transform: translateY(-2px); }
+  .plan-cta.outline { border: 1.5px solid var(--border); color: var(--ink-muted); }
+  .plan-cta.outline:hover { border-color: var(--green); color: var(--green); }
+  .plan-cta.amber { background: var(--amber); color: var(--white); }
+  .plan-cta.amber:hover { background: #7a5009; transform: translateY(-2px); }
+
+  .plan-note { font-size: 0.78rem; color: var(--ink-faint); text-align: center; margin-top: .75rem; }
+
+  /* UPSELL JOURNEY */
+  .journey { background: var(--ink); padding: 5rem 5%; }
+  .journey .section-title { color: var(--white); }
+  .journey .section-title em { color: #5dcaa5; }
+  .journey .section-tag { color: #5dcaa5; }
+  .journey-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .journey-step { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.5rem; }
+  .journey-step-num { font-family: 'Fraunces', serif; font-size: 0.8rem; font-weight: 700; color: #5dcaa5; margin-bottom: .75rem; display: block; letter-spacing: .05em; text-transform: uppercase; }
+  .journey-step h3 { font-size: 1rem; font-weight: 500; color: var(--white); margin-bottom: .5rem; }
+  .journey-step p { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
+  .journey-step .price-pill { display: inline-block; background: rgba(93,202,165,0.15); color: #5dcaa5; font-size: 0.8rem; font-weight: 500; padding: 3px 10px; border-radius: 100px; margin-top: .75rem; }
+
+  /* PROOF */
+  .proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
+  .proof-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
+  .proof-stars { color: var(--gold); font-size: 0.9rem; margin-bottom: .75rem; letter-spacing: 2px; }
+  .proof-text { font-size: 0.92rem; color: var(--ink-muted); line-height: 1.65; margin-bottom: 1rem; font-family: 'Fraunces', serif; font-style: italic; }
+  .proof-author { display: flex; align-items: center; gap: 10px; }
+  .proof-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--green-light); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 500; }
+  .proof-name { font-size: 0.85rem; font-weight: 500; color: var(--ink); }
+  .proof-trade { font-size: 0.78rem; color: var(--ink-faint); }
+
+  /* ROI */
+  .roi { background: var(--green-pale); padding: 5rem 5%; text-align: center; }
+  .roi-nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; max-width: 720px; margin: 3rem auto; }
+  .roi-num { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem 1rem; text-align: center; }
+  .roi-num strong { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--green); display: block; }
+  .roi-num span { font-size: 0.82rem; color: var(--ink-faint); margin-top: 4px; display: block; }
+
+  /* FAQ */
+  .faq-list { max-width: 700px; margin: 3rem auto 0; }
+  .faq-item { border-bottom: 1px solid var(--border); padding: 1.25rem 0; cursor: pointer; }
+  .faq-q { font-size: 1rem; font-weight: 500; color: var(--ink); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .faq-q::after { content: '+'; font-size: 1.2rem; color: var(--green); flex-shrink: 0; transition: transform .2s; }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s; }
+  .faq-item.open .faq-a { max-height: 300px; padding-top: .75rem; }
+
+  /* CTA FOOTER */
+  .cta-footer { background: var(--ink); padding: 6rem 5%; text-align: center; }
+  .cta-footer .section-title { color: var(--white); }
+  .cta-footer .section-title em { color: #5dcaa5; }
+  .cta-footer p { font-size: 1.05rem; color: rgba(255,255,255,0.55); max-width: 500px; margin: 0 auto 2rem; }
+  .footer-trust { margin-top: 1.5rem; font-size: 0.82rem; color: rgba(255,255,255,0.35); display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer { background: #060f09; color: rgba(255,255,255,0.3); padding: 2.5rem 5%; text-align: center; font-size: 0.82rem; }
+  footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  footer a:hover { color: var(--white); }
+  .footer-bottom { line-height: 1.8; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hero { padding: 5rem 5% 3.5rem; }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">🌿Try Review Bloom</a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#features">What's included</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="https://buy.stripe.com/bJeaEZ1P1fsTcag45kfEk07" class="nav-cta">Get started — from £97 →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🗺️ Google Maps Management · London Trades & Businesses</div>
+  <h1>Rank higher on Google Maps.<br><em>Win more jobs</em> — on autopilot.</h1>
+  <p>London Businesses are losing calls to competitors with better Google rankings — not better work. Start with Google Maps domination from just £97/month. Add review automation when you're ready.</p>
+  <div class="hero-btns">
+    <a href="https://buy.stripe.com/bJeaEZ1P1fsTcag45kfEk07" class="btn-primary">Start with GBP Management — £97 →</a>
+    <a href="#how" class="btn-ghost">See how it works</a>
+  </div>
+  <div class="hero-trust">
+    <span>✓ First results within 7 days</span>
+    <span>✓ No long contracts</span>
+    <span>✓ Cancel any time</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <span class="stat-num">97%</span>
+    <span class="stat-label">of buyers read reviews before choosing the right Business</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">Top 3</span>
+    <span class="stat-label">Map Pack positions get 80% of all local clicks</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">6 wks</span>
+    <span class="stat-label">average time to reach the Map Pack top 3</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">+236%</span>
+    <span class="stat-label">typical review growth in the first 60 days</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="reveal">
+    <span class="section-tag">The problem</span>
+    <h2 class="section-title">You do great work.<br><em>Google doesn't know it yet.</em></h2>
+    <p class="section-subtitle">Your ideal customers are choosing competitors — not because they're better, but because Google ranks them higher.</p>
+  </div>
+  <div class="problem-grid reveal">
+    <div class="problem-card">
+      <span class="problem-icon">📉</span>
+      <h3>Invisible on Google Maps</h3>
+      <p>An unoptimised Google Business Profile means you're buried on page 2 — while competitors with better profiles take your calls.</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">😩</span>
+      <h3>Not enough reviews</h3>
+      <p>Happy customers never get around to leaving reviews. You're starting from scratch with every new lead, while rivals have hundreds.</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">⏰</span>
+      <h3>No time to manage it</h3>
+      <p>You're already wearing too many hats. Managing your Google profile, posting updates, chasing reviews — it doesn't get done.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="reveal" style="text-align:center; max-width: 600px; margin: 0 auto;">
+    <span class="section-tag">How it works</span>
+    <h2 class="section-title">Set up once.<br><em>We handle everything else.</em></h2>
+    <p class="section-subtitle">Start with GBP Management — the fastest way to climb the Map Pack. Add reviews when you want to accelerate.</p>
+  </div>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Onboard (30 mins)</h3>
+      <p>One setup call. We get access to your Google Business Profile and connect any job management software you use.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Optimise</h3>
+      <p>Full profile audit — categories, services, photos, service areas, Q&amp;A — all optimised to Google's ranking signals on day one.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Rank</h3>
+      <p>We post weekly, track your heatmap rankings, and keep your profile ahead of competitors — every single month.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Scale (optional)</h3>
+      <p>Add review automation to supercharge your ranking. SMS + email after every job. AI replies. Past customer reactivation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="features-intro reveal">
+    <span class="section-tag">What's included</span>
+    <h2 class="section-title">Start with the <em>profile.</em><br>Add reviews when you're ready.</h2>
+    <p class="section-subtitle">Everything in green is included from £297. Blue features unlock with the Review Automation add-on.</p>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <div class="feature-icon-wrap">📍</div>
+      <h3>Full GBP optimisation</h3>
+      <p>Categories, services, photos, service areas, Q&amp;A — fully optimised on day one and maintained every month.</p>
+      <span class="feature-tag included">Included from £97</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap">📝</div>
+      <h3>AI-generated GBP posts</h3>
+      <p>4 posts per month — keeps your profile active and signals to Google that you're an engaged, trusted business.</p>
+      <span class="feature-tag included">Included from £297</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap">🗺️</div>
+      <h3>Weekly heatmap tracking</h3>
+      <p>See exactly where you rank across every postcode in your service area — for every keyword that matters.</p>
+      <span class="feature-tag included">Included from £297</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap">🔒</div>
+      <h3>Profile lock &amp; monitoring</h3>
+      <p>Prevents anyone editing your listing without approval. Instant alerts if your profile is changed or suspended.</p>
+      <span class="feature-tag included">Included from £297</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap">🏆</div>
+      <h3>Competitor intelligence</h3>
+      <p>See review counts, ratings, and posting frequency for your top 5 rivals — and exactly what it takes to outrank them.</p>
+      <span class="feature-tag included">Included from £297</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap">📋</div>
+      <h3>Monthly ranking report</h3>
+      <p>Before/after heatmaps, GBP insights (calls, clicks, directions), competitor movement — sent every month.</p>
+      <span class="feature-tag included">Included from £297</span>
+    </div>
+    <!-- Add-on feature, hidden while only the £97 plan is live
+    <div class="feature-card">
+      <div class="feature-icon-wrap">⭐</div>
+      <h3>Automated review requests</h3>
+      <p>Personalised SMS + email sent automatically after every job. 4× higher response rate than generic requests.</p>
+      <span class="feature-tag addon">Add-on · from £497/mo</span>
+    </div>
+    -->
+
+    <!-- Add-on feature, hidden while only the £97 plan is live
+    <div class="feature-card">
+      <div class="feature-icon-wrap">🤖</div>
+      <h3>AI review responses</h3>
+      <p>Every Google review gets a professional, personalised reply automatically. 100% coverage, zero effort from you.</p>
+      <span class="feature-tag addon">Add-on · from £497/mo</span>
+    </div>
+    -->
+
+    <!-- Add-on feature, hidden while only the £97 plan is live
+    <div class="feature-card">
+      <div class="feature-icon-wrap">🔁</div>
+      <h3>Past customer reactivation</h3>
+      <p>We contact your past customer list on signup — generating a wave of authentic reviews in the first 7 days.</p>
+      <span class="feature-tag addon">Add-on · from £497/mo</span>
+    </div>
+    -->
+
+  </div>
+</section>
+
+<!-- UPSELL JOURNEY -->
+<section class="journey">
+  <div class="reveal" style="max-width: 580px;">
+    <span class="section-tag">Your growth path</span>
+    <h2 class="section-title">Start small.<br><em>Scale when it's paying for itself.</em></h2>
+    <p style="color: rgba(255,255,255,0.55); font-size: 1.05rem; margin-top: .5rem;">Most clients start on GBP Management, see ranking results in 3–4 weeks, then upgrade to add reviews. The whole system compounds from there.</p>
+  </div>
+  <div class="journey-steps reveal">
+    <div class="journey-step">
+      <span class="journey-step-num">Month 1 — Start</span>
+      <h3>GBP Management</h3>
+      <p>Profile fully optimised. Heatmaps running. Posts going out. Competitors tracked. You start climbing the Map Pack.</p>
+      <span class="price-pill">£97/month</span>
+    </div>
+    <!-- Hidden while only the £97 plan is live
+    <div class="journey-step">
+      <span class="journey-step-num">Month 2 — Accelerate</span>
+      <h3>+ Review Automation</h3>
+      <p>You're ranking better — now add fuel. Every job triggers a review request. Past customers get reactivated. Reviews compound.</p>
+      <span class="price-pill">£497/month</span>
+    </div>
+    <div class="journey-step">
+      <span class="journey-step-num">Month 3+ — Dominate</span>
+      <h3>Full Domination</h3>
+      <p>Everything — plus a dedicated account manager and weekly reviews. For Businesses and trades serious about owning their area.</p>
+      <span class="price-pill">£897/month</span>
+    </div>
+    -->
+
+  </div>
+</section>
+
+<!-- GBP 2026 STATS -->
+<section style="background: var(--cream); padding: 5rem 5%;">
+  <div class="reveal" style="text-align:center; max-width: 640px; margin: 0 auto;">
+    <span class="section-tag">Google Business Profile — 2026 data</span>
+    <h2 class="section-title">Google Maps is changing fast.<br><em>Is your profile keeping up?</em></h2>
+    <p class="section-subtitle" style="margin: 0 auto;">Google completely overhauled what it takes to rank locally in 2026. Here's what the data says — and why it matters for your business right now.</p>
+  </div>
+
+  <!-- STAT CARDS GRID -->
+  <div class="reveal" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 3rem;">
+
+    <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem;">
+      <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 1rem;">
+        <div style="width:40px; height:40px; border-radius:10px; background:var(--green-light); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;">📉</div>
+        <span style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint);">Freshness signal</span>
+      </div>
+      <div style="font-family:'Fraunces',serif; font-size:2.4rem; font-weight:700; color:var(--green); line-height:1;">30 days</div>
+      <p style="font-size:0.88rem; color:var(--ink-muted); margin-top:.6rem; line-height:1.6;">Profiles that go 30+ days without new photos or posts are now seeing measurable visibility drops in local rankings. Google treats freshness as an active ranking signal in 2026.</p>
+      <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border); font-size:0.75rem; color:var(--ink-faint);">Source: Explore Digital / Local SEO guides, 2026</div>
+    </div>
+
+    <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem;">
+      <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 1rem;">
+        <div style="width:40px; height:40px; border-radius:10px; background:var(--green-light); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;">⭐</div>
+        <span style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint);">Review recency</span>
+      </div>
+      <div style="font-family:'Fraunces',serif; font-size:2.4rem; font-weight:700; color:var(--green); line-height:1;">#1 factor</div>
+      <p style="font-size:0.88rem; color:var(--ink-muted); margin-top:.6rem; line-height:1.6;">Star rating and review freshness are now the top two trust signals consumers use to choose a local business — ahead of proximity and website quality, per BrightLocal's 2026 Local Consumer Review Survey.</p>
+      <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border); font-size:0.75rem; color:var(--ink-faint);">Source: BrightLocal Local Consumer Review Survey 2026</div>
+    </div>
+
+    <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem;">
+      <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 1rem;">
+        <div style="width:40px; height:40px; border-radius:10px; background:var(--green-light); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;">📸</div>
+        <span style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint);">Photo quality</span>
+      </div>
+      <div style="font-family:'Fraunces',serif; font-size:2.4rem; font-weight:700; color:var(--green); line-height:1;">Real only</div>
+      <p style="font-size:0.88rem; color:var(--ink-muted); margin-top:.6rem; line-height:1.6;">Google's 2026 guidelines explicitly penalise stock photos and heavily filtered images. Profiles with authentic team, work-in-progress, and job-site photos outperform polished but fake-looking galleries.</p>
+      <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border); font-size:0.75rem; color:var(--ink-faint);">Source: Google Business Profile photo guidelines 2026</div>
+    </div>
+
+    <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem;">
+      <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 1rem;">
+        <div style="width:40px; height:40px; border-radius:10px; background:var(--green-light); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;">🤖</div>
+        <span style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint);">AI calling</span>
+      </div>
+      <div style="font-family:'Fraunces',serif; font-size:2.4rem; font-weight:700; color:var(--green); line-height:1;">New in 2026</div>
+      <p style="font-size:0.88rem; color:var(--ink-muted); margin-top:.6rem; line-height:1.6;">Google now calls local businesses on behalf of customers to check pricing, availability, and hours — directly from Search. Businesses with incomplete or outdated GBP info are losing these enquiries invisibly.</p>
+      <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border); font-size:0.75rem; color:var(--ink-faint);">Source: Google AI-powered calling, Search 2026</div>
+    </div>
+
+    <div style="background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem;">
+      <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 1rem;">
+        <div style="width:40px; height:40px; border-radius:10px; background:var(--green-light); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;">💬</div>
+        <span style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint);">Review replies</span>
+      </div>
+      <div style="font-family:'Fraunces',serif; font-size:2.4rem; font-weight:700; color:var(--green); line-height:1;">Stand out</div>
+      <p style="font-size:0.88rem; color:var(--ink-muted); margin-top:.6rem; line-height:1.6;">Google confirms that "helpful replies can help your business stand out" in local results. Slow or generic AI-copy replies are now flagged by consumers as a red flag — personalised responses win trust and rankings.</p>
+      <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border); font-size:0.75rem; color:var(--ink-faint);">Source: Google Business Profile ranking guidance 2026</div>
+    </div>
+
+    <div style="background: var(--ink); border: 1px solid var(--ink); border-radius: 16px; padding: 1.75rem;">
+      <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 1rem;">
+        <div style="width:40px; height:40px; border-radius:10px; background:rgba(93,202,165,0.15); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;">🏆</div>
+        <span style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:rgba(255,255,255,0.4);">The bottom line</span>
+      </div>
+      <div style="font-family:'Fraunces',serif; font-size:1.5rem; font-weight:700; color:#5dcaa5; line-height:1.3; margin-bottom:.75rem;">Google rewards authenticity above everything else in 2026.</div>
+      <p style="font-size:0.88rem; color:rgba(255,255,255,0.55); line-height:1.65;">Real photos. Fresh posts. Consistent reviews. Human responses. Accurate info. This is exactly what we manage for you — every month, without you lifting a finger.</p>
+      <a href="#pricing" style="display:inline-block; margin-top:1.25rem; background:#5dcaa5; color:var(--ink); font-size:0.88rem; font-weight:600; padding:.6rem 1.4rem; border-radius:100px; text-decoration:none;">See our plans →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ROI -->
+<section class="roi">
+  <div class="reveal">
+    <span class="section-tag">Return on investment</span>
+    <h2 class="section-title">One extra job<br><em>covers the whole month.</em></h2>
+    <p class="section-subtitle" style="margin: 1rem auto 0;">Most London tradespeople charge £800–£3,000 a job. At £297/month, you're ROI positive after a single new customer from Google.</p>
+  </div>
+  <div class="roi-nums reveal">
+    <div class="roi-num">
+      <strong>£297</strong>
+      <span>entry price — GBP Management</span>
+    </div>
+    <div class="roi-num">
+      <strong>£2,500</strong>
+      <span>avg London boiler install value</span>
+    </div>
+    <div class="roi-num">
+      <strong>+£2,203</strong>
+      <span>profit after just 1 job from Google</span>
+    </div>
+    <div class="roi-num">
+      <strong>7 days</strong>
+      <span>to see first ranking improvements</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-intro reveal">
+    <span class="section-tag">Pricing</span>
+    <h2 class="section-title">Start where it <em>makes sense.</em><br>Upgrade when you're ready.</h2>
+    <p class="section-subtitle">No contracts. No setup fees. Cancel any time. Upgrade or downgrade whenever you like.</p>
+  </div>
+
+  <div class="pricing-grid reveal">
+
+    <!-- PLAN 1 -->
+    <div class="plan-card">
+      <p class="plan-label base">Base plan</p>
+      <p class="plan-name">GBP Management</p>
+      <p class="plan-desc">Everything you need to start ranking on Google Maps — without touching reviews yet.</p>
+      <div class="plan-price">
+        <span class="plan-price-num">£97</span>
+        <span class="plan-price-per">/month</span>
+      </div>
+      <p class="plan-save">&nbsp;</p>
+      <hr class="plan-divider">
+      <ul class="plan-includes">
+        <li><span class="chk">✓</span>Full GBP audit &amp; optimisation on day 1</li>
+        <li><span class="chk">✓</span>4× AI-generated GBP posts per month</li>
+        <li><span class="chk">✓</span>Weekly heatmap rank tracking</li>
+        <li><span class="chk">✓</span>Profile lock + suspension monitoring</li>
+        <li><span class="chk">✓</span>Competitor benchmarking (top 5 rivals)</li>
+        <li><span class="chk">✓</span>Monthly ranking report</li>
+        <li class="faded"><span class="cross">✗</span>Review automation</li>
+        <li class="faded"><span class="cross">✗</span>AI review responses</li>
+        <li class="faded"><span class="cross">✗</span>Past customer reactivation</li>
+      </ul>
+      <a href="https://buy.stripe.com/bJeaEZ1P1fsTcag45kfEk07" class="plan-cta outline">Get started — £97/mo</a>
+      <p class="plan-note">No contract · cancel any time</p>
+    </div>
+
+    <!-- PLAN 2 — hidden while only the £97 plan is live
+    <div class="plan-card featured" style="position: relative;">
+      <span class="plan-popular">Most popular</span>
+      <p class="plan-label addon">GBP + Reviews</p>
+      <p class="plan-name">Review Automation</p>
+      <p class="plan-desc">Add automated review requests on top of full GBP management. The combination that drives top 3 rankings fast.</p>
+      <div class="plan-price">
+        <span class="plan-price-num">£497</span>
+        <span class="plan-price-per">/month</span>
+      </div>
+      <p class="plan-save">Includes everything in GBP Management</p>
+      <hr class="plan-divider">
+      <ul class="plan-includes">
+        <li><span class="chk">✓</span>Everything in GBP Management</li>
+        <li><span class="chk">✓</span>Automated SMS + email review requests</li>
+        <li><span class="chk">✓</span>Smart follow-up sequences (48hr nudge)</li>
+        <li><span class="chk">✓</span>Past customer reactivation campaign</li>
+        <li><span class="chk">✓</span>AI responds to every Google review</li>
+        <li><span class="chk">✓</span>Social posting of your best reviews</li>
+        <li><span class="chk">✓</span>Review growth report included</li>
+      </ul>
+      <a href="https://buy.stripe.com/3cIeVf1P1fsT6PWdFUfEk05" class="plan-cta green">Get started — £497/mo</a>
+      <p class="plan-note">No contract · cancel any time</p>
+    </div>
+    -->
+
+
+    <!-- PLAN 3 — hidden while only the £97 plan is live
+    <div class="plan-card bundle" style="position: relative;">
+      <span class="plan-bundle-tag">Best value</span>
+      <p class="plan-label bundle">Full Domination</p>
+      <p class="plan-name">Complete Domination</p>
+      <p class="plan-desc">Everything — plus a dedicated account manager and weekly reviews. For Businesses and trades serious about owning their area.</p>
+      <div class="plan-price">
+        <span class="plan-price-num">£897</span>
+        <span class="plan-price-per">/month</span>
+      </div>
+      <p class="plan-save" style="color: var(--amber);">Saves £200/mo vs buying separately</p>
+      <hr class="plan-divider">
+      <ul class="plan-includes">
+        <li><span class="chk">✓</span>Everything in GBP + Reviews</li>
+        <li><span class="chk">✓</span>Dedicated account manager</li>
+        <li><span class="chk">✓</span>Bi-weekly ranking strategy calls</li>
+        <li><span class="chk">✓</span>Priority suspension recovery</li>
+        <li><span class="chk">✓</span>Competitor gap action plan monthly</li>
+        <li><span class="chk">✓</span>Geo-tagged photo schedule</li>
+        <li><span class="chk">✓</span>First-in-line for new features</li>
+      </ul>
+      <a href="https://buy.stripe.com/4gM3cxeBNcgHb6c0T8fEk06" class="plan-cta amber">Get started — £897/mo</a>
+      <p class="plan-note">No contract · cancel any time</p>
+    </div>
+    -->
+
+
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="reveal" style="text-align:center; max-width: 600px; margin: 0 auto;">
+    <span class="section-tag">FAQ</span>
+    <h2 class="section-title">Common <em>questions.</em></h2>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <div class="faq-q">Can I start on GBP Management and upgrade later?</div>
+      <div class="faq-a">Absolutely — this is the most common path. Most clients start at £297 to see the ranking improvements, then add review automation in month 2 once they're happy with results. You can upgrade any time with no penalties or setup fees.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How quickly will I see results?</div>
+      <div class="faq-a">Most clients see measurable ranking improvements within 7–14 days of onboarding, as profile optimisation and fresh posts take effect almost immediately. Map Pack positions typically improve significantly within 3–6 weeks depending on local competition.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does this work with my existing job management software?</div>
+      <div class="faq-a">Yes — we integrate with Jobber, Housecall Pro, Workiz, QuickBooks, and thousands more. If you manage jobs in any software, we can almost certainly connect directly. We walk you through it on your setup call.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is asking customers for reviews against Google's rules?</div>
+      <div class="faq-a">No — asking genuine customers for honest reviews is explicitly allowed and encouraged by Google. What we never do is incentivise, fake, or filter reviews. Every review generated is 100% authentic.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What trades do you work with?</div>
+      <div class="faq-a">Any local service business in London — plumbers, electricians, boiler engineers, builders, painters, landscapers, roofers, cleaners, gas engineers, window fitters, and more. If you serve London homeowners, we can help.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I cancel any time?</div>
+      <div class="faq-a">Yes — no contracts, no cancellation fees. Cancel any time and your account stays active until the end of that billing month. We're confident in results, which is why we don't lock you in.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FOOTER -->
+<section class="cta-footer">
+  <div class="reveal">
+    <span class="section-tag" style="color: #5dcaa5;">Get started today</span>
+    <h2 class="section-title">Ready to rank #1<br><em>in your borough?</em></h2>
+    <p>Start with GBP Management from £97/month. First ranking results within a week. No contract, no card required.</p>
+    <a href="#pricing" class="btn-primary">See all plans →</a>
+    <div class="footer-trust">
+      <span>✓ Setup in 30 minutes</span>
+      <span>✓ First results within 7 days</span>
+      <span>✓ Cancel any time</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-bottom">
+    © 2026 Try Review Bloom. All rights reserved. A service of <strong style="color:rgba(255,255,255,.7);">Patient Acquisition Hub Ltd</strong> · Registered in England &amp; Wales · Company No. 15431935<br>
+    <span style="font-size:.72rem;color:rgba(255,255,255,.3);margin-top:5px;display:block;">5-7 Buck Street London NW1 8NJ · 🔒 UK GDPR Compliant</span>
+    <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(46,204,113,0.08);border:1px solid rgba(46,204,113,0.2);border-radius:4px;padding:8px 14px;margin-top:12px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 2l7 4v5c0 5-3.5 9.7-7 11C8.5 20.7 5 16 5 11V6l7-4z"/><path d="M9 12l2 2 4-4"/></svg>
+      <div>
+        <div style="font-size:.7rem;font-weight:600;color:rgba(255,255,255,.75);line-height:1.2;">ICO Registered — Data Controller</div>
+        <div style="font-size:.65rem;color:rgba(255,255,255,.4);line-height:1.3;">Patient Acquisition Hub Ltd &nbsp;·&nbsp; Reg. No. <span style="color:#2ecc71;font-weight:600;">ZC148168</span> &nbsp;·&nbsp; <a href="https://ico.org.uk/ESDWebPages/Entry/ZC148168" target="_blank" rel="noopener" style="color:rgba(46,204,113,0.7);text-decoration:none;">Verify ↗</a></div>
+      </div>
+    </div>
+    <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.78rem;">
+      <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Service</a> &nbsp;·&nbsp; <a href="#">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
