@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Maps Management for London Local Businesses | Try Review Bloom</title>
+<link rel="canonical" href="https://tryreviewbloom.com/local-business.html">
+<meta name="description" content="Restaurants, salons, solicitors, estate agents, gyms, accountants and more — rank higher on Google Maps and win more customers on autopilot. Full GBP optimisation from £97/month.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #1a6b4a;
+    --green-mid: #2d9966;
+    --green-light: #e8f5ef;
+    --green-pale: #f4faf7;
+    --ink: #0f1a14;
+    --ink-muted: #3d5047;
+    --ink-faint: #7a9085;
+    --border: #d0e4d9;
+    --white: #ffffff;
+    --cream: #fafcfb;
+    --gold: #c9a84c;
+    --blue-light: #e8f0fe;
+    --blue: #1a56a4;
+    --amber-light: #fef3e2;
+    --amber: #92600a;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--ink); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; color: var(--green); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.9rem; color: var(--ink-muted); text-decoration: none; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--green); }
+  .nav-cta { background: var(--green); color: var(--white); padding: 0.55rem 1.25rem; border-radius: 100px; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: background .2s, transform .15s; }
+  .nav-cta:hover { background: #155a3e; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero { background: var(--green-pale); padding: 7rem 5% 5rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(45,153,102,0.12) 0%, transparent 70%); pointer-events: none; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--green-light); color: var(--green); border: 1px solid rgba(26,107,74,0.2); font-size: 0.8rem; font-weight: 500; padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.5rem; animation: fadeUp .5s ease both; }
+  .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 700; line-height: 1.15; color: var(--ink); max-width: 820px; margin: 0 auto 1.25rem; animation: fadeUp .55s .1s ease both; }
+  .hero h1 em { color: var(--green); font-style: italic; }
+  .hero p { font-size: 1.1rem; color: var(--ink-muted); max-width: 580px; margin: 0 auto 2.5rem; animation: fadeUp .55s .2s ease both; }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeUp .55s .3s ease both; }
+  .btn-primary { background: var(--green); color: var(--white); padding: 0.85rem 2rem; border-radius: 100px; font-size: 1rem; font-weight: 500; text-decoration: none; transition: background .2s, transform .15s; box-shadow: 0 4px 20px rgba(26,107,74,0.25); display: inline-block; }
+  .btn-primary:hover { background: #155a3e; transform: translateY(-2px); }
+  .btn-ghost { border: 1.5px solid var(--border); color: var(--ink-muted); padding: 0.85rem 2rem; border-radius: 100px; font-size: 1rem; font-weight: 500; text-decoration: none; transition: border-color .2s, color .2s; }
+  .btn-ghost:hover { border-color: var(--green); color: var(--green); }
+  .hero-trust { margin-top: 2.5rem; font-size: 0.82rem; color: var(--ink-faint); display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; animation: fadeUp .55s .4s ease both; }
+  .hero-trust span { display: flex; align-items: center; gap: 5px; }
+
+  /* STATS */
+  .stats-strip { background: var(--green); padding: 2.5rem 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; text-align: center; }
+  .stat-num { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 700; color: var(--white); display: block; }
+  .stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-top: 2px; }
+
+  /* SECTIONS */
+  section { padding: 5rem 5%; }
+  .section-tag { font-size: 0.78rem; font-weight: 500; color: var(--green); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .75rem; display: block; }
+  .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .section-title em { color: var(--green); font-style: italic; }
+  .section-subtitle { font-size: 1.05rem; color: var(--ink-muted); max-width: 560px; }
+
+  /* SECTORS */
+  .sectors { background: var(--cream); }
+  .sectors-intro { text-align: center; margin-bottom: 3rem; }
+  .sectors-intro .section-subtitle { margin: 0 auto; }
+  .sectors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+  .sector-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .sector-icon { font-size: 1.6rem; flex-shrink: 0; }
+  .sector-card h3 { font-size: 1rem; font-weight: 500; margin-bottom: .3rem; color: var(--ink); }
+  .sector-card p { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.55; }
+
+  /* PROBLEM */
+  .problem { background: var(--white); }
+  .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
+  .problem-card { background: var(--cream); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
+  .problem-icon { font-size: 1.5rem; margin-bottom: .75rem; display: block; }
+  .problem-card h3 { font-size: 1rem; font-weight: 500; margin-bottom: .4rem; color: var(--ink); }
+  .problem-card p { font-size: 0.88rem; color: var(--ink-muted); line-height: 1.6; }
+
+  /* HOW */
+  .how { background: var(--cream); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .step { text-align: center; }
+  .step-num { width: 48px; height: 48px; border-radius: 50%; background: var(--green); color: var(--white); font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+  .step h3 { font-size: 1rem; font-weight: 500; margin-bottom: .4rem; color: var(--ink); }
+  .step p { font-size: 0.87rem; color: var(--ink-muted); }
+
+  /* FEATURES */
+  .features-intro { text-align: center; margin-bottom: 3.5rem; }
+  .features-intro .section-subtitle { margin: 0 auto; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .feature-card { border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; background: var(--white); transition: border-color .2s, transform .2s; }
+  .feature-card:hover { border-color: var(--green-mid); transform: translateY(-3px); }
+  .feature-icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: var(--green-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.2rem; }
+  .feature-card h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: .5rem; color: var(--ink); }
+  .feature-card p { font-size: 0.88rem; color: var(--ink-muted); line-height: 1.65; }
+  .feature-tag { display: inline-block; margin-top: .85rem; font-size: 0.75rem; font-weight: 500; padding: 2px 10px; border-radius: 100px; background: var(--green-light); color: var(--green); }
+
+  /* PRICING */
+  .pricing { background: var(--green-pale); }
+  .pricing-intro { text-align: center; margin-bottom: 3rem; }
+  .pricing-intro .section-subtitle { margin: 0 auto; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+
+  .plan-card { background: var(--white); border: 1.5px solid var(--border); border-radius: 24px; padding: 2rem; display: flex; flex-direction: column; }
+
+  .plan-label { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; color: var(--green); }
+
+  .plan-name { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .plan-desc { font-size: 0.85rem; color: var(--ink-faint); margin-bottom: 1.25rem; }
+
+  .plan-price { display: flex; align-items: baseline; gap: 4px; margin-bottom: 4px; }
+  .plan-price-num { font-family: 'Fraunces', serif; font-size: 2.6rem; font-weight: 700; color: var(--ink); }
+  .plan-price-per { font-size: 0.9rem; color: var(--ink-faint); }
+  .plan-save { font-size: 0.78rem; color: var(--green); font-weight: 500; margin-bottom: 1.5rem; min-height: 18px; }
+
+  .plan-divider { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+
+  .plan-includes { list-style: none; padding: 0; margin: 0 0 1.5rem; flex: 1; }
+  .plan-includes li { display: flex; align-items: flex-start; gap: 9px; font-size: 0.88rem; color: var(--ink-muted); padding: 4px 0; }
+  .plan-includes li .chk { color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  .plan-cta { display: block; text-align: center; padding: 0.85rem; border-radius: 100px; font-size: 0.95rem; font-weight: 500; text-decoration: none; transition: background .2s, transform .15s; margin-top: auto; background: var(--green); color: var(--white); box-shadow: 0 4px 16px rgba(26,107,74,0.2); }
+  .plan-cta:hover { background: #155a3e; transform: translateY(-2px); }
+
+  .plan-note { font-size: 0.78rem; color: var(--ink-faint); text-align: center; margin-top: .75rem; }
+
+  /* FAQ */
+  .faq-list { max-width: 700px; margin: 3rem auto 0; }
+  .faq-item { border-bottom: 1px solid var(--border); padding: 1.25rem 0; cursor: pointer; }
+  .faq-q { font-size: 1rem; font-weight: 500; color: var(--ink); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .faq-q::after { content: '+'; font-size: 1.2rem; color: var(--green); flex-shrink: 0; transition: transform .2s; }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s; }
+  .faq-item.open .faq-a { max-height: 300px; padding-top: .75rem; }
+
+  /* RELATED LINKS */
+  .related { background: var(--white); }
+  .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .related-card { border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; text-decoration: none; display: block; transition: border-color .2s, transform .2s; }
+  .related-card:hover { border-color: var(--green-mid); transform: translateY(-2px); }
+  .related-card h4 { font-size: 0.95rem; font-weight: 500; color: var(--ink); margin-bottom: .3rem; }
+  .related-card p { font-size: 0.82rem; color: var(--ink-faint); }
+
+  /* CTA FOOTER */
+  .cta-footer { background: var(--ink); padding: 6rem 5%; text-align: center; }
+  .cta-footer .section-title { color: var(--white); }
+  .cta-footer .section-title em { color: #5dcaa5; }
+  .cta-footer p { font-size: 1.05rem; color: rgba(255,255,255,0.55); max-width: 500px; margin: 0 auto 2rem; }
+  .footer-trust { margin-top: 1.5rem; font-size: 0.82rem; color: rgba(255,255,255,0.35); display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer { background: #060f09; color: rgba(255,255,255,0.3); padding: 2.5rem 5%; text-align: center; font-size: 0.82rem; }
+  footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  footer a:hover { color: var(--white); }
+  .footer-bottom { line-height: 1.8; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hero { padding: 5rem 5% 3.5rem; }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<!-- ============================================================
+     SCHEMA MARKUP — Try Review Bloom Local Business Page
+     Page: /local-business.html
+     Test at: https://search.google.com/test/rich-results
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["LocalBusiness", "ProfessionalService"],
+      "@id": "https://tryreviewbloom.com/#business",
+      "name": "Try Review Bloom",
+      "alternateName": "Patient Acquisition Hub Ltd",
+      "description": "Google Business Profile management and Maps ranking service for London local businesses. GBP optimisation, weekly heatmap rank tracking, and review automation built to win the Map Pack top 3.",
+      "url": "https://tryreviewbloom.com",
+      "email": "julien@patientacquisitionhub.com",
+      "priceRange": "£",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "5-7 Buck Street",
+        "addressLocality": "London",
+        "postalCode": "NW1 8NJ",
+        "addressCountry": "GB"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "London"
+      },
+      "sameAs": [
+        "https://www.patientacquisitionhub.com",
+        "https://www.linkedin.com/in/julien-kabongo1993"
+      ]
+    },
+
+    {
+      "@type": "WebSite",
+      "@id": "https://tryreviewbloom.com/#website",
+      "url": "https://tryreviewbloom.com",
+      "name": "Try Review Bloom",
+      "publisher": { "@id": "https://tryreviewbloom.com/#business" },
+      "inLanguage": "en-GB"
+    },
+
+    {
+      "@type": "WebPage",
+      "@id": "https://tryreviewbloom.com/local-business.html#webpage",
+      "url": "https://tryreviewbloom.com/local-business.html",
+      "name": "Google Maps Management for London Local Businesses | Try Review Bloom",
+      "description": "Restaurants, salons, solicitors, estate agents, gyms, accountants and more — rank higher on Google Maps and win more customers on autopilot. Full GBP optimisation from £97/month.",
+      "isPartOf": { "@id": "https://tryreviewbloom.com/#website" },
+      "about": { "@id": "https://tryreviewbloom.com/#business" },
+      "inLanguage": "en-GB",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://tryreviewbloom.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Local Business GBP Management",
+            "item": "https://tryreviewbloom.com/local-business.html"
+          }
+        ]
+      }
+    },
+
+    {
+      "@type": "Service",
+      "@id": "https://tryreviewbloom.com/local-business.html#service",
+      "name": "Google Business Profile Management for London Local Businesses",
+      "provider": { "@id": "https://tryreviewbloom.com/#business" },
+      "serviceType": "Google Business Profile Management",
+      "description": "Full Google Business Profile optimisation, weekly heatmap rank tracking, AI-generated posts, profile lock and suspension monitoring, and competitor intelligence for non-trade local businesses across London aiming for the Google Maps top 3.",
+      "areaServed": {
+        "@type": "City",
+        "name": "London"
+      },
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Local service businesses in London, including restaurants, cafés, hair and beauty salons, solicitors, estate agents, gyms, accountants, and health and wellness practices"
+      },
+      "url": "https://tryreviewbloom.com/local-business.html",
+      "offers": {
+        "@type": "Offer",
+        "name": "GBP Management",
+        "price": "97",
+        "priceCurrency": "GBP",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "97",
+          "priceCurrency": "GBP",
+          "billingDuration": "P1M",
+          "unitText": "MONTH"
+        },
+        "url": "https://buy.stripe.com/bJeaEZ1P1fsTcag45kfEk07",
+        "availability": "https://schema.org/InStock",
+        "description": "Full GBP audit and optimisation on day one, 4 AI-generated posts per month, weekly heatmap rank tracking, profile lock and suspension monitoring, competitor benchmarking against 5 rivals, and a monthly ranking report. No contract, cancel any time."
+      }
+    },
+
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does Try Review Bloom work for businesses that aren't trades?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Try Review Bloom works for any local business that serves customers in London and relies on Google search to be found — restaurants, cafés, salons, solicitors, estate agents, gyms, accountants, and health and wellness practices, among others."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is this different from the trades-focused GBP plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The underlying system is the same — full GBP optimisation, weekly heatmap rank tracking, AI-generated posts, and competitor intelligence — adapted to the categories, service descriptions, and customer language relevant to non-trade sectors."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How quickly will I see results?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most clients see measurable ranking improvements within weeks of onboarding, as profile optimisation and fresh posts take effect almost immediately. Map Pack positions typically improve significantly within 3 to 6 weeks depending on local competition."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is asking customers for Google reviews against Google's rules?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Asking genuine customers for honest reviews is explicitly allowed and encouraged by Google. Incentivising, faking, or filtering reviews is never done — every review generated is authentic."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I cancel my Try Review Bloom subscription any time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. There are no contracts and no cancellation fees. A cancelled account stays active until the end of that billing month."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://tryreviewbloom.com/" class="logo">🌿Try Review Bloom</a>
+  <ul class="nav-links">
+    <li><a href="#sectors">Who it's for</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="https://buy.stripe.com/bJeaEZ1P1fsTcag45kfEk07" class="nav-cta">Get started — from £97 →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🏪 Google Maps Management · Local Businesses Across London</div>
+  <h1>Rank higher on Google Maps.<br><em>Win more customers</em> — on autopilot.</h1>
+  <p>It's not just tradespeople. Restaurants, salons, solicitors, estate agents, gyms, and accountants all lose customers to competitors with better Google rankings — not better service. Start with Google Maps domination from just £97/month.</p>
+  <div class="hero-btns">
+    <a href="https://buy.stripe.com/bJeaEZ1P1fsTcag45kfEk07" class="btn-primary">Start with GBP Management — £97 →</a>
+    <a href="#how" class="btn-ghost">See how it works</a>
+  </div>
+  <div class="hero-trust">
+    <span>✓ First results within 7 days</span>
+    <span>✓ No long contracts</span>
+    <span>✓ Cancel any time</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <span class="stat-num">97%</span>
+    <span class="stat-label">of customers read reviews before choosing a local business</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">Top 3</span>
+    <span class="stat-label">Map Pack positions get 80% of all local clicks</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">6 wks</span>
+    <span class="stat-label">average time to reach the Map Pack top 3</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">+236%</span>
+    <span class="stat-label">typical review growth in the first 60 days</span>
+  </div>
+</div>
+
+<!-- SECTORS -->
+<section class="sectors" id="sectors">
+  <div class="sectors-intro reveal">
+    <span class="section-tag">Who it's for</span>
+    <h2 class="section-title">Built for <em>any local business</em><br>that depends on Google.</h2>
+    <p class="section-subtitle">If customers find you through a Google search or a Maps result, this is for you.</p>
+  </div>
+  <div class="sectors-grid reveal">
+    <div class="sector-card">
+      <span class="sector-icon">🍽️</span>
+      <div><h3>Restaurants &amp; cafés</h3><p>Reviews win diners before they ever walk through the door.</p></div>
+    </div>
+    <div class="sector-card">
+      <span class="sector-icon">💇</span>
+      <div><h3>Salons &amp; beauty</h3><p>Google is how new clients find you and decide to book.</p></div>
+    </div>
+    <div class="sector-card">
+      <span class="sector-icon">⚖️</span>
+      <div><h3>Solicitors &amp; legal</h3><p>Trust signals matter before a client ever picks up the phone.</p></div>
+    </div>
+    <div class="sector-card">
+      <span class="sector-icon">🏠</span>
+      <div><h3>Estate agents</h3><p>Local map dominance drives more valuation instructions.</p></div>
+    </div>
+    <div class="sector-card">
+      <span class="sector-icon">🏋️</span>
+      <div><h3>Gyms &amp; fitness</h3><p>Map Pack position is often the deciding factor for new members.</p></div>
+    </div>
+    <div class="sector-card">
+      <span class="sector-icon">🔢</span>
+      <div><h3>Accountants &amp; finance</h3><p>Reviews build credibility before the first meeting is even booked.</p></div>
+    </div>
+    <div class="sector-card">
+      <span class="sector-icon">🏥</span>
+      <div><h3>Health &amp; wellness</h3><p>Physios, opticians, osteopaths — patients choose by reputation.</p></div>
+    </div>
+    <div class="sector-card">
+      <span class="sector-icon">🦷</span>
+      <div><h3>Dental practices</h3><p>Dental-specific marketing available via <a href="https://www.patientacquisitionhub.com" style="color:var(--green);font-weight:500;">Patient Acquisition Hub</a>.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="reveal">
+    <span class="section-tag">The problem</span>
+    <h2 class="section-title">You run a great business.<br><em>Google doesn't know it yet.</em></h2>
+    <p class="section-subtitle">Your ideal customers are choosing competitors — not because they're better, but because Google ranks them higher.</p>
+  </div>
+  <div class="problem-grid reveal">
+    <div class="problem-card">
+      <span class="problem-icon">📉</span>
+      <h3>Invisible on Google Maps</h3>
+      <p>An unoptimised Google Business Profile means you're buried on page 2 — while competitors with better profiles take your customers.</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">😩</span>
+      <h3>Not enough reviews</h3>
+      <p>Happy customers rarely leave reviews unprompted. You're starting from scratch with every new enquiry, while rivals have hundreds.</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">⏰</span>
+      <h3>No time to manage it</h3>
+      <p>You're already running the business. Managing your Google profile, posting updates, chasing reviews — it doesn't get done.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="reveal" style="text-align:center; max-width: 600px; margin: 0 auto;">
+    <span class="section-tag">How it works</span>
+    <h2 class="section-title">Set up once.<br><em>We handle everything else.</em></h2>
+    <p class="section-subtitle">Start with GBP Management — the fastest way to climb the Map Pack. Add reviews when you want to accelerate.</p>
+  </div>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Onboard (30 mins)</h3>
+      <p>One setup call. We get access to your Google Business Profile and learn how your business and customers work.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Optimise</h3>
+      <p>Full profile audit — categories, services, photos, service areas, Q&amp;A — all optimised to Google's ranking signals on day one.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Rank</h3>
+      <p>We post weekly, track your heatmap rankings, and keep your profile ahead of competitors — every single month.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Scale (optional)</h3>
+      <p>Add review automation to supercharge your ranking. SMS + email after every visit. AI replies. Past customer reactivation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="features-intro reveal">
+    <span class="section-tag">What's included</span>
+    <h2 class="section-title">Everything you need to<br><em>win the Map Pack.</em></h2>
+    <p class="section-subtitle">Full Google Business Profile management, included from £97/month.</p>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <div class="feature-icon-wrap">📍</div>
+      <h3>Full GBP optimisation</h3>
+      <p>Categories, services, photos, service areas, Q&amp;A — fully optimised on day one and maintained every month.</p>
+      <span class="feature-tag">Included from £97</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap">📝</div>
+      <h3>AI-generated GBP posts</h3>
+      <p>4 posts per month — keeps your profile active and signals to Google that you're an engaged, trusted business.</p>
+      <span class="feature-tag">Included from £97</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap">🗺️</div>
+      <h3>Weekly heatmap tracking</h3>
+      <p>See exactly where you rank across every postcode in your area — for every keyword that matters to your business.</p>
+      <span class="feature-tag">Included from £97</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap">🔒</div>
+      <h3>Profile lock &amp; monitoring</h3>
+      <p>Prevents anyone editing your listing without approval. Instant alerts if your profile is changed or suspended.</p>
+      <span class="feature-tag">Included from £97</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap">🏆</div>
+      <h3>Competitor intelligence</h3>
+      <p>See review counts, ratings, and posting frequency for your top 5 local rivals — and what it takes to outrank them.</p>
+      <span class="feature-tag">Included from £97</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon-wrap">📋</div>
+      <h3>Monthly ranking report</h3>
+      <p>Before/after heatmaps, GBP insights (calls, clicks, directions), competitor movement — sent every month.</p>
+      <span class="feature-tag">Included from £97</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-intro reveal">
+    <span class="section-tag">Pricing</span>
+    <h2 class="section-title">Start where it <em>makes sense.</em></h2>
+    <p class="section-subtitle">No contracts. No setup fees. Cancel any time.</p>
+  </div>
+  <div class="pricing-grid reveal">
+    <div class="plan-card">
+      <p class="plan-label">Base plan</p>
+      <p class="plan-name">GBP Management</p>
+      <p class="plan-desc">Everything you need to start ranking on Google Maps — without touching reviews yet.</p>
+      <div class="plan-price">
+        <span class="plan-price-num">£97</span>
+        <span class="plan-price-per">/month</span>
+      </div>
+      <p class="plan-save">&nbsp;</p>
+      <hr class="plan-divider">
+      <ul class="plan-includes">
+        <li><span class="chk">✓</span>Full GBP audit &amp; optimisation on day 1</li>
+        <li><span class="chk">✓</span>4× AI-generated GBP posts per month</li>
+        <li><span class="chk">✓</span>Weekly heatmap rank tracking</li>
+        <li><span class="chk">✓</span>Profile lock + suspension monitoring</li>
+        <li><span class="chk">✓</span>Competitor benchmarking (top 5 rivals)</li>
+        <li><span class="chk">✓</span>Monthly ranking report</li>
+      </ul>
+      <a href="https://buy.stripe.com/bJeaEZ1P1fsTcag45kfEk07" class="plan-cta">Get started — £97/mo</a>
+      <p class="plan-note">No contract · cancel any time</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="reveal" style="text-align:center; max-width: 600px; margin: 0 auto;">
+    <span class="section-tag">FAQ</span>
+    <h2 class="section-title">Common <em>questions.</em></h2>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <div class="faq-q">Does Try Review Bloom work for businesses that aren't trades?</div>
+      <div class="faq-a">Yes — this is exactly what this page is for. Restaurants, cafés, salons, solicitors, estate agents, gyms, accountants, and health and wellness practices all face the same problem as tradespeople: too few reviews, an under-optimised GBP, and competitors showing up first.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How is this different from the trades-focused GBP plan?</div>
+      <div class="faq-a">The underlying system is identical — full GBP optimisation, weekly heatmap rank tracking, AI-generated posts, and competitor intelligence — just adapted to the categories, service descriptions, and customer language relevant to your sector. See the <a href="https://tryreviewbloom.com/gbp.html" style="color:var(--green);font-weight:500;">trades-focused version</a> if that fits your business better.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How quickly will I see results?</div>
+      <div class="faq-a">Most clients see measurable ranking improvements within weeks of onboarding, as profile optimisation and fresh posts take effect almost immediately. Map Pack positions typically improve significantly within 3–6 weeks depending on local competition.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is asking customers for reviews against Google's rules?</div>
+      <div class="faq-a">No — asking genuine customers for honest reviews is explicitly allowed and encouraged by Google. What we never do is incentivise, fake, or filter reviews. Every review generated is 100% authentic.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I cancel any time?</div>
+      <div class="faq-a">Yes — no contracts, no cancellation fees. Cancel any time and your account stays active until the end of that billing month.</div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED -->
+<section class="related">
+  <div class="reveal">
+    <span class="section-tag">Explore more</span>
+    <h2 class="section-title">More from <em>Try Review Bloom.</em></h2>
+  </div>
+  <div class="related-grid reveal">
+    <a href="https://tryreviewbloom.com/gbp.html" class="related-card">
+      <h4>GBP Management for Trades →</h4>
+      <p>The trades-focused version of this offer, for plumbers, electricians, builders and more.</p>
+    </a>
+    <a href="https://tryreviewbloom.com/review.html" class="related-card">
+      <h4>Review Automation →</h4>
+      <p>Automated SMS + email review requests for any local service business.</p>
+    </a>
+    <a href="https://tryreviewbloom.com/features.html" class="related-card">
+      <h4>Full Feature List →</h4>
+      <p>Everything Try Review Bloom does, in one place.</p>
+    </a>
+  </div>
+</section>
+
+<!-- CTA FOOTER -->
+<section class="cta-footer">
+  <div class="reveal">
+    <span class="section-tag" style="color: #5dcaa5;">Get started today</span>
+    <h2 class="section-title">Ready to rank #1<br><em>in your area?</em></h2>
+    <p>Start with GBP Management from £97/month. First ranking results within a week. No contract, no card required.</p>
+    <a href="#pricing" class="btn-primary">See pricing →</a>
+    <div class="footer-trust">
+      <span>✓ Setup in 30 minutes</span>
+      <span>✓ First results within weeks</span>
+      <span>✓ Cancel any time</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-bottom">
+    © 2026 Try Review Bloom. All rights reserved. A service of <strong style="color:rgba(255,255,255,.7);">Patient Acquisition Hub Ltd</strong> · Registered in England &amp; Wales · Company No. 15431935<br>
+    <span style="font-size:.72rem;color:rgba(255,255,255,.3);margin-top:5px;display:block;">5-7 Buck Street London NW1 8NJ · 🔒 UK GDPR Compliant</span>
+    <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(46,204,113,0.08);border:1px solid rgba(46,204,113,0.2);border-radius:4px;padding:8px 14px;margin-top:12px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 2l7 4v5c0 5-3.5 9.7-7 11C8.5 20.7 5 16 5 11V6l7-4z"/><path d="M9 12l2 2 4-4"/></svg>
+      <div>
+        <div style="font-size:.7rem;font-weight:600;color:rgba(255,255,255,.75);line-height:1.2;">ICO Registered — Data Controller</div>
+        <div style="font-size:.65rem;color:rgba(255,255,255,.4);line-height:1.3;">Patient Acquisition Hub Ltd &nbsp;·&nbsp; Reg. No. <span style="color:#2ecc71;font-weight:600;">ZC148168</span> &nbsp;·&nbsp; <a href="https://ico.org.uk/ESDWebPages/Entry/ZC148168" target="_blank" rel="noopener" style="color:rgba(46,204,113,0.7);text-decoration:none;">Verify ↗</a></div>
+      </div>
+    </div>
+    <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.78rem;">
+      <a href="https://tryreviewbloom.com/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="https://tryreviewbloom.com/terms-of-service.html">Terms of Service</a> &nbsp;·&nbsp; <a href="mailto:hello@tryreviewbloom.com">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>

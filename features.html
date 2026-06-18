@@ -232,6 +232,81 @@ footer{background:#fff;border-top:1px solid var(--border);padding:60px 40px 28px
   .cs-item{grid-template-columns:1fr}
 }
 </style>
+
+<!-- ============================================================
+     SCHEMA MARKUP — Try Review Bloom Features Page
+     Page: /features.html
+     Test at: https://search.google.com/test/rich-results
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["LocalBusiness", "ProfessionalService"],
+      "@id": "https://tryreviewbloom.com/#business",
+      "name": "Try Review Bloom",
+      "alternateName": "Patient Acquisition Hub Ltd",
+      "description": "Google Business Profile management and Maps ranking service for London trades and local businesses. GBP optimisation, weekly heatmap rank tracking, and review automation built to win the Map Pack top 3.",
+      "url": "https://tryreviewbloom.com",
+      "email": "julien@patientacquisitionhub.com",
+      "priceRange": "£",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "5-7 Buck Street",
+        "addressLocality": "London",
+        "postalCode": "NW1 8NJ",
+        "addressCountry": "GB"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "London"
+      },
+      "sameAs": [
+        "https://www.patientacquisitionhub.com",
+        "https://www.linkedin.com/in/julien-kabongo1993"
+      ]
+    },
+
+    {
+      "@type": "WebSite",
+      "@id": "https://tryreviewbloom.com/#website",
+      "url": "https://tryreviewbloom.com",
+      "name": "Try Review Bloom",
+      "publisher": { "@id": "https://tryreviewbloom.com/#business" },
+      "inLanguage": "en-GB"
+    },
+
+    {
+      "@type": "WebPage",
+      "@id": "https://tryreviewbloom.com/features.html#webpage",
+      "url": "https://tryreviewbloom.com/features.html",
+      "name": "Features | Review Bloom",
+      "description": "Review Bloom automates the review collection process so you can set it up once and watch the reviews flow in.",
+      "isPartOf": { "@id": "https://tryreviewbloom.com/#website" },
+      "about": { "@id": "https://tryreviewbloom.com/#business" },
+      "inLanguage": "en-GB",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://tryreviewbloom.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Features",
+            "item": "https://tryreviewbloom.com/features.html"
+          }
+        ]
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
