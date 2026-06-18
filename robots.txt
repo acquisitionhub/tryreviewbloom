@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /Backend/
+Disallow: /borough_replace_block.html
+Disallow: /trb-dental-banner-snippet.html
+
+Sitemap: https://tryreviewbloom.com/sitemap.xml
