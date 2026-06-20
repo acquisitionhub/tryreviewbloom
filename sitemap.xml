@@ -91,4 +91,34 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://tryreviewbloom.com/london/watford.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tryreviewbloom.com/london/hemel-hempstead.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tryreviewbloom.com/london/dartford.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tryreviewbloom.com/london/aldershot.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tryreviewbloom.com/london/maidenhead.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tryreviewbloom.com/london/slough.html</loc>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
