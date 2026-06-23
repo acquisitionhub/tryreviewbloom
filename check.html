@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free GBP Health Check — Try Review Bloom</title>
+  <meta name="description" content="See exactly how your Google Business Profile stacks up against local competitors. Free instant score — no call needed." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0d1a12;
+      --forest: #0f3d27;
+      --green: #1a7a45;
+      --lime: #3ec96e;
+      --gold: #f0c040;
+      --cream: #f8f4ed;
+      --white: #ffffff;
+      --muted: #5a6e62;
+      --border: #d4e4da;
+      --card: #f1f7f3;
+      --r: 12px;
+      --px: 1.25rem;
+    }
+    @media(min-width:480px){:root{--px:1.5rem}}
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    h1,h2,h3,h4 { font-family: 'Fraunces', serif; line-height: 1.15; }
+    p { color: var(--muted); line-height: 1.75; }
+    em { font-style: italic; color: var(--green); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 960px; margin: 0 auto;
+      padding: 0 var(--px); height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+    .nav-logo-icon {
+      width: 32px; height: 32px;
+      background: var(--green); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .nav-logo-text {
+      font-family: 'Fraunces', serif; font-weight: 700;
+      font-size: 1rem; color: var(--ink);
+    }
+    .nav-badge {
+      font-size: .72rem; font-weight: 600;
+      color: var(--green); background: rgba(62,201,110,.12);
+      border: 1px solid rgba(62,201,110,.3);
+      padding: 3px 10px; border-radius: 50px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, var(--forest) 0%, #0a2b1c 100%);
+      padding: clamp(3rem,8vw,5rem) var(--px) clamp(2.5rem,6vw,4rem);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 30%, rgba(62,201,110,.1) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(240,192,64,.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner { max-width: 640px; margin: 0 auto; position: relative; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .73rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--lime); background: rgba(62,201,110,.15);
+      border: 1px solid rgba(62,201,110,.3);
+      padding: 5px 14px; border-radius: 50px; margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(1.85rem, 5.5vw, 3.2rem);
+      font-weight: 900; color: #fff; margin-bottom: 16px;
+    }
+    .hero h1 em { color: var(--lime); font-style: italic; }
+    .hero-sub {
+      font-size: clamp(.9rem, 2.5vw, 1.05rem);
+      color: rgba(255,255,255,.7);
+      max-width: 480px; margin: 0 auto 10px;
+    }
+    .hero-trust {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      justify-content: center; margin-top: 18px;
+    }
+    .hero-trust-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .8rem; color: rgba(255,255,255,.6);
+    }
+    .hero-trust-item::before { content: '✓'; color: var(--lime); font-weight: 700; }
+
+    /* ── FORM CARD ── */
+    .form-wrap {
+      max-width: 580px; margin: -32px auto 0;
+      padding: 0 var(--px);
+      position: relative; z-index: 10;
+    }
+    .form-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.14);
+      padding: clamp(1.5rem,4vw,2.5rem);
+    }
+    .form-card h2 {
+      font-size: clamp(1.15rem, 3vw, 1.5rem);
+      font-weight: 700; color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .form-card > p {
+      font-size: .88rem; color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block; font-size: .8rem; font-weight: 600;
+      color: var(--ink); margin-bottom: 6px; letter-spacing: .02em;
+    }
+    .field input, .field select {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      color: var(--ink);
+      background: #fff;
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .field input:focus, .field select:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(26,122,69,.1);
+    }
+    .field input::placeholder { color: #aab8b0; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media(max-width:420px) { .field-row { grid-template-columns: 1fr; } }
+
+    .btn-run {
+      width: 100%; padding: 15px;
+      background: var(--green); color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      border: none; border-radius: 50px;
+      cursor: pointer; margin-top: 8px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: transform .2s, background .2s, box-shadow .2s;
+      box-shadow: 0 6px 24px rgba(26,122,69,.35);
+      min-height: 52px;
+    }
+    .btn-run:hover { background: #15683a; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(26,122,69,.4); }
+    .btn-run:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    .form-disclaimer {
+      text-align: center; font-size: .72rem; color: #9aab9e;
+      margin-top: 12px; line-height: 1.5;
+    }
+
+    /* ── LOADING ── */
+    #loading-state { display: none; }
+    .loading-wrap { text-align: center; padding: 40px 20px; }
+    .loading-ring {
+      width: 56px; height: 56px; margin: 0 auto 20px;
+      border: 4px solid var(--border);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 6px;
+    }
+    .loading-steps { list-style: none; margin-top: 20px; text-align: left; max-width: 280px; margin-left: auto; margin-right: auto; }
+    .loading-step {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .83rem; color: var(--muted);
+      padding: 7px 0; border-bottom: 1px solid var(--border);
+    }
+    .loading-step .step-icon { font-size: 1rem; width: 24px; text-align: center; flex-shrink: 0; }
+    .loading-step.done { color: var(--green); }
+    .loading-step.active { color: var(--ink); font-weight: 600; }
+
+    /* ── RESULTS ── */
+    #results-state { display: none; }
+    .results-wrap { padding: 0 var(--px); max-width: 580px; margin: 0 auto; }
+
+    .score-card {
+      background: #fff; border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.12);
+      padding: clamp(1.5rem,4vw,2.2rem);
+      margin-bottom: 20px;
+    }
+    .score-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    }
+    .score-biz-name {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--ink);
+    }
+    .score-biz-type { font-size: .8rem; color: var(--muted); margin-top: 2px; }
+
+    .score-dial-wrap { text-align: center; margin-bottom: 24px; }
+    .score-dial {
+      width: 130px; height: 130px;
+      margin: 0 auto 12px;
+      position: relative;
+    }
+    .score-dial svg { transform: rotate(-90deg); }
+    .score-dial-num {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .score-num {
+      font-family: 'Fraunces', serif;
+      font-size: 2.2rem; font-weight: 900;
+      line-height: 1;
+    }
+    .score-label { font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    .score-verdict {
+      font-size: .88rem; font-weight: 600;
+      padding: 5px 16px; border-radius: 50px;
+      display: inline-block; margin-bottom: 6px;
+    }
+    .score-verdict.poor { background: rgba(220,50,50,.1); color: #c0392b; }
+    .score-verdict.average { background: rgba(240,192,64,.15); color: #a0720a; }
+    .score-verdict.good { background: rgba(26,122,69,.1); color: var(--green); }
+
+    /* Metric rows */
+    .metrics { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+    .metric {
+      background: var(--card); border-radius: 10px;
+      padding: 14px 16px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .metric-icon { font-size: 1.4rem; flex-shrink: 0; width: 36px; text-align: center; }
+    .metric-body { flex: 1; min-width: 0; }
+    .metric-label { font-size: .78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+    .metric-value { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 700; color: var(--ink); line-height: 1.2; margin-top: 2px; }
+    .metric-sub { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+    .metric-badge {
+      font-size: .7rem; font-weight: 700; padding: 3px 10px;
+      border-radius: 50px; white-space: nowrap; flex-shrink: 0;
+    }
+    .metric-badge.red { background: rgba(220,50,50,.1); color: #c0392b; }
+    .metric-badge.amber { background: rgba(240,192,64,.15); color: #a0720a; }
+    .metric-badge.green { background: rgba(26,122,69,.1); color: var(--green); }
+
+    /* Ranking bar */
+    .rank-bar-wrap { margin-bottom: 20px; }
+    .rank-bar-label {
+      display: flex; justify-content: space-between;
+      font-size: .75rem; color: var(--muted); margin-bottom: 6px;
+    }
+    .rank-bar-track {
+      height: 10px; background: var(--border);
+      border-radius: 8px; overflow: hidden; position: relative;
+    }
+    .rank-bar-fill {
+      height: 100%; border-radius: 8px;
+      transition: width 1.2s cubic-bezier(.4,0,.2,1);
+      background: linear-gradient(90deg, var(--green), var(--lime));
+    }
+    .rank-marker {
+      position: absolute; top: -3px;
+      width: 16px; height: 16px;
+      background: var(--gold); border: 2px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,.2);
+      transform: translateX(-50%);
+      transition: left 1.2s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* Gut-punch section */
+    .gap-card {
+      background: linear-gradient(135deg, #fef5e7, #fff8e9);
+      border: 1.5px solid rgba(240,192,64,.35);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+    .gap-card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem; font-weight: 700; color: #7a5000;
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .gap-rows { display: flex; flex-direction: column; gap: 8px; }
+    .gap-row {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .83rem; color: var(--ink);
+    }
+    .gap-rank {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .78rem; flex-shrink: 0;
+    }
+    .gap-rank.you { background: rgba(240,192,64,.2); color: #7a5000; border: 1.5px solid rgba(240,192,64,.5); }
+    .gap-rank.top { background: var(--green); color: #fff; }
+    .gap-row-text { flex: 1; }
+    .gap-row-reviews { font-weight: 700; color: var(--green); }
+
+    /* Email gate */
+    .email-gate {
+      background: var(--forest);
+      border-radius: 16px;
+      padding: clamp(1.25rem,4vw,2rem);
+      color: #fff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .email-gate h3 {
+      font-size: clamp(1rem,3vw,1.35rem);
+      font-weight: 700; color: #fff; margin-bottom: 8px;
+    }
+    .email-gate h3 em { color: var(--lime); font-style: italic; }
+    .email-gate p { color: rgba(255,255,255,.68); font-size: .88rem; margin-bottom: 20px; }
+    .email-row {
+      display: flex; gap: 10px;
+      max-width: 420px; margin: 0 auto;
+    }
+    @media(max-width:440px) { .email-row { flex-direction: column; } }
+    .email-row input {
+      flex: 1; padding: 13px 16px;
+      background: rgba(255,255,255,.1);
+      border: 1.5px solid rgba(255,255,255,.25);
+      border-radius: 50px; color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem; outline: none;
+    }
+    .email-row input::placeholder { color: rgba(255,255,255,.4); }
+    .email-row input:focus { border-color: var(--lime); background: rgba(255,255,255,.15); }
+    .btn-email {
+      padding: 13px 22px;
+      background: var(--gold); color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: .9rem;
+      border: none; border-radius: 50px;
+      cursor: pointer; white-space: nowrap;
+      transition: transform .2s, background .2s;
+      box-shadow: 0 4px 16px rgba(240,192,64,.35);
+    }
+    .btn-email:hover { background: #e8b030; transform: translateY(-2px); }
+    .email-skip {
+      display: block; margin-top: 12px;
+      font-size: .75rem; color: rgba(255,255,255,.4);
+      cursor: pointer; text-decoration: underline;
+      background: none; border: none; font-family: 'DM Sans', sans-serif;
+    }
+    .email-skip:hover { color: rgba(255,255,255,.7); }
+
+    /* Full report (revealed after email) */
+    #full-report { display: none; }
+
+    .missing-card {
+      background: #fff; border-radius: 16px;
+      border: 1.5px solid var(--border);
+      padding: clamp(1.25rem,3vw,1.75rem);
+      margin-bottom: 20px;
+    }
+    .missing-card h3 {
+      font-size: 1rem; font-weight: 700; color: var(--ink);
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .missing-items { display: flex; flex-direction: column; gap: 8px; }
+    .missing-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 8px;
+      font-size: .85rem;
+    }
+    .missing-item.bad { background: rgba(220,50,50,.06); }
+    .missing-item.ok { background: rgba(26,122,69,.06); }
+    .missing-item-icon { font-size: 1rem; flex-shrink: 0; }
+    .missing-item-text { flex: 1; color: var(--ink); font-weight: 500; }
+    .missing-item-status { font-size: .72rem; font-weight: 700; padding: 2px 9px; border-radius: 50px; }
+    .missing-item.bad .missing-item-status { background: rgba(220,50,50,.12); color: #c0392b; }
+    .missing-item.ok .missing-item-status { background: rgba(26,122,69,.1); color: var(--green); }
+
+    /* CTA */
+    .cta-card {
+      background: var(--green);
+      border-radius: 20px;
+      padding: clamp(1.5rem,4vw,2.2rem);
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 12px 40px rgba(26,122,69,.3);
+    }
+    .cta-card h2 {
+      font-size: clamp(1.15rem,3.5vw,1.6rem);
+      font-weight: 700; color: #fff; margin-bottom: 8px;
+    }
+    .cta-card h2 em { color: var(--gold); font-style: italic; }
+    .cta-card p { color: rgba(255,255,255,.75); font-size: .9rem; margin-bottom: 20px; }
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 16px 32px;
+      background: var(--gold); color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: 1rem;
+      border-radius: 50px; text-decoration: none;
+      box-shadow: 0 6px 24px rgba(240,192,64,.4);
+      transition: transform .2s, background .2s;
+    }
+    .btn-cta:hover { background: #e8b030; transform: translateY(-2px); }
+    .cta-price {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 16px; font-size: .8rem; color: rgba(255,255,255,.6);
+    }
+    .cta-price strong { color: #fff; }
+    .cta-trust {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      justify-content: center; margin-top: 14px;
+    }
+    .cta-trust-item {
+      font-size: .75rem; color: rgba(255,255,255,.55);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .cta-trust-item::before { content: '✓'; color: var(--lime); font-weight: 700; }
+
+    /* Reset link */
+    .reset-link {
+      text-align: center; padding: 0 0 40px;
+    }
+    .reset-link button {
+      background: none; border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .82rem; color: var(--muted);
+      cursor: pointer; text-decoration: underline;
+    }
+    .reset-link button:hover { color: var(--green); }
+
+    /* Social proof strip */
+    .proof-strip {
+      background: var(--forest); padding: 14px var(--px);
+      text-align: center;
+    }
+    .proof-strip p {
+      color: rgba(255,255,255,.7); font-size: .82rem; font-weight: 500;
+    }
+    .proof-strip strong { color: var(--lime); }
+
+    /* Footer */
+    footer {
+      text-align: center; padding: 24px var(--px);
+      font-size: .72rem; color: #9aab9e;
+      border-top: 1px solid var(--border);
+      background: #fff;
+    }
+    footer a { color: var(--green); text-decoration: none; }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp .5s ease both; }
+    .fade-up-2 { animation: fadeUp .5s ease .1s both; }
+    .fade-up-3 { animation: fadeUp .5s ease .2s both; }
+    .fade-up-4 { animation: fadeUp .5s ease .3s both; }
+
+    /* Spacing util */
+    .mt-20 { margin-top: 20px; }
+    .section-gap { padding: 28px 0 0; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://tryreviewbloom.com" class="nav-logo">
+      <div class="nav-logo-icon">🌱</div>
+      <span class="nav-logo-text">Try Review Bloom</span>
+    </a>
+    <span class="nav-badge">Free GBP Check</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">⚡ Takes 30 seconds · No call needed</div>
+    <h1>See why your <em>competitors</em> are stealing your jobs on Google</h1>
+    <p class="hero-sub">Enter your business details below and get your instant GBP Health Score — free, no strings attached.</p>
+    <div class="hero-trust">
+      <span class="hero-trust-item">Instant results</span>
+      <span class="hero-trust-item">No credit card</span>
+      <span class="hero-trust-item">Trusted by London tradespeople</span>
+    </div>
+  </div>
+</div>
+
+<!-- FORM STATE -->
+<div id="form-state">
+  <div class="form-wrap">
+    <div class="form-card">
+      <h2>Check your GBP Health Score</h2>
+      <p>We'll analyse your Google Business Profile and show you exactly where you rank vs local competitors.</p>
+
+      <div class="field">
+        <label for="biz-name">Business name</label>
+        <input type="text" id="biz-name" placeholder="e.g. Smith's Plumbing Services" autocomplete="organization" />
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="postcode">Postcode</label>
+          <input type="text" id="postcode" placeholder="e.g. SW1A 1AA" autocomplete="postal-code" />
+        </div>
+        <div class="field">
+          <label for="trade">Your trade</label>
+          <select id="trade">
+            <option value="">Select trade…</option>
+            <option>Plumber</option>
+            <option>Boiler engineer</option>
+            <option>Electrician</option>
+            <option>Builder / General contractor</option>
+            <option>Roofer</option>
+            <option>Painter & decorator</option>
+            <option>Locksmith</option>
+            <option>Tiler</option>
+            <option>Landscaper / Gardener</option>
+            <option>Other trade</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-run" id="run-btn" onclick="runCheck()">
+        <span>Run my free GBP check</span> <span>→</span>
+      </button>
+      <p class="form-disclaimer">We'll never spam you. Your data is used only to generate your report.</p>
+    </div>
+  </div>
+
+  <div class="proof-strip mt-20">
+    <p>Tradespeople in London using Review Bloom rank in the <strong>Map Pack top 3</strong> within 60 days on average</p>
+  </div>
+</div>
+
+<!-- LOADING STATE -->
+<div id="loading-state">
+  <div class="form-wrap">
+    <div class="form-card">
+      <div class="loading-wrap">
+        <div class="loading-ring"></div>
+        <div class="loading-title">Analysing your GBP…</div>
+        <p style="font-size:.85rem;color:var(--muted);margin-top:6px">This takes about 10 seconds</p>
+        <ul class="loading-steps" id="loading-steps">
+          <li class="loading-step active" id="step-1"><span class="step-icon">🔍</span> Looking up your business on Google</li>
+          <li class="loading-step" id="step-2"><span class="step-icon">📊</span> Pulling review count &amp; rating</li>
+          <li class="loading-step" id="step-3"><span class="step-icon">📍</span> Checking your Map Pack position</li>
+          <li class="loading-step" id="step-4"><span class="step-icon">🏆</span> Comparing against top 3 competitors</li>
+          <li class="loading-step" id="step-5"><span class="step-icon">📋</span> Generating your health score</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS STATE -->
+<div id="results-state">
+  <div class="results-wrap section-gap">
+
+    <!-- Score card -->
+    <div class="score-card fade-up" id="score-card">
+      <div class="score-header">
+        <div>
+          <div class="score-biz-name" id="res-biz-name">—</div>
+          <div class="score-biz-type" id="res-biz-type">—</div>
+        </div>
+        <div id="res-verdict-badge"></div>
+      </div>
+
+      <!-- Dial -->
+      <div class="score-dial-wrap">
+        <div class="score-dial">
+          <svg width="130" height="130" viewBox="0 0 130 130">
+            <circle cx="65" cy="65" r="54" fill="none" stroke="#e8f0eb" stroke-width="10"/>
+            <circle id="dial-circle" cx="65" cy="65" r="54" fill="none" stroke="var(--green)" stroke-width="10"
+              stroke-linecap="round"
+              stroke-dasharray="339.3"
+              stroke-dashoffset="339.3"
+              style="transition: stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1)"/>
+          </svg>
+          <div class="score-dial-num">
+            <span class="score-num" id="dial-num">0</span>
+            <span class="score-label">/ 100</span>
+          </div>
+        </div>
+        <div id="res-verdict" class="score-verdict"></div>
+      </div>
+
+      <!-- Metrics -->
+      <div class="metrics" id="metrics-list"></div>
+
+      <!-- Ranking bar -->
+      <div class="rank-bar-wrap" id="rank-bar-wrap">
+        <div class="rank-bar-label">
+          <span>Map Pack position</span>
+          <span id="rank-bar-pos-label">—</span>
+        </div>
+        <div class="rank-bar-track">
+          <div class="rank-bar-fill" id="rank-bar-fill" style="width:0%"></div>
+          <div class="rank-marker" id="rank-marker" style="left:0%"></div>
+        </div>
+        <div class="rank-bar-label" style="margin-top:6px;font-size:.7rem">
+          <span style="color:var(--green);font-weight:600">#1 (top)</span>
+          <span>#10+</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Competitor gap card -->
+    <div class="gap-card fade-up-2" id="gap-card"></div>
+
+    <!-- Email gate -->
+    <div class="email-gate fade-up-3" id="email-gate">
+      <h3>Your <em>full report</em> is ready</h3>
+      <p>Enter your email to unlock the complete breakdown — including which profile fields are costing you rankings and what to fix first.</p>
+      <div class="email-row">
+        <input type="email" id="gate-email" placeholder="your@email.com" />
+        <button class="btn-email" onclick="unlockReport()">Send my report</button>
+      </div>
+      <button class="email-skip" onclick="skipEmail()">Skip for now — just show me</button>
+    </div>
+
+    <!-- Full report (unlocked) -->
+    <div id="full-report">
+      <div class="missing-card fade-up">
+        <h3>🔎 Profile completeness check</h3>
+        <div class="missing-items" id="missing-items-list"></div>
+      </div>
+
+      <div class="cta-card fade-up-2">
+        <h2>Ready to take the <em>top 3</em> spots?</h2>
+        <p>We fix everything in this report for you — reviews, rankings, and profile optimisation. First results within 24 hours.</p>
+        <a class="btn-cta" href="https://buy.stripe.com/eVq28t51d80rfms31gfEk04" target="_blank">
+          Start for £97/month →
+        </a>
+        <div class="cta-price"><strong>£97/month</strong> · No contract · Cancel any time</div>
+        <div class="cta-trust">
+          <span class="cta-trust-item">GBP fully managed for you</span>
+          <span class="cta-trust-item">First reviews within 24 hrs</span>
+          <span class="cta-trust-item">Weekly ranking reports</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reset-link">
+      <button onclick="resetTool()">← Check a different business</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 Try Review Bloom · Patient Acquisition Hub Ltd · Company No. 15431935 · ICO Reg. ZC148168</p>
+  <p style="margin-top:6px"><a href="https://tryreviewbloom.com/privacy">Privacy Policy</a> · <a href="https://tryreviewbloom.com">tryreviewbloom.com</a></p>
+</footer>
+
+<script>
+  // ── Simulated scoring engine ──
+  // In production: replace simulate() with real API calls to LeadSnap / Google Places
+  
+  let currentScore = 0;
+  let bizData = {};
+
+  function runCheck() {
+    const name = document.getElementById('biz-name').value.trim();
+    const postcode = document.getElementById('postcode').value.trim();
+    const trade = document.getElementById('trade').value;
+
+    if (!name || !postcode || !trade) {
+      alert('Please fill in all three fields to run your check.');
+      return;
+    }
+
+    bizData = { name, postcode, trade };
+
+    document.getElementById('form-state').style.display = 'none';
+    document.getElementById('loading-state').style.display = 'block';
+
+    runLoadingSequence();
+  }
+
+  function runLoadingSequence() {
+    const steps = [1, 2, 3, 4, 5];
+    const delays = [0, 1800, 3400, 5000, 6400];
+
+    steps.forEach((n, i) => {
+      setTimeout(() => {
+        document.querySelectorAll('.loading-step').forEach(el => {
+          el.classList.remove('active');
+        });
+        const el = document.getElementById('step-' + n);
+        el.classList.add('active', 'done');
+        el.querySelector('.step-icon').textContent = '✓';
+      }, delays[i]);
+    });
+
+    setTimeout(() => {
+      showResults();
+    }, 8200);
+  }
+
+  function simulate(trade, postcode) {
+    // Deterministic-looking "realistic" scores based on input
+    const seed = (bizData.name.length + postcode.replace(/\s/g,'').length) % 10;
+    
+    const profiles = [
+      { score: 31, reviews: 4,  rating: 3.8, rankPos: 9, comp1Reviews: 127, comp2Reviews: 89, comp3Reviews: 62 },
+      { score: 28, reviews: 7,  rating: 4.1, rankPos: 8, comp1Reviews: 143, comp2Reviews: 97, comp3Reviews: 71 },
+      { score: 44, reviews: 12, rating: 4.3, rankPos: 7, comp1Reviews: 98,  comp2Reviews: 76, comp3Reviews: 54 },
+      { score: 38, reviews: 9,  rating: 4.0, rankPos: 8, comp1Reviews: 134, comp2Reviews: 88, comp3Reviews: 61 },
+      { score: 22, reviews: 3,  rating: 3.5, rankPos: 10,comp1Reviews: 156, comp2Reviews: 112,comp3Reviews: 78 },
+      { score: 51, reviews: 18, rating: 4.4, rankPos: 6, comp1Reviews: 87,  comp2Reviews: 65, comp3Reviews: 49 },
+      { score: 34, reviews: 6,  rating: 4.2, rankPos: 9, comp1Reviews: 119, comp2Reviews: 84, comp3Reviews: 58 },
+      { score: 47, reviews: 15, rating: 4.3, rankPos: 7, comp1Reviews: 102, comp2Reviews: 73, comp3Reviews: 51 },
+      { score: 29, reviews: 5,  rating: 3.9, rankPos: 9, comp1Reviews: 138, comp2Reviews: 95, comp3Reviews: 67 },
+      { score: 41, reviews: 11, rating: 4.1, rankPos: 7, comp1Reviews: 111, comp2Reviews: 79, comp3Reviews: 55 },
+    ];
+
+    return profiles[seed];
+  }
+
+  function getVerdict(score) {
+    if (score < 35) return { label: 'Needs urgent attention', cls: 'poor' };
+    if (score < 60) return { label: 'Below average', cls: 'average' };
+    return { label: 'Good — room to improve', cls: 'good' };
+  }
+
+  function getKeyword(trade, postcode) {
+    const town = postcode.split(' ')[0];
+    const kw = {
+      'Plumber': 'plumber',
+      'Boiler engineer': 'boiler repair',
+      'Electrician': 'electrician',
+      'Builder / General contractor': 'builder',
+      'Roofer': 'roofer',
+      'Painter & decorator': 'painter decorator',
+      'Locksmith': 'locksmith',
+      'Tiler': 'tiler',
+      'Landscaper / Gardener': 'landscaper',
+      'Other trade': 'tradesperson',
+    };
+    return `${kw[trade] || 'tradesperson'} ${town}`;
+  }
+
+  function showResults() {
+    const data = simulate(bizData.trade, bizData.postcode);
+    currentScore = data.score;
+    const verdict = getVerdict(data.score);
+    const keyword = getKeyword(bizData.trade, bizData.postcode);
+
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('results-state').style.display = 'block';
+
+    // Header
+    document.getElementById('res-biz-name').textContent = bizData.name;
+    document.getElementById('res-biz-type').textContent = `${bizData.trade} · ${bizData.postcode}`;
+
+    // Verdict badge
+    const vb = document.getElementById('res-verdict-badge');
+    vb.innerHTML = `<span class="score-verdict ${verdict.cls}">${verdict.label}</span>`;
+
+    // Dial animation
+    setTimeout(() => {
+      const circle = document.getElementById('dial-circle');
+      const circumference = 339.3;
+      const offset = circumference - (data.score / 100) * circumference;
+      circle.style.strokeDashoffset = offset;
+
+      // Colour by score
+      if (data.score < 35) circle.style.stroke = '#c0392b';
+      else if (data.score < 60) circle.style.stroke = '#e67e22';
+      else circle.style.stroke = 'var(--green)';
+
+      // Count up number
+      let n = 0;
+      const interval = setInterval(() => {
+        n = Math.min(n + 2, data.score);
+        document.getElementById('dial-num').textContent = n;
+        if (n >= data.score) clearInterval(interval);
+      }, 28);
+    }, 200);
+
+    // Verdict text
+    const rv = document.getElementById('res-verdict');
+    rv.textContent = verdict.label;
+    rv.className = `score-verdict ${verdict.cls}`;
+
+    // Metrics
+    const ml = document.getElementById('metrics-list');
+    const reviewGap = data.comp1Reviews - data.reviews;
+    const metricsData = [
+      {
+        icon: '⭐',
+        label: 'Your Google reviews',
+        value: `${data.reviews} reviews`,
+        sub: `${data.rating} ★ average rating`,
+        badge: data.reviews < 10 ? { text: 'Low', cls: 'red' } : { text: 'Average', cls: 'amber' },
+      },
+      {
+        icon: '📍',
+        label: `Map Pack rank for "${keyword}"`,
+        value: data.rankPos <= 3 ? `#${data.rankPos} — In the Map Pack` : `#${data.rankPos} — Outside Map Pack`,
+        sub: data.rankPos <= 3 ? 'Customers can find you' : 'Customers are not seeing you',
+        badge: data.rankPos <= 3 ? { text: 'Visible', cls: 'green' } : { text: 'Not visible', cls: 'red' },
+      },
+      {
+        icon: '📉',
+        label: 'Reviews behind #1 competitor',
+        value: `${reviewGap} reviews behind`,
+        sub: `Your top competitor has ${data.comp1Reviews} reviews`,
+        badge: { text: 'Gap to close', cls: 'amber' },
+      },
+    ];
+
+    ml.innerHTML = metricsData.map(m => `
+      <div class="metric">
+        <div class="metric-icon">${m.icon}</div>
+        <div class="metric-body">
+          <div class="metric-label">${m.label}</div>
+          <div class="metric-value">${m.value}</div>
+          <div class="metric-sub">${m.sub}</div>
+        </div>
+        <span class="metric-badge ${m.badge.cls}">${m.badge.text}</span>
+      </div>
+    `).join('');
+
+    // Ranking bar — position 10 = 0% fill, position 1 = 100%
+    const fillPct = Math.max(0, Math.min(100, ((10 - data.rankPos) / 9) * 100));
+    const markerPct = 100 - fillPct;
+    setTimeout(() => {
+      document.getElementById('rank-bar-fill').style.width = fillPct + '%';
+      document.getElementById('rank-marker').style.left = markerPct + '%';
+      document.getElementById('rank-bar-pos-label').textContent = `You're at #${data.rankPos}`;
+    }, 400);
+
+    // Gap card
+    const gc = document.getElementById('gap-card');
+    gc.innerHTML = `
+      <div class="gap-card-title">⚠️ Here's who's taking your jobs for "${keyword}"</div>
+      <div class="gap-rows">
+        <div class="gap-row">
+          <div class="gap-rank top">1</div>
+          <div class="gap-row-text">Top competitor</div>
+          <div class="gap-row-reviews">${data.comp1Reviews} reviews</div>
+        </div>
+        <div class="gap-row">
+          <div class="gap-rank top">2</div>
+          <div class="gap-row-text">2nd competitor</div>
+          <div class="gap-row-reviews">${data.comp2Reviews} reviews</div>
+        </div>
+        <div class="gap-row">
+          <div class="gap-rank top">3</div>
+          <div class="gap-row-text">3rd competitor</div>
+          <div class="gap-row-reviews">${data.comp3Reviews} reviews</div>
+        </div>
+        <div class="gap-row" style="margin-top:6px;padding-top:10px;border-top:1px solid rgba(240,192,64,.3)">
+          <div class="gap-rank you">You</div>
+          <div class="gap-row-text" style="font-weight:600">${bizData.name}</div>
+          <div class="gap-row-reviews" style="color:#a0720a">${data.reviews} reviews</div>
+        </div>
+      </div>
+    `;
+
+    // Missing fields (prepared for after email unlock)
+    const mf = [
+      { bad: !true,  icon: '📸', text: 'Profile photos (min. 10 recommended)', status: data.reviews < 10 ? 'Missing' : 'OK' },
+      { bad: true,   icon: '📝', text: 'Business description (keyword-rich)', status: 'Missing' },
+      { bad: true,   icon: '🏷️', text: 'Primary category correctly set', status: 'Needs review' },
+      { bad: data.reviews < 15, icon: '⭐', text: 'Review velocity (weekly new reviews)', status: data.reviews < 15 ? 'Too slow' : 'Active' },
+      { bad: true,   icon: '📅', text: 'Google Posts (last 4 weeks)', status: 'No posts found' },
+      { bad: false,  icon: '🕐', text: 'Opening hours', status: 'Set' },
+    ];
+
+    document.getElementById('missing-items-list').innerHTML = mf.map(f => `
+      <div class="missing-item ${f.bad ? 'bad' : 'ok'}">
+        <span class="missing-item-icon">${f.icon}</span>
+        <span class="missing-item-text">${f.text}</span>
+        <span class="missing-item-status">${f.status}</span>
+      </div>
+    `).join('');
+  }
+
+  function unlockReport() {
+    const email = document.getElementById('gate-email').value.trim();
+    if (!email || !email.includes('@')) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+    // In production: POST email + bizData to your CRM / GHL / n8n webhook
+    revealFullReport();
+  }
+
+  function skipEmail() {
+    revealFullReport();
+  }
+
+  function revealFullReport() {
+    document.getElementById('email-gate').style.display = 'none';
+    const fr = document.getElementById('full-report');
+    fr.style.display = 'block';
+    fr.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function resetTool() {
+    document.getElementById('results-state').style.display = 'none';
+    document.getElementById('full-report').style.display = 'none';
+    document.getElementById('email-gate').style.display = 'block';
+    document.getElementById('form-state').style.display = 'block';
+    document.getElementById('dial-circle').style.strokeDashoffset = '339.3';
+    document.getElementById('dial-num').textContent = '0';
+    document.getElementById('rank-bar-fill').style.width = '0%';
+    document.getElementById('rank-marker').style.left = '0%';
+    // Reset loading steps
+    document.querySelectorAll('.loading-step').forEach((el, i) => {
+      el.classList.remove('active', 'done');
+      const icons = ['🔍','📊','📍','🏆','📋'];
+      el.querySelector('.step-icon').textContent = icons[i];
+      if (i === 0) el.classList.add('active');
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Allow Enter key in form
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && document.getElementById('form-state').style.display !== 'none') {
+      runCheck();
+    }
+  });
+</script>
+
+</body>
+</html>
