@@ -491,7 +491,7 @@
     .mt-20 { margin-top: 20px; }
     .section-gap { padding: 28px 0 0; }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs1-RXW8sp_-awSmXcPhcVfOAXXo_QvA0&libraries=places&callback=initPlaces" async defer></script>
+  <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.googleapis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({key:"AIzaSyAs1-RXW8sp_-awSmXcPhcVfOAXXo_QvA0",v:"weekly"});</script>
 </head>
 <body>
 
@@ -712,35 +712,32 @@
     runLoadingSequence();
   }
 
-  let placesService = null;
   let realPlacesData = null;
 
-  function initPlaces() {
-    const dummy = document.createElement('div');
-    placesService = new google.maps.places.PlacesService(dummy);
-  }
-
-  function fetchRealData(name, postcode) {
-    return new Promise((resolve) => {
-      if (!placesService) { resolve(null); return; }
-      placesService.findPlaceFromQuery({
-        query: name + ' ' + postcode + ' UK',
-        fields: ['name','rating','user_ratings_total','photos','opening_hours','place_id']
-      }, function(results, status) {
-        if (status === google.maps.places.PlacesServiceStatus.OK && results && results[0]) {
-          const p = results[0];
-          resolve({
-            reviews: p.user_ratings_total || null,
-            rating: p.rating ? p.rating.toFixed(1) : null,
-            hasPhotos: p.photos && p.photos.length >= 5,
-            hasHours: !!(p.opening_hours),
-            placeId: p.place_id
-          });
-        } else {
-          resolve(null);
-        }
-      });
-    });
+  async function fetchRealData(name, postcode) {
+    try {
+      const { Place } = await google.maps.importLibrary("places");
+      const request = {
+        textQuery: name + ' ' + postcode + ' UK',
+        fields: ['displayName','rating','userRatingCount','photos','regularOpeningHours','id'],
+        maxResultCount: 1,
+      };
+      const { places } = await Place.searchByText(request);
+      if (places && places.length > 0) {
+        const p = places[0];
+        return {
+          reviews: p.userRatingCount || null,
+          rating: p.rating ? p.rating.toFixed(1) : null,
+          hasPhotos: p.photos && p.photos.length >= 5,
+          hasHours: !!(p.regularOpeningHours),
+          placeId: p.id
+        };
+      }
+      return null;
+    } catch(e) {
+      console.warn('Places API error:', e);
+      return null;
+    }
   }
 
   function runLoadingSequence() {
@@ -751,6 +748,7 @@
     realPlacesData = null;
     fetchRealData(bizData.name, bizData.postcode).then(function(data) {
       realPlacesData = data;
+      console.log("Places data:", data);
     });
 
     steps.forEach((n, i) => {
