@@ -491,6 +491,7 @@
     .mt-20 { margin-top: 20px; }
     .section-gap { padding: 28px 0 0; }
   </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs1-RXW8sp_-awSmXcPhcVfOAXXo_QvA0&libraries=places&callback=initPlaces" async defer></script>
 </head>
 <body>
 
@@ -711,9 +712,46 @@
     runLoadingSequence();
   }
 
+  let placesService = null;
+  let realPlacesData = null;
+
+  function initPlaces() {
+    const dummy = document.createElement('div');
+    placesService = new google.maps.places.PlacesService(dummy);
+  }
+
+  function fetchRealData(name, postcode) {
+    return new Promise((resolve) => {
+      if (!placesService) { resolve(null); return; }
+      placesService.findPlaceFromQuery({
+        query: name + ' ' + postcode + ' UK',
+        fields: ['name','rating','user_ratings_total','photos','opening_hours','place_id']
+      }, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK && results && results[0]) {
+          const p = results[0];
+          resolve({
+            reviews: p.user_ratings_total || null,
+            rating: p.rating ? p.rating.toFixed(1) : null,
+            hasPhotos: p.photos && p.photos.length >= 5,
+            hasHours: !!(p.opening_hours),
+            placeId: p.place_id
+          });
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  }
+
   function runLoadingSequence() {
     const steps = [1, 2, 3, 4, 5];
     const delays = [0, 1800, 3400, 5000, 6400];
+
+    // Kick off real data fetch immediately in parallel
+    realPlacesData = null;
+    fetchRealData(bizData.name, bizData.postcode).then(function(data) {
+      realPlacesData = data;
+    });
 
     steps.forEach((n, i) => {
       setTimeout(() => {
@@ -729,6 +767,13 @@
     setTimeout(() => {
       showResults();
     }, 8200);
+  }
+
+  function calcScore(reviews, rankPos) {
+    // Score = review component (0-60) + rank component (0-40)
+    const reviewScore = Math.min(60, Math.round((reviews / 150) * 60));
+    const rankScore = Math.max(0, Math.round(((10 - rankPos) / 9) * 40));
+    return Math.min(99, reviewScore + rankScore);
   }
 
   function simulate(trade, postcode) {
@@ -775,7 +820,16 @@
   }
 
   function showResults() {
-    const data = simulate(bizData.trade, bizData.postcode);
+    const simData = simulate(bizData.trade, bizData.postcode);
+    // Blend: use real Places data where available, fall back to simulated
+    const realReviews = realPlacesData && realPlacesData.reviews != null ? realPlacesData.reviews : null;
+    const realRating = realPlacesData && realPlacesData.rating != null ? realPlacesData.rating : null;
+    const data = Object.assign({}, simData, {
+      reviews: realReviews !== null ? realReviews : simData.reviews,
+      rating: realRating !== null ? realRating : simData.rating,
+      // Recalculate score based on real reviews if available
+      score: realReviews !== null ? calcScore(realReviews, simData.rankPos) : simData.score
+    });
     currentScore = data.score;
     const verdict = getVerdict(data.score);
     const keyword = getKeyword(bizData.trade, bizData.postcode);
