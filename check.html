@@ -976,3 +976,21 @@
 
 </body>
 </html>
+<script>
+  // Pre-fill from URL params (when arriving from homepage hero tool)
+  (function() {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get('name')) document.getElementById('biz-name').value = p.get('name');
+    if (p.get('postcode')) document.getElementById('postcode').value = p.get('postcode');
+    if (p.get('trade')) {
+      const sel = document.getElementById('trade');
+      for (let i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === p.get('trade')) { sel.selectedIndex = i; break; }
+      }
+    }
+    // Auto-run if all three params present
+    if (p.get('name') && p.get('postcode') && p.get('trade')) {
+      setTimeout(runCheck, 400);
+    }
+  })();
+</script>
