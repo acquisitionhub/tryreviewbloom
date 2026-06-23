@@ -918,7 +918,21 @@
       alert('Please enter a valid email address.');
       return;
     }
-    // In production: POST email + bizData to your CRM / GHL / n8n webhook
+
+    // Send lead to Formspree → julien@camdenacquisitionhub.com
+    fetch('https://formspree.io/f/mgojvzzr', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        business_name: bizData.name,
+        trade: bizData.trade,
+        postcode: bizData.postcode,
+        gbp_score: currentScore,
+        _subject: `New GBP lead: ${bizData.name} (${bizData.trade}, ${bizData.postcode})`
+      })
+    }).catch(() => {}); // Silent fail — never block the user
+
     revealFullReport();
   }
 
