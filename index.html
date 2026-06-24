@@ -1549,6 +1549,559 @@ Because Google's map algorithm actively rewards review velocity, they climbed st
   </div>
 </div>
 
+<!--
+=============================================================
+  TRY REVIEW BLOOM — LOCAL PRESENCE OFFER SECTION
+=============================================================
+  PLACEMENT: Paste this entire block BEFORE the
+  <section class="website-addon" id="website"> section.
+
+  TARGET PROSPECT: Businesses already appearing on Google
+  Maps (positions 4–10) but with NO website. Strong closer
+  pitch — they've done the hard work, we finish the job.
+
+  USES: existing TRB CSS variables + component classes.
+  No new dependencies. Add the <style> block once to your
+  existing <style> tag or keep it inline here.
+=============================================================
+-->
+
+<!-- ── LOCAL PRESENCE STYLES ─────────────────────────────── -->
+<style>
+  .lp-section { background: var(--forest); }
+  .lp-section h2 { color: #fff; }
+  .lp-section h2 em { color: var(--lime); }
+  .lp-section .section-sub { color: rgba(255,255,255,.65); }
+
+  .lp-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  @media (min-width: 900px) {
+    .lp-grid { grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+  }
+
+  /* Insight pill — "you're already ranking" hook */
+  .lp-insight {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: rgba(240,192,64,.1);
+    border: 1px solid rgba(240,192,64,.3);
+    border-radius: var(--r);
+    padding: 16px 18px;
+    margin-bottom: 28px;
+  }
+  .lp-insight-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+  .lp-insight-text { font-size: .88rem; color: rgba(255,255,255,.8); line-height: 1.65; }
+  .lp-insight-text strong { color: var(--gold); }
+
+  /* What's included checklist */
+  .lp-includes {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .lp-includes li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: .92rem;
+    color: rgba(255,255,255,.8);
+    line-height: 1.55;
+  }
+  .lp-includes li .lp-tick {
+    color: var(--lime);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: .95rem;
+  }
+  .lp-includes li .lp-label { font-weight: 600; color: #fff; }
+  .lp-includes li .lp-sub { color: rgba(255,255,255,.5); font-size: .82rem; }
+
+  /* Price block */
+  .lp-price-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .lp-price-amount {
+    font-family: 'Fraunces', serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--lime);
+    line-height: 1;
+  }
+  .lp-price-period { font-size: .9rem; color: rgba(255,255,255,.5); }
+  .lp-price-note {
+    font-size: .78rem;
+    color: rgba(255,255,255,.4);
+    margin-bottom: 22px;
+  }
+
+  /* CTA buttons row */
+  .lp-ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+  @media (max-width: 399px) {
+    .lp-ctas { flex-direction: column; align-items: stretch; }
+    .lp-ctas .btn { justify-content: center; }
+  }
+
+  /* Right column — the "no website" problem mock */
+  .lp-right { display: flex; flex-direction: column; gap: 20px; }
+
+  /* SERP mock — shows them how they look WITHOUT a site */
+  .lp-serp-mock {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  }
+  .lp-serp-bar {
+    background: #f1f3f4;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .lp-serp-dots { display: flex; gap: 5px; }
+  .lp-serp-dots span {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: block;
+  }
+  .lp-serp-query {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 22px;
+    padding: 5px 12px;
+    font-size: .72rem;
+    color: #3c4043;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .lp-serp-body { padding: 14px 16px; }
+  .lp-serp-label {
+    font-size: .65rem;
+    color: #70757a;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Map pack result rows */
+  .lp-map-result {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f3f4;
+  }
+  .lp-map-result:last-child { border-bottom: none; }
+  .lp-map-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .65rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .lp-map-num.pos1 { background: #1a7a45; color: #fff; }
+  .lp-map-num.pos2 { background: #e8f5e9; color: #1a7a45; }
+  .lp-map-num.pos3 { background: #fef9e7; color: #b7950b; }
+  .lp-map-num.pos4 { background: #fdebd0; color: #ca6f1e; }
+  .lp-map-num.pos5 { background: #f5b7b1; color: #c0392b; }
+
+  .lp-map-info { flex: 1; min-width: 0; }
+  .lp-map-name {
+    font-size: .82rem;
+    font-weight: 700;
+    color: #3c4043;
+    margin-bottom: 2px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .lp-map-meta {
+    font-size: .7rem;
+    color: #70757a;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .lp-map-stars { color: #fbbc04; }
+  .lp-map-website {
+    font-size: .65rem;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .lp-map-website.has-site { background: #e8f5e9; color: #1a7a45; }
+  .lp-map-website.no-site { background: #fdecea; color: #c0392b; }
+  .lp-map-website.you { background: #fef9e7; color: #b7950b; }
+
+  /* The "gap" callout */
+  .lp-gap-callout {
+    background: rgba(240,192,64,.12);
+    border: 1px solid rgba(240,192,64,.3);
+    border-radius: var(--r);
+    padding: 14px 16px;
+    font-size: .82rem;
+    color: rgba(255,255,255,.8);
+    line-height: 1.6;
+  }
+  .lp-gap-callout strong { color: var(--gold); }
+
+  /* Versus table */
+  .lp-vs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .82rem;
+    margin-top: 32px;
+  }
+  .lp-vs-table th {
+    text-align: left;
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: rgba(255,255,255,.4);
+    padding: 0 0 10px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .lp-vs-table th:not(:first-child) { text-align: center; }
+  .lp-vs-table td {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    color: rgba(255,255,255,.75);
+    vertical-align: middle;
+  }
+  .lp-vs-table td:not(:first-child) { text-align: center; }
+  .lp-vs-table tr.lp-vs-highlight td { color: var(--lime); font-weight: 600; }
+  .lp-vs-tick { color: var(--lime); font-size: 1rem; }
+  .lp-vs-cross { color: rgba(255,255,255,.2); font-size: 1rem; }
+  .lp-vs-you { color: var(--gold); font-size: .7rem; font-weight: 700; }
+
+  /* Objection block */
+  .lp-objections {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: var(--r);
+    padding: 22px;
+    margin-top: 36px;
+  }
+  .lp-obj { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,.07); }
+  .lp-obj:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .lp-obj-q { font-size: .88rem; font-weight: 600; color: #fff; margin-bottom: 5px; }
+  .lp-obj-a { font-size: .82rem; color: rgba(255,255,255,.55); line-height: 1.65; }
+  .lp-obj-a strong { color: rgba(255,255,255,.8); }
+</style>
+
+<!-- ── LOCAL PRESENCE SECTION ─────────────────────────────── -->
+<section class="lp-section" id="local-presence">
+  <div class="container">
+
+    <!-- Section header -->
+    <div class="section-label">
+      <span class="badge" style="background:rgba(240,192,64,.15);color:var(--gold);border-color:rgba(240,192,64,.3);">
+        🗺️ Local Presence — £197/month
+      </span>
+    </div>
+    <h2 class="section-title">
+      You're already showing up on Google Maps.<br>
+      <em>But there's nothing to click through to.</em>
+    </h2>
+    <p class="section-sub">
+      Most businesses ranking in positions 4–10 on the map pack have no website attached to their profile. That's not a ranking problem — it's a conversion problem. Every searcher who doesn't click your listing goes straight to the competitor above you who has one.
+    </p>
+
+    <div class="lp-grid">
+
+      <!-- LEFT: offer detail -->
+      <div class="fade-in">
+
+        <!-- Hook insight -->
+        <div class="lp-insight">
+          <span class="lp-insight-icon">💡</span>
+          <div class="lp-insight-text">
+            <strong>You've already done the hard part.</strong> Getting a Google Business Profile to rank takes months of consistency. Losing those clicks to a competitor with a basic website is the most fixable problem in local SEO — and it costs nothing compared to what you're already losing.
+          </div>
+        </div>
+
+        <!-- What's included -->
+        <ul class="lp-includes">
+          <li>
+            <span class="lp-tick">✓</span>
+            <div>
+              <div class="lp-label">Google Business Profile management</div>
+              <div class="lp-sub">Weekly posts, photos, Q&A, category optimisation — managed every week</div>
+            </div>
+          </li>
+          <li>
+            <span class="lp-tick">✓</span>
+            <div>
+              <div class="lp-label">Review automation</div>
+              <div class="lp-sub">Automated SMS + email review requests after every job, AI replies to every review</div>
+            </div>
+          </li>
+          <li>
+            <span class="lp-tick">✓</span>
+            <div>
+              <div class="lp-label">Local website — built for your trade</div>
+              <div class="lp-sub">Service pages + location pages — built to rank and built to convert</div>
+            </div>
+          </li>
+          <li>
+            <span class="lp-tick">✓</span>
+            <div>
+              <div class="lp-label">LocalBusiness schema markup</div>
+              <div class="lp-sub">Structured data that tells Google exactly who you are and where you work</div>
+            </div>
+          </li>
+          <li>
+            <span class="lp-tick">✓</span>
+            <div>
+              <div class="lp-label">Monthly heatmap ranking report</div>
+              <div class="lp-sub">See where you rank across your service area — every month, no guesswork</div>
+            </div>
+          </li>
+          <li>
+            <span class="lp-tick">✓</span>
+            <div>
+              <div class="lp-label">Ongoing site updates included</div>
+              <div class="lp-sub">New service or area to add? Just message us — no extra charge</div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Price -->
+        <div class="lp-price-row">
+          <div class="lp-price-amount">£197</div>
+          <div class="lp-price-period">/month</div>
+          <span class="badge" style="background:rgba(62,201,110,.2);color:var(--lime);border-color:rgba(62,201,110,.4);">No setup fee</span>
+        </div>
+        <p class="lp-price-note">30 days' notice to cancel. Your GBP access and website files handed back in full if you leave.</p>
+
+        <!-- CTAs -->
+        <div class="lp-ctas">
+          <a href="https://cal.com/julien-6itp3b/30min" target="_blank" rel="noopener" class="btn btn-gold btn-lg">
+            Book a free audit call →
+          </a>
+          <a href="#pricing" class="btn btn-ghost btn-lg">See all plans</a>
+        </div>
+
+        <!-- Versus table -->
+        <table class="lp-vs-table">
+          <thead>
+            <tr>
+              <th>What you get</th>
+              <th>GBP only (£97)</th>
+              <th>Local Presence (£197)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>GBP management</td>
+              <td><span class="lp-vs-tick">✓</span></td>
+              <td><span class="lp-vs-tick">✓</span></td>
+            </tr>
+            <tr>
+              <td>Review automation</td>
+              <td><span class="lp-vs-tick">✓</span></td>
+              <td><span class="lp-vs-tick">✓</span></td>
+            </tr>
+            <tr class="lp-vs-highlight">
+              <td>Local website (service + location pages)</td>
+              <td><span class="lp-vs-cross">✕</span></td>
+              <td><span class="lp-vs-tick">✓</span></td>
+            </tr>
+            <tr class="lp-vs-highlight">
+              <td>LocalBusiness schema markup</td>
+              <td><span class="lp-vs-cross">✕</span></td>
+              <td><span class="lp-vs-tick">✓</span></td>
+            </tr>
+            <tr class="lp-vs-highlight">
+              <td>Monthly heatmap report</td>
+              <td><span class="lp-vs-cross">✕</span></td>
+              <td><span class="lp-vs-tick">✓</span></td>
+            </tr>
+            <tr class="lp-vs-highlight">
+              <td>Ongoing site updates</td>
+              <td><span class="lp-vs-cross">✕</span></td>
+              <td><span class="lp-vs-tick">✓</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Objections -->
+        <div class="lp-objections">
+          <div class="lp-obj">
+            <div class="lp-obj-q">I already rank on Google Maps — why do I need a website?</div>
+            <div class="lp-obj-a">Because <strong>ranking and converting are two different things</strong>. When someone searches "boiler engineer Watford" and sees your listing, the first thing they do is look for a website to verify you're real. If there's nothing to click, they go to the listing above you that has one. You're generating visibility for someone else.</div>
+          </div>
+          <div class="lp-obj">
+            <div class="lp-obj-q">Can't I just use my GBP as my online presence?</div>
+            <div class="lp-obj-a">Your GBP gets you found. A website gets you chosen. Google's own research shows that <strong>businesses with websites linked to their GBP get significantly more direction requests, calls, and clicks</strong> than those without. It also gives Google more signals to rank you higher — a site with location and service pages reinforces exactly what your GBP already says about you.</div>
+          </div>
+          <div class="lp-obj">
+            <div class="lp-obj-q">How long does it take to set up?</div>
+            <div class="lp-obj-a">We run a 24-hour audit of your GBP and existing presence, then your website is live within <strong>7 days of onboarding</strong>. GBP management and review automation start the same week. You don't need to do anything beyond a 30-minute setup call.</div>
+          </div>
+          <div class="lp-obj">
+            <div class="lp-obj-q">What if I'm already getting some calls from Google?</div>
+            <div class="lp-obj-a">That's exactly why this is the right moment. You've proven your GBP works — now <strong>every pound you put into Local Presence multiplies something that already has traction</strong>. Adding a website and review automation to a listing that's already ranking is the highest-ROI move you can make right now.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: SERP mock showing the "no website" problem -->
+      <div class="lp-right fade-in fade-in-delay-1">
+
+        <!-- Mock Google Maps SERP -->
+        <div class="lp-serp-mock">
+          <div class="lp-serp-bar">
+            <div class="lp-serp-dots">
+              <span style="background:#ff5f57;"></span>
+              <span style="background:#febc2e;"></span>
+              <span style="background:#28c840;"></span>
+            </div>
+            <div class="lp-serp-query">boiler engineer watford near me</div>
+          </div>
+          <div class="lp-serp-body">
+            <div class="lp-serp-label">Google Map Pack — top results</div>
+
+            <!-- Position 1 — competitor with site -->
+            <div class="lp-map-result">
+              <div class="lp-map-num pos1">1</div>
+              <div class="lp-map-info">
+                <div class="lp-map-name">Watford Boiler Pro Ltd</div>
+                <div class="lp-map-meta">
+                  <span class="lp-map-stars">★★★★★</span>
+                  <span>4.9 · 312 reviews</span>
+                  <span class="lp-map-website has-site">✓ Website</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Position 2 — competitor with site -->
+            <div class="lp-map-result">
+              <div class="lp-map-num pos2">2</div>
+              <div class="lp-map-info">
+                <div class="lp-map-name">Central Heating Watford</div>
+                <div class="lp-map-meta">
+                  <span class="lp-map-stars">★★★★☆</span>
+                  <span>4.7 · 187 reviews</span>
+                  <span class="lp-map-website has-site">✓ Website</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Position 3 — competitor with site -->
+            <div class="lp-map-result">
+              <div class="lp-map-num pos3">3</div>
+              <div class="lp-map-info">
+                <div class="lp-map-name">Hertfordshire Gas Services</div>
+                <div class="lp-map-meta">
+                  <span class="lp-map-stars">★★★★☆</span>
+                  <span>4.6 · 94 reviews</span>
+                  <span class="lp-map-website has-site">✓ Website</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Position 5 — YOU, no website -->
+            <div class="lp-map-result" style="background:rgba(202,111,30,.06);border-radius:8px;padding:10px;margin:0 -4px;">
+              <div class="lp-map-num pos4">5</div>
+              <div class="lp-map-info">
+                <div class="lp-map-name" style="color:#ca6f1e;">Your Business ← You are here</div>
+                <div class="lp-map-meta">
+                  <span class="lp-map-stars">★★★★☆</span>
+                  <span>4.5 · 23 reviews</span>
+                  <span class="lp-map-website no-site">✗ No website</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Gap callout -->
+        <div class="lp-gap-callout">
+          <strong>What's happening every time someone searches:</strong> positions 1–3 all have websites to click through to. Your listing is visible — but there's nowhere to go, nothing to verify you're real, no service pages to build trust. The customer picks someone with a site. Every time.
+        </div>
+
+        <!-- After mock — what it looks like WITH Local Presence -->
+        <div style="background:rgba(62,201,110,.07);border:1px solid rgba(62,201,110,.2);border-radius:var(--r);padding:20px;">
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--lime);margin-bottom:12px;">What changes with Local Presence</div>
+
+          <div class="lp-map-result" style="border-bottom:none;padding:0;">
+            <div class="lp-map-num pos1" style="background:var(--green);">↑</div>
+            <div class="lp-map-info">
+              <div class="lp-map-name" style="color:#fff;">Your Business</div>
+              <div class="lp-map-meta">
+                <span class="lp-map-stars">★★★★★</span>
+                <span style="color:rgba(255,255,255,.6);">4.8 · growing weekly</span>
+                <span class="lp-map-website has-site">✓ Website live</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:.78rem;color:rgba(255,255,255,.65);">
+              <span style="color:var(--lime);font-weight:700;">✓</span>
+              Service pages for every job type you do
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.78rem;color:rgba(255,255,255,.65);">
+              <span style="color:var(--lime);font-weight:700;">✓</span>
+              Location pages for every town you cover
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.78rem;color:rgba(255,255,255,.65);">
+              <span style="color:var(--lime);font-weight:700;">✓</span>
+              Reviews growing automatically — every week
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.78rem;color:rgba(255,255,255,.65);">
+              <span style="color:var(--lime);font-weight:700;">✓</span>
+              Schema markup reinforcing your GBP signals
+            </div>
+          </div>
+        </div>
+
+        <!-- Closing CTA card -->
+        <div style="background:var(--gold);border-radius:var(--r);padding:22px;text-align:center;">
+          <div style="font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:6px;">
+            Start converting the traffic you're already getting
+          </div>
+          <div style="font-size:.85rem;color:rgba(13,26,18,.7);margin-bottom:16px;line-height:1.6;">
+            Free 20-minute audit call. We'll show you exactly where you're losing clicks and what it would take to fix it.
+          </div>
+          <a href="https://cal.com/julien-6itp3b/30min" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;justify-content:center;background:var(--forest);box-shadow:none;">
+            Book your free audit call →
+          </a>
+          <div style="font-size:.72rem;color:rgba(13,26,18,.5);margin-top:10px;">No obligation. No pitch. Just an honest look at your Google presence.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ── END LOCAL PRESENCE SECTION ───────────────────────── -->
+
+
 <section class="website-addon" id="website">
   <div class="container">
     <div class="wa-grid">
