@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRB Prospect Hub — Find Tradespeople Venting Across All Platforms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#0d1a12;color:#fff;min-height:100vh;line-height:1.6}
+:root{--green:#1a7a45;--lime:#3ec96e;--gold:#f0c040;--forest:#0f3d27;--card:rgba(255,255,255,.05);--border:rgba(255,255,255,.1);--red:#f87171;--amber:#f0c040}
+nav{background:rgba(0,0,0,.4);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px}
+.nav-logo{font-family:'Fraunces',serif;font-weight:700;font-size:1rem;color:#fff;text-decoration:none}
+.nav-links{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.nav-links a{font-size:.82rem;color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--lime)}
+.hero{background:linear-gradient(150deg,#0a2b1c 0%,#0d1a12 100%);padding:3rem 1.5rem 2rem;text-align:center;border-bottom:1px solid var(--border)}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;margin-bottom:.75rem;line-height:1.15}
+.hero h1 em{color:var(--lime);font-style:italic}
+.hero p{color:rgba(255,255,255,.6);max-width:600px;margin:0 auto 1.5rem;font-size:.95rem;line-height:1.75}
+.stats-bar{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
+.stat-item{text-align:center}
+.stat-num{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:var(--lime);line-height:1}
+.stat-label{font-size:.7rem;color:rgba(255,255,255,.4);margin-top:2px}
+.main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+.section-title{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:700;color:#fff;margin-bottom:.35rem}
+.section-sub{font-size:.85rem;color:rgba(255,255,255,.45);margin-bottom:1.25rem;line-height:1.6}
+
+/* SHEET BUTTON */
+.sheet-cta{background:linear-gradient(135deg,var(--forest),#0a2b2b);border:1px solid rgba(62,201,110,.3);border-radius:16px;padding:1.75rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;gap:1.25rem;flex-wrap:wrap}
+.sheet-cta h2{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.sheet-cta p{font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.65;max-width:480px}
+.sheet-btn{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:#0d1a12;font-weight:700;padding:13px 22px;border-radius:50px;text-decoration:none;font-size:.9rem;flex-shrink:0;white-space:nowrap;transition:transform .2s,background .2s}
+.sheet-btn:hover{transform:translateY(-2px);background:#2fb55e}
+
+/* PLATFORM SECTIONS */
+.platform-section{margin-bottom:2.5rem}
+.platform-header{display:flex;align-items:center;gap:12px;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
+.platform-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.platform-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:#fff}
+.platform-meta{font-size:.78rem;color:rgba(255,255,255,.4);margin-top:2px}
+.platform-volume{font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:50px;margin-left:auto;flex-shrink:0}
+.vol-fire{background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.vol-warm{background:rgba(240,192,64,.12);color:var(--gold);border:1px solid rgba(240,192,64,.25)}
+.vol-ok{background:rgba(62,201,110,.12);color:var(--lime);border:1px solid rgba(62,201,110,.25)}
+
+/* SEARCH TERM PILLS */
+.term-grid{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.term-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:6px 12px;cursor:pointer;transition:border-color .2s,background .2s}
+.term-pill:hover{border-color:var(--lime);background:rgba(62,201,110,.08)}
+.term-pill code{font-size:.78rem;font-family:monospace;color:var(--lime);font-weight:600}
+.term-pill span{font-size:.72rem;color:rgba(255,255,255,.4)}
+.term-pill .copied{color:var(--lime);font-size:.72rem;display:none}
+
+/* DIRECT LINKS */
+.link-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px;margin-bottom:1rem}
+.link-card{display:flex;align-items:flex-start;gap:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.875rem 1rem;text-decoration:none;transition:border-color .2s,background .2s}
+.link-card:hover{border-color:var(--lime);background:rgba(62,201,110,.06)}
+.link-card-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px}
+.link-card-title{font-size:.88rem;font-weight:600;color:#fff;margin-bottom:2px}
+.link-card-sub{font-size:.75rem;color:rgba(255,255,255,.4);line-height:1.5}
+.link-card-arrow{color:var(--lime);font-size:.85rem;margin-left:auto;flex-shrink:0;margin-top:2px}
+
+/* WA TEMPLATES */
+.wa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-bottom:2rem}
+.wa-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:1rem}
+.wa-badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--lime);margin-bottom:.5rem}
+.wa-msg{font-size:.82rem;color:rgba(255,255,255,.75);line-height:1.7;white-space:pre-line;margin-bottom:.6rem;font-style:italic}
+.wa-btn{font-size:.75rem;padding:5px 12px;border-radius:6px;border:1px solid rgba(62,201,110,.3);background:rgba(62,201,110,.1);color:var(--lime);cursor:pointer;transition:background .2s}
+.wa-btn:hover{background:rgba(62,201,110,.2)}
+
+/* GOOGLE OPERATORS */
+.operators{display:flex;flex-direction:column;gap:6px;margin-bottom:2rem}
+.op-row{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:9px 12px}
+.op-code{font-size:.78rem;font-family:monospace;color:rgba(255,255,255,.7);flex:1;word-break:break-all;line-height:1.5}
+.op-tag{font-size:.68rem;font-weight:600;padding:2px 8px;border-radius:4px;flex-shrink:0;white-space:nowrap}
+.tag-fire{background:rgba(248,113,113,.15);color:var(--red)}
+.tag-warm{background:rgba(240,192,64,.12);color:var(--gold)}
+.tag-ok{background:rgba(62,201,110,.12);color:var(--lime)}
+.op-copy{font-size:.72rem;padding:4px 9px;border-radius:5px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.5);cursor:pointer;flex-shrink:0}
+.op-copy:hover{border-color:var(--lime);color:var(--lime)}
+
+/* PROCESS */
+.steps{display:flex;flex-direction:column;gap:8px;margin-bottom:2rem}
+.step{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:9px}
+.step-n{width:28px;height:28px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:.85rem;flex-shrink:0}
+.step h4{font-size:.9rem;font-weight:600;color:#fff;margin-bottom:2px}
+.step p{font-size:.8rem;color:rgba(255,255,255,.5);line-height:1.55}
+.step code{font-size:.76rem;background:rgba(62,201,110,.12);color:var(--lime);padding:1px 5px;border-radius:3px;font-family:monospace}
+
+.divider{border:none;border-top:1px solid var(--border);margin:2rem 0}
+footer{text-align:center;padding:1.5rem;font-size:.75rem;color:rgba(255,255,255,.25);border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://tryreviewbloom.com" class="nav-logo">🌿 Try Review Bloom</a>
+  <div class="nav-links">
+    <a href="https://tryreviewbloom.com">Home</a>
+    <a href="https://tryreviewbloom.com/check.html">GBP Check</a>
+    <a href="https://tryreviewbloom.com/checkatrade-alternative.html">Checkatrade alternative</a>
+    <a href="https://cal.com/julien-6itp3b/30min">Book Demo</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1>Find tradespeople venting<br><em>across every platform</em></h1>
+  <p>Every platform where frustrated tradespeople publicly complain — with direct links, copy-ready search terms, and pre-written WhatsApp messages. Your prospect pipeline in one page.</p>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">9</div><div class="stat-label">Complaint sources</div></div>
+    <div class="stat-item"><div class="stat-num">14k+</div><div class="stat-label">Trustpilot reviews to mine</div></div>
+    <div class="stat-item"><div class="stat-num">60s</div><div class="stat-label">Per prospect</div></div>
+    <div class="stat-item"><div class="stat-num">£297</div><div class="stat-label">Your offer</div></div>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- MASTER SHEET -->
+  <div class="sheet-cta">
+    <div>
+      <h2>Master Prospect Tracker</h2>
+      <p>All platforms feed into one Google Sheet. Signal scored 0–100. WhatsApp links. Status tracking. Renewal calendar. NW London filter.</p>
+    </div>
+    <a href="https://docs.google.com/spreadsheets/d/1XjxvZL9SwgWW-TAjXFVZmhAc4v5Zc7SBE-PYnvlR3Sc/edit?gid=212111615#gid=212111615" target="_blank" rel="noopener" class="sheet-btn">
+      📊 Open Google Sheet →
+    </a>
+  </div>
+
+  <!-- ── 1. TRUSTPILOT ──────────────────────────────────── -->
+  <div class="platform-section">
+    <div class="platform-header">
+      <div class="platform-icon" style="background:rgba(0,182,122,.15)">⭐</div>
+      <div>
+        <div class="platform-title">Trustpilot — Checkatrade reviews</div>
+        <div class="platform-meta">trustpilot.com/review/www.checkatrade.com · 14,000+ reviews · Highest volume</div>
+      </div>
+      <span class="platform-volume vol-fire">🔴 Best source</span>
+    </div>
+    <div class="term-grid">
+      <div class="term-pill" onclick="copyTerm('renewal',this)"><code>renewal</code><span>Price hike victims</span></div>
+      <div class="term-pill" onclick="copyTerm('cancel',this)"><code>cancel</code><span>Leaving intent</span></div>
+      <div class="term-pill" onclick="copyTerm('membership',this)"><code>membership</code><span>Trade-side only</span></div>
+      <div class="term-pill" onclick="copyTerm('no leads',this)"><code>no leads</code><span>No ROI</span></div>
+      <div class="term-pill" onclick="copyTerm('contract',this)"><code>contract</code><span>Lock-in complaints</span></div>
+      <div class="term-pill" onclick="copyTerm('London',this)"><code>London</code><span>Geo filter</span></div>
+      <div class="term-pill" onclick="copyTerm('NW',this)"><code>NW</code><span>NW London patch</span></div>
+      <div class="term-pill" onclick="copyTerm('electrician',this)"><code>electrician</code><span>Niche #1</span></div>
+      <div class="term-pill" onclick="copyTerm('painter',this)"><code>painter</code><span>Niche #2</span></div>
+      <div class="term-pill" onclick="copyTerm('boiler',this)"><code>boiler</code><span>Niche #3</span></div>
+      <div class="term-pill" onclick="copyTerm('plumber',this)"><code>plumber</code><span>Niche #4</span></div>
+    </div>
+    <div class="link-grid">
+      <a href="https://www.trustpilot.com/review/www.checkatrade.com?stars=1" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🔴</span>
+        <div><div class="link-card-title">All 1-star reviews</div><div class="link-card-sub">14,000+ reviews unfiltered. Start here then add search terms.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.trustpilot.com/review/www.checkatrade.com?search=renewal&stars=1" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">💥</span>
+        <div><div class="link-card-title">Pre-filtered: renewal</div><div class="link-card-sub">Hottest leads — price hike victims already complaining publicly.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.trustpilot.com/review/www.checkatrade.com?search=membership&stars=1" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🎯</span>
+        <div><div class="link-card-title">Pre-filtered: membership</div><div class="link-card-sub">Almost exclusively tradesperson reviews — skip homeowners entirely.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.trustpilot.com/review/www.checkatrade.com?search=no+leads&stars=1" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">📉</span>
+        <div><div class="link-card-title">Pre-filtered: no leads</div><div class="link-card-sub">Tradespeople getting zero ROI — most motivated to switch.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 2. TRUSTPILOT BARK ────────────────────────────── -->
+  <div class="platform-section">
+    <div class="platform-header">
+      <div class="platform-icon" style="background:rgba(255,165,0,.15)">🐶</div>
+      <div>
+        <div class="platform-title">Trustpilot — Bark.com reviews</div>
+        <div class="platform-meta">trustpilot.com/review/bark.com · 2,000+ tradesperson reviews · Credit expiry rage</div>
+      </div>
+      <span class="platform-volume vol-fire">🔴 High intent</span>
+    </div>
+    <div class="term-grid">
+      <div class="term-pill" onclick="copyTerm('credits',this)"><code>credits</code><span>Credit expiry rage</span></div>
+      <div class="term-pill" onclick="copyTerm('expired',this)"><code>expired</code><span>Wasted credits</span></div>
+      <div class="term-pill" onclick="copyTerm('refund',this)"><code>refund</code><span>Demanding money back</span></div>
+      <div class="term-pill" onclick="copyTerm('fake leads',this)"><code>fake leads</code><span>Scam complaints</span></div>
+      <div class="term-pill" onclick="copyTerm('waste',this)"><code>waste</code><span>No ROI</span></div>
+      <div class="term-pill" onclick="copyTerm('London',this)"><code>London</code><span>Geo filter</span></div>
+    </div>
+    <div class="link-grid">
+      <a href="https://www.trustpilot.com/review/bark.com?stars=1" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🔴</span>
+        <div><div class="link-card-title">Bark 1-star reviews</div><div class="link-card-sub">Credit expiry and fake lead complaints dominate. Very high frustration.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.trustpilot.com/review/bark.com?search=credits&stars=1" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">💸</span>
+        <div><div class="link-card-title">Pre-filtered: credits</div><div class="link-card-sub">People who lost money on expired credits — hottest Bark prospects.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.trustpilot.com/review/bark.com?search=fake&stars=1" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🚨</span>
+        <div><div class="link-card-title">Pre-filtered: fake leads</div><div class="link-card-sub">Tradespeople who paid for leads that never existed. Maximum anger.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 3. TRUSTPILOT MYBUILDER ───────────────────────── -->
+  <div class="platform-section">
+    <div class="platform-header">
+      <div class="platform-icon" style="background:rgba(59,130,246,.15)">🔨</div>
+      <div>
+        <div class="platform-title">Trustpilot — MyBuilder reviews</div>
+        <div class="platform-meta">trustpilot.com/review/mybuilder.com · Per-lead fee rage · Ghosting complaints</div>
+      </div>
+      <span class="platform-volume vol-warm">🟡 Good volume</span>
+    </div>
+    <div class="term-grid">
+      <div class="term-pill" onclick="copyTerm('shortlist',this)"><code>shortlist</code><span>Per-lead fee complaints</span></div>
+      <div class="term-pill" onclick="copyTerm('ghost',this)"><code>ghost</code><span>Homeowner ghosting</span></div>
+      <div class="term-pill" onclick="copyTerm('fee',this)"><code>fee</code><span>Fee complaints</span></div>
+      <div class="term-pill" onclick="copyTerm('refund',this)"><code>refund</code><span>Demanding money back</span></div>
+      <div class="term-pill" onclick="copyTerm('London',this)"><code>London</code><span>Geo filter</span></div>
+    </div>
+    <div class="link-grid">
+      <a href="https://www.trustpilot.com/review/mybuilder.com?stars=1" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🔴</span>
+        <div><div class="link-card-title">MyBuilder 1-star reviews</div><div class="link-card-sub">Shortlist fee complaints and homeowner ghosting dominate.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.trustpilot.com/review/mybuilder.com?search=shortlist&stars=1" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">💰</span>
+        <div><div class="link-card-title">Pre-filtered: shortlist</div><div class="link-card-sub">Tradespeople paying per shortlist and getting nothing — your perfect pitch.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 4. TRUSTPILOT RATED PEOPLE ───────────────────── -->
+  <div class="platform-section">
+    <div class="platform-header">
+      <div class="platform-icon" style="background:rgba(139,92,246,.15)">👥</div>
+      <div>
+        <div class="platform-title">Trustpilot — Rated People reviews</div>
+        <div class="platform-meta">trustpilot.com/review/ratedpeople.com · Shared lead frustration</div>
+      </div>
+      <span class="platform-volume vol-warm">🟡 Moderate volume</span>
+    </div>
+    <div class="term-grid">
+      <div class="term-pill" onclick="copyTerm('leads',this)"><code>leads</code><span>Lead quality</span></div>
+      <div class="term-pill" onclick="copyTerm('shared',this)"><code>shared</code><span>Shared lead rage</span></div>
+      <div class="term-pill" onclick="copyTerm('credits',this)"><code>credits</code><span>Credit complaints</span></div>
+      <div class="term-pill" onclick="copyTerm('waste',this)"><code>waste</code><span>No ROI</span></div>
+    </div>
+    <div class="link-grid">
+      <a href="https://www.trustpilot.com/review/ratedpeople.com?stars=1" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🔴</span>
+        <div><div class="link-card-title">Rated People 1-star reviews</div><div class="link-card-sub">Shared lead frustration. Tradespeople competing against 5 others per job.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.trustpilot.com/review/ratedpeople.com?search=leads&stars=1" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">📉</span>
+        <div><div class="link-card-title">Pre-filtered: leads</div><div class="link-card-sub">Tradespeople who paid for leads that went nowhere — your exact pitch.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 5. TRUSTPILOT TRUSTATRADER ───────────────────── -->
+  <div class="platform-section">
+    <div class="platform-header">
+      <div class="platform-icon" style="background:rgba(16,185,129,.15)">🔒</div>
+      <div>
+        <div class="platform-title">Trustpilot — Trustatrader reviews</div>
+        <div class="platform-meta">trustpilot.com/review/trustatrader.com · Annual subscription complaints</div>
+      </div>
+      <span class="platform-volume vol-ok">🟢 Niche but hot</span>
+    </div>
+    <div class="term-grid">
+      <div class="term-pill" onclick="copyTerm('renewal',this)"><code>renewal</code><span>Price hike</span></div>
+      <div class="term-pill" onclick="copyTerm('contract',this)"><code>contract</code><span>Lock-in</span></div>
+      <div class="term-pill" onclick="copyTerm('membership',this)"><code>membership</code><span>Trade-side</span></div>
+      <div class="term-pill" onclick="copyTerm('London',this)"><code>London</code><span>Geo filter</span></div>
+    </div>
+    <div class="link-grid">
+      <a href="https://www.trustpilot.com/review/trustatrader.com?stars=1" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🔴</span>
+        <div><div class="link-card-title">Trustatrader 1-star reviews</div><div class="link-card-sub">Annual subscription complaints. Same frustrations as Checkatrade but less competition to reach them.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 6. REDDIT ─────────────────────────────────────── -->
+  <div class="platform-section">
+    <div class="platform-header">
+      <div class="platform-icon" style="background:rgba(255,69,0,.15)">👽</div>
+      <div>
+        <div class="platform-title">Reddit — trade complaint threads</div>
+        <div class="platform-meta">r/DIYUK · r/selfemployed · r/plumbing · r/electricians · Named businesses, real trades</div>
+      </div>
+      <span class="platform-volume vol-fire">🔴 Named prospects</span>
+    </div>
+    <div class="operators">
+      <div class="op-row"><span class="op-tag tag-fire">Fire</span><code class="op-code">site:reddit.com "checkatrade" "renewal" "London" after:2025-01-01</code><button class="op-copy" onclick="copyOp(this,'site:reddit.com &quot;checkatrade&quot; &quot;renewal&quot; &quot;London&quot; after:2025-01-01')">Copy</button></div>
+      <div class="op-row"><span class="op-tag tag-fire">Fire</span><code class="op-code">site:reddit.com "leaving checkatrade" "London" OR "Camden" OR "NW"</code><button class="op-copy" onclick="copyOp(this,'site:reddit.com &quot;leaving checkatrade&quot; &quot;London&quot; OR &quot;Camden&quot; OR &quot;NW&quot;')">Copy</button></div>
+      <div class="op-row"><span class="op-tag tag-warm">Warm</span><code class="op-code">site:reddit.com "bark.com" "credits" "waste" tradesman</code><button class="op-copy" onclick="copyOp(this,'site:reddit.com &quot;bark.com&quot; &quot;credits&quot; &quot;waste&quot; tradesman')">Copy</button></div>
+      <div class="op-row"><span class="op-tag tag-warm">Warm</span><code class="op-code">site:reddit.com "checkatrade" "price increase" plumber OR electrician OR painter</code><button class="op-copy" onclick="copyOp(this,'site:reddit.com &quot;checkatrade&quot; &quot;price increase&quot; plumber OR electrician OR painter')">Copy</button></div>
+      <div class="op-row"><span class="op-tag tag-ok">NW</span><code class="op-code">site:reddit.com "checkatrade" "NW1" OR "Camden" OR "Hampstead" cancel OR leaving</code><button class="op-copy" onclick="copyOp(this,'site:reddit.com &quot;checkatrade&quot; &quot;NW1&quot; OR &quot;Camden&quot; OR &quot;Hampstead&quot; cancel OR leaving')">Copy</button></div>
+    </div>
+    <div class="link-grid">
+      <a href="https://www.reddit.com/search/?q=checkatrade+renewal&sort=new" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🔍</span>
+        <div><div class="link-card-title">Reddit: Checkatrade renewal</div><div class="link-card-sub">New threads first. Real names, real businesses, raw frustration.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.reddit.com/search/?q=leaving+checkatrade&sort=new" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🚪</span>
+        <div><div class="link-card-title">Reddit: leaving Checkatrade</div><div class="link-card-sub">People actively asking how to cancel. Maximum buying intent.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.reddit.com/r/DIYUK/search/?q=checkatrade&sort=new" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🔧</span>
+        <div><div class="link-card-title">r/DIYUK: Checkatrade</div><div class="link-card-sub">UK trade community. Mix of homeowners and tradespeople — filter for trades.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.reddit.com/r/selfemployed/search/?q=checkatrade&sort=new" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">💼</span>
+        <div><div class="link-card-title">r/selfemployed: Checkatrade</div><div class="link-card-sub">Self-employed tradespeople venting about platform costs. High quality leads.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 7. FACEBOOK GROUPS ────────────────────────────── -->
+  <div class="platform-section">
+    <div class="platform-header">
+      <div class="platform-icon" style="background:rgba(59,130,246,.15)">👥</div>
+      <div>
+        <div class="platform-title">Facebook groups — trade communities</div>
+        <div class="platform-meta">Tens of thousands of members · Raw complaints · Direct DM possible · Highest volume</div>
+      </div>
+      <span class="platform-volume vol-fire">🔴 Highest volume</span>
+    </div>
+    <div class="section-sub" style="margin-bottom:.75rem">Join these groups then search inside each one using the terms below. Sort by "Recent Posts."</div>
+    <div class="link-grid">
+      <a href="https://www.facebook.com/groups/search/checkatrade" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🔍</span>
+        <div><div class="link-card-title">Search Facebook groups: Checkatrade</div><div class="link-card-sub">Finds all public posts mentioning Checkatrade across trade groups.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.facebook.com/search/groups/?q=UK+tradespeople" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">👷</span>
+        <div><div class="link-card-title">Join: UK Tradespeople groups</div><div class="link-card-sub">Search "UK Tradespeople" on Facebook — join all results with 1,000+ members.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.facebook.com/search/groups/?q=London+tradespeople" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">📍</span>
+        <div><div class="link-card-title">Join: London Tradespeople groups</div><div class="link-card-sub">London-specific. Your geo-targeted audience right here.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.facebook.com/search/groups/?q=checkatrade+members" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">💬</span>
+        <div><div class="link-card-title">Join: Checkatrade Members Forum</div><div class="link-card-sub">Private group — tradespeople only. Most unfiltered Checkatrade complaints anywhere.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+    </div>
+    <div class="term-grid" style="margin-top:.75rem">
+      <div class="term-pill" onclick="copyTerm('Checkatrade renewal',this)"><code>Checkatrade renewal</code><span>Paste inside any group</span></div>
+      <div class="term-pill" onclick="copyTerm('leaving Checkatrade',this)"><code>leaving Checkatrade</code><span>Exit intent</span></div>
+      <div class="term-pill" onclick="copyTerm('cancel Checkatrade',this)"><code>cancel Checkatrade</code><span>Active cancellers</span></div>
+      <div class="term-pill" onclick="copyTerm('Checkatrade price',this)"><code>Checkatrade price</code><span>Cost complaints</span></div>
+      <div class="term-pill" onclick="copyTerm('alternatives to Checkatrade',this)"><code>alternatives to Checkatrade</code><span>Actively seeking switch</span></div>
+      <div class="term-pill" onclick="copyTerm('Bark credits',this)"><code>Bark credits</code><span>Bark frustration</span></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 8. TOOLTALK FORUM ──────────────────────────────── -->
+  <div class="platform-section">
+    <div class="platform-header">
+      <div class="platform-icon" style="background:rgba(245,158,11,.15)">🔧</div>
+      <div>
+        <div class="platform-title">Tool Talk Forum — tooltalk.com</div>
+        <div class="platform-meta">UK trade forum · High intent · Members researching how to cancel</div>
+      </div>
+      <span class="platform-volume vol-warm">🟡 High intent</span>
+    </div>
+    <div class="link-grid">
+      <a href="https://www.tooltalk.co.uk/search?q=checkatrade" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🔍</span>
+        <div><div class="link-card-title">Tool Talk: Checkatrade threads</div><div class="link-card-sub">Active trade forum. Members share renewal costs and ask how to cancel. Very high intent.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.tooltalk.co.uk/search?q=bark.com" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">🐶</span>
+        <div><div class="link-card-title">Tool Talk: Bark.com threads</div><div class="link-card-sub">Credit waste and fake lead complaints from real tradespeople.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── 9. GOOGLE REVIEWS OF PLATFORMS ────────────────── -->
+  <div class="platform-section">
+    <div class="platform-header">
+      <div class="platform-icon" style="background:rgba(234,179,8,.15)">🗺️</div>
+      <div>
+        <div class="platform-title">Google reviews — the platforms themselves</div>
+        <div class="platform-meta">Search each platform on Google · Filter 1-star · Read trade-side complaints</div>
+      </div>
+      <span class="platform-volume vol-ok">🟢 Underused source</span>
+    </div>
+    <div class="link-grid">
+      <a href="https://www.google.com/search?q=Checkatrade+reviews" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">⭐</span>
+        <div><div class="link-card-title">Checkatrade Google reviews</div><div class="link-card-sub">Search Checkatrade on Google → scroll to reviews → filter 1 star → read trade complaints.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+      <a href="https://www.google.com/search?q=Bark.com+reviews+tradespeople" target="_blank" rel="noopener" class="link-card">
+        <span class="link-card-icon">⭐</span>
+        <div><div class="link-card-title">Bark.com Google reviews</div><div class="link-card-sub">Search Bark.com on Google. Filter 1 star. Credit expiry and fake lead complaints dominate.</div></div>
+        <span class="link-card-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- GLOBAL GOOGLE OPERATORS -->
+    <div style="margin-top:1rem">
+      <div class="section-sub">Global Google search operators — paste into Google search bar:</div>
+      <div class="operators">
+        <div class="op-row"><span class="op-tag tag-fire">NW London</span><code class="op-code">site:trustpilot.com checkatrade "NW1" OR "NW3" OR "Camden" OR "Hampstead"</code><button class="op-copy" onclick="copyOp(this,'site:trustpilot.com checkatrade &quot;NW1&quot; OR &quot;NW3&quot; OR &quot;Camden&quot; OR &quot;Hampstead&quot;')">Copy</button></div>
+        <div class="op-row"><span class="op-tag tag-fire">Multi-platform</span><code class="op-code">"checkatrade" "mybuilder" OR "bark" tradesperson London complaint 2025 OR 2026</code><button class="op-copy" onclick="copyOp(this,'&quot;checkatrade&quot; &quot;mybuilder&quot; OR &quot;bark&quot; tradesperson London complaint 2025 OR 2026')">Copy</button></div>
+        <div class="op-row"><span class="op-tag tag-warm">Bark NW</span><code class="op-code">site:trustpilot.com bark.com "London" OR "NW" credits waste tradesman</code><button class="op-copy" onclick="copyOp(this,'site:trustpilot.com bark.com &quot;London&quot; OR &quot;NW&quot; credits waste tradesman')">Copy</button></div>
+        <div class="op-row"><span class="op-tag tag-warm">All platforms</span><code class="op-code">"leaving checkatrade" OR "cancel bark" OR "mybuilder refund" plumber OR electrician London</code><button class="op-copy" onclick="copyOp(this,'&quot;leaving checkatrade&quot; OR &quot;cancel bark&quot; OR &quot;mybuilder refund&quot; plumber OR electrician London')">Copy</button></div>
+        <div class="op-row"><span class="op-tag tag-ok">Nextdoor</span><code class="op-code">site:nextdoor.com checkatrade London tradesperson</code><button class="op-copy" onclick="copyOp(this,'site:nextdoor.com checkatrade London tradesperson')">Copy</button></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- WHATSAPP TEMPLATES -->
+  <div class="section-title">WhatsApp templates — one click to copy</div>
+  <div class="section-sub">Use the right message for the platform they complained on. All under 60 words.</div>
+  <div class="wa-grid">
+    <div class="wa-card">
+      <div class="wa-badge">Trustpilot / any — leaving or renewal</div>
+      <div class="wa-msg" id="m1">Hi [Name] — saw your review about Checkatrade. We help tradespeople transition their reputation from Checkatrade onto Google — so when you leave, you don't lose everything you've built. £297/month, no contract.
+
+tryreviewbloom.com/check</div>
+      <button class="wa-btn" onclick="copyMsg('m1',this)">Copy</button>
+    </div>
+    <div class="wa-card">
+      <div class="wa-badge">Bark — credit waste</div>
+      <div class="wa-msg" id="m2">Hi [Name] — saw your comment about Bark credits. Unlike Bark, what we build for you never expires — it's your Google reputation, permanently. £297/month, no contract.
+
+tryreviewbloom.com/check</div>
+      <button class="wa-btn" onclick="copyMsg('m2',this)">Copy</button>
+    </div>
+    <div class="wa-card">
+      <div class="wa-badge">Multi-platform signal</div>
+      <div class="wa-msg" id="m3">Hi [Name] — noticed you're on Checkatrade and Bark. Add up what you spent across both last year vs jobs actually won. I help tradespeople replace all of that with one Google presence they own permanently. £297/month.
+
+tryreviewbloom.com/check</div>
+      <button class="wa-btn" onclick="copyMsg('m3',this)">Copy</button>
+    </div>
+    <div class="wa-card">
+      <div class="wa-badge">Data-led opener — any platform</div>
+      <div class="wa-msg" id="m4">Hi [Name] — quick question. If you cancelled Checkatrade tomorrow, what happens to your [X] reviews?
+
+We help tradespeople answer that before it's too late. £297/month.
+
+tryreviewbloom.com/check</div>
+      <button class="wa-btn" onclick="copyMsg('m4',this)">Copy</button>
+    </div>
+    <div class="wa-card">
+      <div class="wa-badge">MyBuilder — per lead fees</div>
+      <div class="wa-msg" id="m5">Hi [Name] — paying per shortlist on MyBuilder whether you win or not adds up fast. I help tradespeople get leads from Google instead — no fees per call, no shared leads. £297/month.
+
+tryreviewbloom.com/check</div>
+      <button class="wa-btn" onclick="copyMsg('m5',this)">Copy</button>
+    </div>
+    <div class="wa-card">
+      <div class="wa-badge">Follow-up (4 days, no reply)</div>
+      <div class="wa-msg" id="m6">Hi [Name] — just following up. When does your Checkatrade renewal come up? Happy to show you what Google looks like as an alternative before then.
+
+tryreviewbloom.com/check</div>
+      <button class="wa-btn" onclick="copyMsg('m6',this)">Copy</button>
+    </div>
+  </div>
+
+  <!-- 60 SECOND PROCESS -->
+  <div class="section-title">The 60-second workflow</div>
+  <div class="section-sub">From spotting a complaint to a sent WhatsApp message.</div>
+  <div class="steps">
+    <div class="step"><div class="step-n">1</div><div><h4>Find the complaint</h4><p>Trustpilot 1-star filtered to <code>membership</code> or <code>renewal</code>. Reddit thread. Facebook group post. Takes 5 seconds to spot a tradesperson.</p></div></div>
+    <div class="step"><div class="step-n">2</div><div><h4>Copy their name + trade</h4><p>Reviewer name shown on Trustpilot. Trade usually mentioned in the review text. 10 seconds.</p></div></div>
+    <div class="step"><div class="step-n">3</div><div><h4>Search Google Maps</h4><p><code>[Name] [trade] London</code> — confirm NW London address, grab Google review count and mobile number. 20 seconds.</p></div></div>
+    <div class="step"><div class="step-n">4</div><div><h4>Add to Google Sheet</h4><p>Name · Trade · Area · Phone · Platform · Google reviews. Sheet scores them 0–100 automatically. 10 seconds.</p></div></div>
+    <div class="step"><div class="step-n">5</div><div><h4>Send the WhatsApp</h4><p>Copy message above. Personalise name and trade. Send. Done. Next prospect. 15 seconds.</p></div></div>
+  </div>
+
+</main>
+
+<footer>
+  🌿 Try Review Bloom · A service of Camden Acquisition Hub Ltd · Co. No. 15431935 · 5-7 Buck Street, London NW1 8NJ
+</footer>
+
+<script>
+function copyTerm(term, el){
+  navigator.clipboard.writeText(term).then(()=>{
+    const orig = el.innerHTML;
+    el.querySelector('span').textContent = 'Copied!';
+    el.style.borderColor = 'var(--lime)';
+    setTimeout(()=>{ el.innerHTML = orig; el.style.borderColor = ''; }, 1500);
+  });
+}
+function copyOp(btn, text){
+  const decoded = text.replace(/&quot;/g,'"');
+  navigator.clipboard.writeText(decoded).then(()=>{
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.style.color = 'var(--lime)';
+    setTimeout(()=>{ btn.textContent = orig; btn.style.color = ''; }, 1500);
+  });
+}
+function copyMsg(id, btn){
+  const text = document.getElementById(id).textContent.trim();
+  navigator.clipboard.writeText(text).then(()=>{
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(()=>{ btn.textContent = orig; }, 1500);
+  });
+}
+</script>
+</body>
+</html>
