@@ -884,6 +884,17 @@
 .hero-proof-label{font-size:.72rem;color:rgba(255,255,255,.55);line-height:1.3;max-width:130px}
 .hero-proof-divider{width:1px;height:40px;background:rgba(255,255,255,.12);flex-shrink:0}
 @media(max-width:479px){.hero-proof-divider{display:none}.hero-proof-bar{gap:1rem}}
+    .dental-redirect-bar{display:inline-flex;align-items:center;gap:10px;background:rgba(62,201,110,.15);border:1px solid rgba(62,201,110,.3);border-radius:999px;padding:8px 16px 8px 12px;margin-bottom:20px;font-size:.85rem;color:var(--lime);text-decoration:none;transition:background .2s,border-color .2s;cursor:pointer}
+    .dental-redirect-bar:hover{background:rgba(62,201,110,.24);border-color:rgba(62,201,110,.5)}
+    .dental-redirect-bar .drb-icon{font-size:1rem;line-height:1;flex-shrink:0}
+    .dental-redirect-bar .drb-text{font-weight:500;letter-spacing:-.01em}
+    .dental-redirect-bar .drb-link{font-weight:700;color:var(--lime)}
+    .dental-redirect-bar .drb-arrow{font-size:.85rem;opacity:.7;margin-left:2px}
+    .hero-platform-row{margin-bottom:1.5rem}
+    .hero-platform-label{display:block;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.45);margin-bottom:8px}
+    .hero-platform-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+    .hero-platform-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:50px}
+    .hero-platform-note{display:block;font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.5;max-width:440px}
     /* ── BOROUGH LINKS SECTION ─────────────────────────────────────────────────
    tryreviewbloom.com — London borough landing page grid
    Add to your main stylesheet or paste into your <style> block
@@ -1096,126 +1107,39 @@
     <div class="hero-grid">
       <div class="hero-content">
         <div class="hero-eyebrow"><span class="badge" style="background:rgba(62,201,110,.15);color:var(--lime);border-color:rgba(62,201,110,.3);">🌿 Google Review Automation · Trades &amp; Home Services</span></div>
-        <!--
-  ============================================================
-  TRY REVIEW BLOOM — DENTAL REDIRECT BANNER
-  ============================================================
-  PLACEMENT: Paste this block INSIDE the hero section,
-  immediately BEFORE the <h1> tag.
-
-  The banner uses your existing TRB green (#16a34a / teal
-  palette). Adjust colours to match your exact CSS variables
-  if they differ.
-  ============================================================
--->
-
-<!-- STYLES: add inside <head> or your existing <style> block -->
-<style>
-  .dental-redirect-bar {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(22, 163, 74, 0.10);
-    border: 1px solid rgba(22, 163, 74, 0.30);
-    border-radius: 999px;
-    padding: 8px 16px 8px 12px;
-    margin-bottom: 28px;
-    font-size: 0.875rem;
-    color: #166534;
-    text-decoration: none;
-    transition: background 0.2s ease, border-color 0.2s ease;
-    cursor: pointer;
-  }
-
-  .dental-redirect-bar:hover {
-    background: rgba(22, 163, 74, 0.18);
-    border-color: rgba(22, 163, 74, 0.50);
-  }
-
-  .dental-redirect-bar .drb-icon {
-    font-size: 1rem;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-
-  .dental-redirect-bar .drb-text {
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-
-  .dental-redirect-bar .drb-link {
-    font-weight: 700;
-    color: #15803d;
-    white-space: nowrap;
-  }
-
-  .dental-redirect-bar .drb-arrow {
-    font-size: 0.85rem;
-    opacity: 0.7;
-    margin-left: 2px;
-  }
-
-  /* Dark mode — remove if your site doesn't use prefers-color-scheme */
-  @media (prefers-color-scheme: dark) {
-    .dental-redirect-bar {
-      background: rgba(134, 239, 172, 0.10);
-      border-color: rgba(134, 239, 172, 0.25);
-      color: #bbf7d0;
-    }
-    .dental-redirect-bar .drb-link {
-      color: #86efac;
-    }
-  }
-</style>
-
-<!-- BANNER HTML: paste before your <h1> -->
-<a
-  href="https://www.camdenacquisitionhub.com"
-  class="dental-redirect-bar"
-  aria-label="Dental practice? Visit Camden Acquisition Hub — our dedicated dental marketing service"
->
-  <span class="drb-icon">🦷</span>
-  <span class="drb-text">
-    Dental practice?
-    <span class="drb-link">Camden Acquisition Hub</span>
-    is our dedicated dental marketing service
-  </span>
-  <span class="drb-arrow">→</span>
-</a>
-
-<!--
-  ============================================================
-  OPTIONAL: if your hero is centred, wrap the anchor in a div:
-
-  <div style="display:flex; justify-content:center;">
-    <a class="dental-redirect-bar" href="..."> ... </a>
-  </div>
-
-  ============================================================
-  RESULT: a pill-shaped green callout line that sits between
-  your "🌿 Google Review Automation · London" label and the H1,
-  visible immediately on load without any scroll.
-  ============================================================ 
--->
+        <a href="https://www.camdenacquisitionhub.com" class="dental-redirect-bar" aria-label="Dental practice? Visit Camden Acquisition Hub — our dedicated dental marketing service">
+          <span class="drb-icon">🦷</span>
+          <span class="drb-text">Dental practice? <span class="drb-link">Camden Acquisition Hub</span> is our dedicated dental marketing service</span>
+          <span class="drb-arrow">→</span>
+        </a>
         <h1>Same postcode. Same skill. They just have more reviews<em> and more jobs.</em></h1>
         <div class="hero-proof-bar" aria-label="Key results">
-  <div class="hero-proof-item">
-    <span class="hero-proof-num">+236%</span>
-    <span class="hero-proof-label">Review growth — Smile Rooms Windsor</span>
-  </div>
-  <div class="hero-proof-divider" aria-hidden="true"></div>
-  <div class="hero-proof-item">
-   <!-- <span class="hero-proof-num">24h</span>-->
-    <!--<span class="hero-proof-label">First reviews arrive</span>-->
-  </div>
-  <div class="hero-proof-divider" aria-hidden="true"></div>
-  <div class="hero-proof-item">
-    <span class="hero-proof-num">80×</span>
-    <span class="hero-proof-label">More website visits per new review</span>
-  </div>
-          <div><div class="tb-num">£297</div><div class="tb-lbl">per month — full review automation, GBP management &amp; citations</div><div class="tb-src">No contracts · No credit card required</div></div>
-</div>
+          <div class="hero-proof-item">
+            <span class="hero-proof-num">+236%</span>
+            <span class="hero-proof-label">Review growth — Smile Rooms Windsor</span>
+          </div>
+          <div class="hero-proof-divider" aria-hidden="true"></div>
+          <div class="hero-proof-item">
+            <span class="hero-proof-num">80×</span>
+            <span class="hero-proof-label">More website visits per new review</span>
+          </div>
+          <div class="hero-proof-divider" aria-hidden="true"></div>
+          <div class="hero-proof-item">
+            <span class="hero-proof-num">£297</span>
+            <span class="hero-proof-label">per month — full review automation, GBP management &amp; citations</span>
+          </div>
+        </div>
         <p class="hero-sub">Your customers are happy. The trade that's outranking you isn't doing better work — they just have more 5-star reviews. Try Review Bloom <strong style="color:var(--lime);">automates every review request</strong> so you rank higher on Google, build trust instantly, and win the next call.</p>
+        <div class="hero-platform-row" role="group" aria-label="Compatible job management software">
+          <span class="hero-platform-label">Works with whatever you run jobs on</span>
+          <div class="hero-platform-pills">
+            <span class="hero-platform-pill">Tradify</span>
+            <span class="hero-platform-pill">ServiceM8</span>
+            <span class="hero-platform-pill">Powered Now</span>
+            <span class="hero-platform-pill">Jobber</span>
+          </div>
+          <span class="hero-platform-note">Switch software anytime — your review automation keeps running.</span>
+        </div>
         <div class="hero-ctas">
           <a href="#pricing" class="btn btn-gold btn-lg">Start Getting Reviews →</a>
           <a href="https://tryreviewbloom.com/gbp.html" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">Try now</a>
