@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UTM Link Generator — CAH / TRB</title>
+<style>
+  :root{
+    --ink:#1a2420;
+    --paper:#f6f5f1;
+    --panel:#ffffff;
+    --line:#dedad0;
+    --cah:#1a6b6b;
+    --cah-soft:#e6f0f0;
+    --trb:#3f7d3f;
+    --trb-soft:#eaf2e6;
+    --muted:#6b7570;
+    --danger:#a4432f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
+    padding:32px 20px 64px;
+  }
+  .wrap{max-width:760px;margin:0 auto;}
+  h1{
+    font-size:1.5rem;
+    letter-spacing:-0.01em;
+    margin:0 0 4px;
+    font-weight:700;
+  }
+  .sub{color:var(--muted);font-size:0.92rem;margin:0 0 28px;}
+
+  .toggle{
+    display:flex;
+    gap:8px;
+    margin-bottom:24px;
+  }
+  .toggle button{
+    flex:1;
+    padding:12px 16px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:var(--panel);
+    font-size:0.95rem;
+    font-weight:600;
+    cursor:pointer;
+    color:var(--muted);
+    transition:all .15s ease;
+    text-align:left;
+  }
+  .toggle button small{display:block;font-weight:400;font-size:0.78rem;margin-top:2px;opacity:0.8;}
+  .toggle button.active[data-site="cah"]{
+    border-color:var(--cah);
+    background:var(--cah-soft);
+    color:var(--cah);
+  }
+  .toggle button.active[data-site="trb"]{
+    border-color:var(--trb);
+    background:var(--trb-soft);
+    color:var(--trb);
+  }
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:24px;
+    margin-bottom:20px;
+  }
+  label{
+    display:block;
+    font-size:0.8rem;
+    font-weight:600;
+    margin-bottom:6px;
+    color:var(--ink);
+  }
+  .req::after{content:" *";color:var(--danger);}
+  .hint{font-size:0.76rem;color:var(--muted);margin-top:4px;margin-bottom:0;font-weight:400;}
+  .field{margin-bottom:18px;}
+  .field:last-child{margin-bottom:0;}
+  input[type=text], select{
+    width:100%;
+    padding:10px 12px;
+    border-radius:8px;
+    border:1.5px solid var(--line);
+    font-size:0.95rem;
+    background:#fff;
+    color:var(--ink);
+    font-family:inherit;
+  }
+  input[type=text]:focus, select:focus{
+    outline:none;
+    border-color:var(--accent, #999);
+  }
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:520px){.grid2{grid-template-columns:1fr;}}
+
+  .path-row{display:flex;gap:8px;align-items:center;}
+  .path-row span{color:var(--muted);font-size:0.9rem;white-space:nowrap;}
+
+  .output{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:20px 24px;
+  }
+  .output h2{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);margin:0 0 10px;font-weight:700;}
+  .link-box{
+    display:flex;
+    gap:8px;
+    align-items:stretch;
+  }
+  .link-box textarea{
+    flex:1;
+    resize:none;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    padding:12px;
+    font-family:'SFMono-Regular', Consolas, monospace;
+    font-size:0.82rem;
+    line-height:1.5;
+    color:var(--ink);
+    background:#fbfbf9;
+    min-height:64px;
+  }
+  .copy-btn{
+    border:none;
+    border-radius:8px;
+    padding:0 20px;
+    font-weight:700;
+    font-size:0.88rem;
+    cursor:pointer;
+    color:#fff;
+    white-space:nowrap;
+  }
+  .copy-btn.cah{background:var(--cah);}
+  .copy-btn.trb{background:var(--trb);}
+  .copy-btn.copied{background:var(--muted) !important;}
+
+  .missing{
+    margin-top:12px;
+    font-size:0.82rem;
+    color:var(--danger);
+  }
+
+  .history{margin-top:28px;}
+  .history h2{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);margin:0 0 12px;font-weight:700;}
+  .history-item{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:8px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+  }
+  .history-item .meta{font-size:0.78rem;color:var(--muted);word-break:break-all;}
+  .history-item .meta b{color:var(--ink);}
+  .history-item button{
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:6px;
+    padding:6px 10px;
+    font-size:0.76rem;
+    cursor:pointer;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+  .empty-hist{color:var(--muted);font-size:0.85rem;font-style:italic;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>UTM Link Generator</h1>
+  <p class="sub">Build tagged links for Camden Acquisition Hub and Try Review Bloom so you know which post actually worked.</p>
+
+  <div class="toggle">
+    <button data-site="cah" class="active" onclick="setSite('cah')">
+      Camden Acquisition Hub
+      <small>camdenacquisitionhub.com</small>
+    </button>
+    <button data-site="trb" onclick="setSite('trb')">
+      Try Review Bloom
+      <small>tryreviewbloom.com</small>
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="field">
+      <label class="req">Landing page path</label>
+      <div class="path-row">
+        <span id="domainLabel">camdenacquisitionhub.com</span>
+        <input type="text" id="path" placeholder="/ (leave blank for homepage)" oninput="render()">
+      </div>
+      <p class="hint">e.g. <code>/pricing.html</code> or leave blank for the homepage</p>
+    </div>
+
+    <div class="grid2">
+      <div class="field">
+        <label class="req">Source</label>
+        <select id="source" onchange="onSourceChange()">
+          <option value="">— Select —</option>
+          <option value="reddit">reddit</option>
+          <option value="linkedin">linkedin</option>
+          <option value="google">google</option>
+          <option value="facebook">facebook</option>
+          <option value="instagram">instagram</option>
+          <option value="whatsapp">whatsapp</option>
+          <option value="email">email</option>
+          <option value="gbp">gbp (Google Business Profile)</option>
+          <option value="cold_dm">cold_dm</option>
+          <option value="__custom">Custom…</option>
+        </select>
+        <input type="text" id="sourceCustom" placeholder="Custom source" style="margin-top:8px;display:none;" oninput="render()">
+      </div>
+
+      <div class="field">
+        <label class="req">Medium</label>
+        <select id="medium" onchange="onMediumChange()">
+          <option value="">— Select —</option>
+          <option value="organic">organic</option>
+          <option value="social">social</option>
+          <option value="email">email</option>
+          <option value="referral">referral</option>
+          <option value="cpc">cpc (paid)</option>
+          <option value="sms">sms</option>
+          <option value="__custom">Custom…</option>
+        </select>
+        <input type="text" id="mediumCustom" placeholder="Custom medium" style="margin-top:8px;display:none;" oninput="render()">
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:18px;">
+      <label class="req">Campaign</label>
+      <input type="text" id="campaign" placeholder="e.g. boiler_nw1_launch" oninput="render()">
+      <p class="hint">Use underscores, no spaces — this is what groups everything together in reports</p>
+    </div>
+
+    <div class="grid2" style="margin-top:18px;">
+      <div class="field">
+        <label>Content <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
+        <input type="text" id="content" placeholder="e.g. comment_link" oninput="render()">
+        <p class="hint">Use to tell apart two links in the same post</p>
+      </div>
+      <div class="field">
+        <label>Term <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
+        <input type="text" id="term" placeholder="e.g. boiler+engineer" oninput="render()">
+        <p class="hint">Mainly for paid search keywords</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="output">
+    <h2>Your link</h2>
+    <div class="link-box">
+      <textarea id="finalLink" readonly rows="3"></textarea>
+      <button class="copy-btn" id="copyBtn" onclick="copyLink()">Copy</button>
+    </div>
+    <div class="missing" id="missingMsg"></div>
+  </div>
+
+  <div class="history">
+    <h2>Recent links</h2>
+    <div id="historyList"></div>
+  </div>
+</div>
+
+<script>
+const sites = {
+  cah: { label: 'Camden Acquisition Hub', domain: 'camdenacquisitionhub.com', accent: '#1a6b6b' },
+  trb: { label: 'Try Review Bloom', domain: 'tryreviewbloom.com', accent: '#3f7d3f' }
+};
+let currentSite = 'cah';
+let history = [];
+
+function setSite(site){
+  currentSite = site;
+  document.querySelectorAll('.toggle button').forEach(b => {
+    b.classList.toggle('active', b.dataset.site === site);
+  });
+  document.getElementById('domainLabel').textContent = sites[site].domain;
+  document.getElementById('copyBtn').className = 'copy-btn ' + site;
+  render();
+}
+
+function onSourceChange(){
+  const sel = document.getElementById('source');
+  document.getElementById('sourceCustom').style.display = sel.value === '__custom' ? 'block' : 'none';
+  render();
+}
+function onMediumChange(){
+  const sel = document.getElementById('medium');
+  document.getElementById('mediumCustom').style.display = sel.value === '__custom' ? 'block' : 'none';
+  render();
+}
+
+function slug(v){
+  return v.trim().toLowerCase().replace(/\s+/g,'_');
+}
+
+function getVal(id, customId){
+  const sel = document.getElementById(id);
+  if(sel.tagName === 'SELECT'){
+    if(sel.value === '__custom'){
+      return slug(document.getElementById(customId).value);
+    }
+    return sel.value;
+  }
+  return slug(sel.value);
+}
+
+function render(){
+  const site = sites[currentSite];
+  let path = document.getElementById('path').value.trim();
+  if(path && !path.startsWith('/')) path = '/' + path;
+
+  const source = getVal('source','sourceCustom');
+  const medium = getVal('medium','mediumCustom');
+  const campaign = slug(document.getElementById('campaign').value);
+  const content = slug(document.getElementById('content').value);
+  const term = slug(document.getElementById('term').value);
+
+  const missing = [];
+  if(!source) missing.push('Source');
+  if(!medium) missing.push('Medium');
+  if(!campaign) missing.push('Campaign');
+
+  const params = [];
+  if(source) params.push('utm_source=' + encodeURIComponent(source));
+  if(medium) params.push('utm_medium=' + encodeURIComponent(medium));
+  if(campaign) params.push('utm_campaign=' + encodeURIComponent(campaign));
+  if(content) params.push('utm_content=' + encodeURIComponent(content));
+  if(term) params.push('utm_term=' + encodeURIComponent(term));
+
+  const url = `https://${site.domain}${path}${params.length ? '?' + params.join('&') : ''}`;
+  document.getElementById('finalLink').value = url;
+
+  const msgEl = document.getElementById('missingMsg');
+  msgEl.textContent = missing.length ? `Still need: ${missing.join(', ')}` : '';
+}
+
+function copyLink(){
+  const ta = document.getElementById('finalLink');
+  const val = ta.value;
+  const source = getVal('source','sourceCustom');
+  const medium = getVal('medium','mediumCustom');
+  const campaign = slug(document.getElementById('campaign').value);
+
+  if(!source || !medium || !campaign) return;
+
+  navigator.clipboard.writeText(val).then(() => {
+    const btn = document.getElementById('copyBtn');
+    const original = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = original; btn.classList.remove('copied'); }, 1400);
+  }).catch(() => {
+    ta.select();
+    document.execCommand('copy');
+  });
+
+  addToHistory(val, sites[currentSite].label, source, medium, campaign);
+}
+
+function addToHistory(url, siteLabel, source, medium, campaign){
+  history.unshift({url, siteLabel, source, medium, campaign, time: new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})});
+  history = history.slice(0, 8);
+  renderHistory();
+}
+
+function renderHistory(){
+  const el = document.getElementById('historyList');
+  if(!history.length){
+    el.innerHTML = '<p class="empty-hist">Links you copy will appear here for this session.</p>';
+    return;
+  }
+  el.innerHTML = history.map(h => `
+    <div class="history-item">
+      <div class="meta"><b>${h.siteLabel}</b> · ${h.source}/${h.medium}/${h.campaign} · ${h.time}<br>${h.url}</div>
+      <button onclick="navigator.clipboard.writeText('${h.url.replace(/'/g,"\\'")}')">Copy</button>
+    </div>
+  `).join('');
+}
+
+setSite('cah');
+renderHistory();
+</script>
+</body>
+</html>
