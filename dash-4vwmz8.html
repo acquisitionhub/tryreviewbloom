@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Visit Dashboard</title>
+<style>
+  :root{
+    --ink:#1a2420; --paper:#f6f5f1; --panel:#fff; --line:#dedad0;
+    --cah:#1a6b6b; --trb:#3f7d3f; --muted:#6b7570;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Segoe UI',system-ui,sans-serif;padding:28px 20px 60px;}
+  .wrap{max-width:980px;margin:0 auto;}
+  h1{font-size:1.4rem;margin:0 0 4px;}
+  .sub{color:var(--muted);font-size:0.88rem;margin:0 0 24px;}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;}
+  .controls select, .controls button{
+    padding:9px 14px;border-radius:8px;border:1.5px solid var(--line);
+    background:#fff;font-size:0.88rem;cursor:pointer;color:var(--ink);
+  }
+  .controls button.refresh{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px;}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;}
+  .stat .num{font-size:1.6rem;font-weight:700;}
+  .stat .label{font-size:0.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.03em;}
+  table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  th,td{text-align:left;padding:10px 12px;font-size:0.85rem;border-bottom:1px solid var(--line);}
+  th{background:#fafaf7;color:var(--muted);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.03em;}
+  tr:last-child td{border-bottom:none;}
+  .empty{padding:24px;text-align:center;color:var(--muted);font-size:0.9rem;}
+  .section{margin-bottom:28px;}
+  .section h2{font-size:0.9rem;margin:0 0 10px;color:var(--ink);}
+  .badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:0.72rem;font-weight:700;}
+  .badge.cah{background:#e6f0f0;color:var(--cah);}
+  .badge.trb{background:#eaf2e6;color:var(--trb);}
+  .loading{color:var(--muted);font-size:0.85rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Visit Dashboard</h1>
+  <p class="sub">Raw traffic + UTM campaign data for camdenacquisitionhub.com and tryreviewbloom.com</p>
+
+  <div class="controls">
+    <select id="siteFilter">
+      <option value="">Both sites</option>
+      <option value="cah">CAH only</option>
+      <option value="trb">TRB only</option>
+    </select>
+    <select id="rangeFilter">
+      <option value="1">Last 24 hours</option>
+      <option value="7" selected>Last 7 days</option>
+      <option value="30">Last 30 days</option>
+      <option value="9999">All time</option>
+    </select>
+    <button class="refresh" onclick="load()">Refresh</button>
+  </div>
+
+  <div class="stat-row" id="stats"></div>
+
+  <div class="section">
+    <h2>By campaign</h2>
+    <div id="campaignTable"></div>
+  </div>
+
+  <div class="section">
+    <h2>By source / medium</h2>
+    <div id="sourceTable"></div>
+  </div>
+
+  <div class="section">
+    <h2>Recent visits</h2>
+    <div id="recentTable"></div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://wvuaqdoijqdyxncpviet.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_N4aqHZv72AvERxh7B-4VQg_Qoa8ngx2';
+
+async function load(){
+  const site = document.getElementById('siteFilter').value;
+  const days = document.getElementById('rangeFilter').value;
+
+  document.getElementById('stats').innerHTML = '<div class="loading">Loading…</div>';
+
+  let url = `${SUPABASE_URL}/rest/v1/site_visits?select=*&order=created_at.desc&limit=2000`;
+  if(site) url += `&site=eq.${site}`;
+  if(days !== '9999'){
+    const since = new Date(Date.now() - days*24*60*60*1000).toISOString();
+    url += `&created_at=gte.${since}`;
+  }
+
+  const res = await fetch(url, {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+  });
+  const rows = await res.json();
+  render(rows);
+}
+
+function render(rows){
+  // Stats
+  const total = rows.length;
+  const cah = rows.filter(r => r.site === 'cah').length;
+  const trb = rows.filter(r => r.site === 'trb').length;
+  const withUtm = rows.filter(r => r.utm_source).length;
+
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="num">${total}</div><div class="label">Total visits</div></div>
+    <div class="stat"><div class="num">${cah}</div><div class="label">CAH visits</div></div>
+    <div class="stat"><div class="num">${trb}</div><div class="label">TRB visits</div></div>
+    <div class="stat"><div class="num">${withUtm}</div><div class="label">Tagged (UTM)</div></div>
+  `;
+
+  // Campaign breakdown
+  const campaigns = {};
+  rows.forEach(r => {
+    if(!r.utm_campaign) return;
+    const key = r.utm_campaign;
+    campaigns[key] = campaigns[key] || {count:0, sites:new Set()};
+    campaigns[key].count++;
+    campaigns[key].sites.add(r.site);
+  });
+  const campEntries = Object.entries(campaigns).sort((a,b) => b[1].count - a[1].count);
+  document.getElementById('campaignTable').innerHTML = campEntries.length ? `
+    <table><thead><tr><th>Campaign</th><th>Site(s)</th><th>Visits</th></tr></thead><tbody>
+    ${campEntries.map(([name, d]) => `
+      <tr><td>${esc(name)}</td><td>${[...d.sites].map(s=>`<span class="badge ${s}">${s.toUpperCase()}</span>`).join(' ')}</td><td>${d.count}</td></tr>
+    `).join('')}
+    </tbody></table>
+  ` : '<div class="empty">No tagged visits yet in this range.</div>';
+
+  // Source/medium breakdown
+  const sm = {};
+  rows.forEach(r => {
+    if(!r.utm_source && !r.utm_medium) return;
+    const key = `${r.utm_source||'—'} / ${r.utm_medium||'—'}`;
+    sm[key] = (sm[key]||0)+1;
+  });
+  const smEntries = Object.entries(sm).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('sourceTable').innerHTML = smEntries.length ? `
+    <table><thead><tr><th>Source / Medium</th><th>Visits</th></tr></thead><tbody>
+    ${smEntries.map(([name,count]) => `<tr><td>${esc(name)}</td><td>${count}</td></tr>`).join('')}
+    </tbody></table>
+  ` : '<div class="empty">No tagged visits yet in this range.</div>';
+
+  // Recent raw visits
+  const recent = rows.slice(0, 30);
+  document.getElementById('recentTable').innerHTML = recent.length ? `
+    <table><thead><tr><th>Time</th><th>Site</th><th>Path</th><th>Source</th><th>Medium</th><th>Campaign</th><th>Referrer</th></tr></thead><tbody>
+    ${recent.map(r => `
+      <tr>
+        <td>${new Date(r.created_at).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</td>
+        <td><span class="badge ${r.site}">${r.site.toUpperCase()}</span></td>
+        <td>${esc(r.path)}</td>
+        <td>${esc(r.utm_source||'—')}</td>
+        <td>${esc(r.utm_medium||'—')}</td>
+        <td>${esc(r.utm_campaign||'—')}</td>
+        <td>${esc(r.referrer ? new URL(r.referrer).hostname : '—')}</td>
+      </tr>
+    `).join('')}
+    </tbody></table>
+  ` : '<div class="empty">No visits recorded yet.</div>';
+}
+
+function esc(s){
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+document.getElementById('siteFilter').addEventListener('change', load);
+document.getElementById('rangeFilter').addEventListener('change', load);
+load();
+</script>
+</body>
+</html>
