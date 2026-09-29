@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Free tool: find the weakest Google profiles in any town | Review Bloom</title>
+<meta name="description" content="Pick a niche and a town. Review Bloom ranks local businesses by how much their Google profile needs help, so your agency knows who to pitch first. Free." />
+<link rel="canonical" href="https://tryreviewbloom.com/audit.html" />
+<link rel="icon" type="image/png" href="/favicon.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Find the weakest Google profiles in any town" />
+<meta property="og:description" content="Free prospecting tool for local SEO agencies. Pick a niche and a town, see who needs help most." />
+<meta property="og:url" content="https://tryreviewbloom.com/audit.html" />
+<meta property="og:image" content="https://tryreviewbloom.com/og-image.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F8F5; --white:#FFFFFF; --ink:#16211B; --forest:#0F3D27; --leaf:#1A7A45;
+  --pen:#D2352C; --line:#D5DED8; --muted:#56655C;
+  --display:'Bricolage Grotesque',system-ui,sans-serif;
+  --body:'Source Serif 4',Georgia,serif;
+  --hand:'Caveat','Comic Sans MS',cursive;
+  --wrap:1040px; --gutter:clamp(1.25rem,4vw,2rem);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.7}
+a{color:var(--leaf)}
+:focus-visible{outline:3px solid var(--leaf);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+h1,h2,h3{font-family:var(--display);line-height:1.08;letter-spacing:-.02em}
+h1{font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:800;max-width:17ch}
+h2{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:700}
+p{max-width:62ch}
+.lede{font-size:clamp(1.05rem,2vw,1.2rem);color:var(--muted)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:.75rem 1.4rem;border-radius:10px;font-family:var(--display);font-weight:700;font-size:1rem;text-decoration:none;border:2px solid transparent;cursor:pointer;transition:background .15s,color .15s}
+.btn-solid{background:var(--forest);color:#fff}
+.btn-solid:hover{background:var(--leaf)}
+.btn-light{background:#fff;color:var(--forest)}
+.btn-light:hover{background:var(--paper)}
+.btn-line{border-color:var(--ink);color:var(--ink);background:transparent}
+.btn-line:hover{background:var(--ink);color:#fff}
+.btn[disabled]{opacity:.6;cursor:wait}
+
+.nav{background:rgba(246,248,245,.94);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:.55rem;font-family:var(--display);font-weight:800;font-size:1.15rem;color:var(--ink);text-decoration:none}
+.logo-mark{width:30px;height:30px;border-radius:50% 50% 50% 8px;background:var(--leaf)}
+.nav-link{font-family:var(--display);font-weight:600;color:var(--forest);text-decoration:none}
+
+.hero{padding:clamp(2.5rem,7vw,4.5rem) 0 2.5rem}
+.hero h1{margin-bottom:1rem}
+.hero .lede{margin-bottom:2rem}
+
+.search{display:grid;gap:.8rem;background:var(--white);border:1px solid var(--line);border-radius:14px;padding:1.2rem;box-shadow:0 24px 50px -30px rgba(15,61,39,.35)}
+@media(min-width:760px){.search{grid-template-columns:1fr 1fr auto;align-items:end;padding:1.4rem}}
+.field label{display:block;font-family:var(--display);font-weight:600;font-size:.92rem;margin-bottom:.35rem}
+.field input{width:100%;min-height:50px;padding:.7rem .9rem;border:1.5px solid var(--line);border-radius:10px;font:inherit;font-size:1rem;background:#fff;color:var(--ink)}
+.field input:focus{outline:none;border-color:var(--leaf);box-shadow:0 0 0 3px rgba(26,122,69,.15)}
+.search-note{margin-top:.8rem;font-size:.92rem;color:var(--muted)}
+.status{margin-top:1rem;font-family:var(--display);font-weight:600;color:var(--pen)}
+.status:empty{display:none}
+
+.results{padding:1rem 0 4rem}
+.results[hidden]{display:none}
+.res-head{margin-bottom:1.4rem}
+.res-head p{color:var(--muted);margin-top:.4rem}
+.biz-list{list-style:none;background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.biz{display:grid;grid-template-columns:2.2rem 1fr auto;gap:.3rem 1rem;padding:1.2rem 1.3rem;border-top:1px solid var(--line)}
+.biz:first-child{border-top:0}
+.rank{font-family:var(--display);font-weight:800;font-size:1.3rem;color:var(--muted)}
+.biz-name{font-family:var(--display);font-weight:700;font-size:1.12rem;letter-spacing:-.01em}
+.biz-name a{color:var(--ink);text-decoration:none}
+.biz-name a:hover{text-decoration:underline}
+.biz-meta{font-size:.93rem;color:var(--muted)}
+.biz-score{text-align:right;font-family:var(--display)}
+.biz-score strong{display:block;font-size:1.7rem;font-weight:800;line-height:1;color:var(--pen)}
+.biz-score span{font-size:.8rem;color:var(--muted)}
+.biz-score.ok strong{color:var(--leaf)}
+.gaps{grid-column:2 / -1;list-style:none;display:flex;flex-wrap:wrap;gap:.1rem 1.2rem;font-family:var(--hand);font-size:1.25rem;line-height:1.3;color:var(--pen)}
+.gaps li::before{content:"";display:inline-block;width:.9rem;height:2px;background:var(--pen);margin-right:.4rem;vertical-align:.3em;transform:rotate(-8deg)}
+.no-gaps{grid-column:2 / -1;font-size:.93rem;color:var(--leaf)}
+@media(max-width:520px){.biz{grid-template-columns:1.6rem 1fr}.biz-score{grid-column:2;text-align:left;display:flex;align-items:baseline;gap:.5rem}.biz-score strong{display:inline}.gaps,.no-gaps{grid-column:2}}
+
+.gate{margin-top:1.5rem;background:var(--forest);color:#fff;border-radius:14px;padding:clamp(1.4rem,4vw,2.2rem)}
+.gate h2{color:#fff;margin-bottom:.4rem}
+.gate p{color:rgba(255,255,255,.75)}
+.gate form{display:grid;gap:.8rem;margin-top:1.3rem}
+@media(min-width:680px){.gate .row{display:grid;grid-template-columns:1fr auto;gap:.8rem}}
+.gate input[type=email]{width:100%;min-height:50px;padding:.7rem .9rem;border:0;border-radius:10px;font:inherit;font-size:1rem}
+.gate .row .btn{margin-top:.8rem}
+@media(min-width:680px){.gate .row .btn{margin-top:0}}
+.consent{display:flex;gap:.6rem;align-items:flex-start;font-size:.92rem;color:rgba(255,255,255,.8)}
+.consent input{margin-top:.35rem;width:18px;height:18px;flex-shrink:0;accent-color:#A8E0BC}
+.fine{font-size:.85rem;color:rgba(255,255,255,.6)}
+.fine a{color:#A8E0BC}
+.gate .status{color:#FFB4AE}
+
+.after{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-top:1.5rem}
+.pitch{margin-top:2.5rem;border:2px solid var(--ink);border-radius:14px;padding:clamp(1.4rem,4vw,2rem);background:var(--white)}
+.pitch h2{margin-bottom:.5rem}
+.pitch p{color:var(--muted);margin-bottom:1.2rem}
+
+.how{padding:0 0 4rem}
+.how-grid{display:grid;gap:2rem;border-top:1px solid var(--line);padding-top:2.5rem}
+@media(min-width:800px){.how-grid{grid-template-columns:repeat(3,1fr)}}
+.how h3{font-size:1.1rem;margin-bottom:.3rem}
+.how p{color:var(--muted);font-size:.98rem}
+
+footer{background:var(--ink);color:rgba(255,255,255,.6);padding:2.5rem 0 calc(2rem + env(safe-area-inset-bottom,0px));font-size:.88rem}
+footer a{color:rgba(255,255,255,.8)}
+
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="logo" href="/"><span class="logo-mark" aria-hidden="true"></span>Review Bloom</a>
+    <a class="nav-link" href="/#pricing">Lifetime deal</a>
+  </div>
+</nav>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <h1>Find the weakest Google profiles in any town.</h1>
+    <p class="lede">Pick a niche and a town. Review Bloom ranks the local businesses by how much their Google profile needs help, so you know exactly who to pitch first.</p>
+
+    <form class="search" id="searchForm" novalidate>
+      <div class="field">
+        <label for="niche">Niche</label>
+        <input id="niche" name="niche" type="text" placeholder="plumbers" autocomplete="off" required maxlength="60" />
+      </div>
+      <div class="field">
+        <label for="town">Town or city</label>
+        <input id="town" name="town" type="text" placeholder="Reading" autocomplete="off" required maxlength="60" />
+      </div>
+      <button class="btn btn-solid" type="submit" id="searchBtn">Find weak profiles</button>
+    </form>
+    <p class="search-note">Free, no signup for the first three results. Up to 5 searches a day.</p>
+    <p class="status" id="searchStatus" role="alert"></p>
+  </div>
+</section>
+
+<section class="results" id="results" hidden aria-live="polite">
+  <div class="wrap">
+    <div class="res-head">
+      <h2 id="resTitle"></h2>
+      <p id="resSub"></p>
+    </div>
+    <ol class="biz-list" id="bizList"></ol>
+
+    <div class="gate" id="gate">
+      <h2 id="gateTitle"></h2>
+      <p>Get the full ranked list with every gap flagged, plus a CSV you can drop into your outreach tool.</p>
+      <form id="unlockForm" novalidate>
+        <div class="row">
+          <label class="sr-only" for="email">Work email</label>
+          <input id="email" type="email" placeholder="you@youragency.com" autocomplete="email" required />
+          <button class="btn btn-light" type="submit" id="unlockBtn">Show the full list</button>
+        </div>
+        <label class="consent">
+          <input type="checkbox" id="consent" />
+          <span>Send me occasional emails about Review Bloom, including the founding lifetime deal. Unsubscribe anytime.</span>
+        </label>
+        <p class="fine">We use your email to send this list and, only if you tick the box, product updates. See our <a href="/privacy-policy/privacy-policy-camden-acquisition-hub.pdf">privacy policy</a>.</p>
+        <p class="status" id="unlockStatus" role="alert"></p>
+      </form>
+    </div>
+
+    <div id="afterUnlock" hidden>
+      <div class="after">
+        <button class="btn btn-line" type="button" id="csvBtn">Download CSV</button>
+      </div>
+      <div class="pitch">
+        <h2>Turn this list into audits you can send</h2>
+        <p>With Review Bloom's lifetime deal you get one-page audit reports for each business, with your own logo on the Agency tier. Pay once, no monthly bill.</p>
+        <a class="btn btn-solid" href="/#pricing">See the lifetime deal</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <div class="wrap how-grid">
+    <div>
+      <h3>Where the data comes from</h3>
+      <p>Google's official Places API. Only public profile information, the same details anyone sees on Google Maps.</p>
+    </div>
+    <div>
+      <h3>How the score works</h3>
+      <p>Out of 100: review count against the local leaders, star rating, website, opening hours, phone number and photos. Lowest scores come first.</p>
+    </div>
+    <div>
+      <h3>Who it's for</h3>
+      <p>Local SEO agencies and freelancers who want a specific reason to contact a business, instead of another generic pitch.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    &copy; 2026 Review Bloom, a product of Camden Acquisition Hub Ltd. Company no. 15431935. ICO registration ZC148168.
+    <a href="/privacy-policy/privacy-policy-camden-acquisition-hub.pdf">Privacy policy</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var FN_URL = 'https://wvuaqdoijqdyxncpviet.supabase.co/functions/v1/agency-audit';
+  var KEY = 'sb_publishable_N4aqHZv72AvERxh7B-4VQg_Qoa8ngx2';
+  var params = new URLSearchParams(location.search);
+  var state = { searchId: null, niche: '', town: '', businesses: [] };
+
+  function $(id){ return document.getElementById(id); }
+  function el(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  function call(payload){
+    return fetch(FN_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': KEY },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      return r.json().catch(function(){ return {}; }).then(function(d){
+        if (!r.ok) throw new Error(d.error || 'Something went wrong. Please try again.');
+        return d;
+      });
+    });
+  }
+
+  function renderList(list){
+    var ol = $('bizList');
+    ol.textContent = '';
+    list.forEach(function(b, i){
+      var li = el('li', 'biz');
+      li.appendChild(el('span', 'rank', String(i + 1)));
+
+      var info = el('div');
+      var name = el('div', 'biz-name');
+      if (b.maps_url) {
+        var a = el('a', null, b.name); a.href = b.maps_url; a.target = '_blank'; a.rel = 'noopener';
+        name.appendChild(a);
+      } else { name.textContent = b.name; }
+      info.appendChild(name);
+      var meta = [];
+      meta.push(b.rating != null ? (b.rating + ' stars, ' + b.reviews + ' reviews') : 'No rating yet');
+      if (b.category) meta.push(b.category);
+      info.appendChild(el('div', 'biz-meta', meta.join(', ')));
+      li.appendChild(info);
+
+      var sc = el('div', 'biz-score' + (b.score >= 75 ? ' ok' : ''));
+      sc.appendChild(el('strong', null, String(b.score)));
+      sc.appendChild(el('span', null, 'out of 100'));
+      li.appendChild(sc);
+
+      if (b.gaps && b.gaps.length) {
+        var ul = el('ul', 'gaps');
+        b.gaps.forEach(function(g){ ul.appendChild(el('li', null, g)); });
+        li.appendChild(ul);
+      } else {
+        li.appendChild(el('p', 'no-gaps', 'No obvious gaps. Probably not your first pitch.'));
+      }
+      ol.appendChild(li);
+    });
+  }
+
+  $('searchForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var niche = $('niche').value.trim(), town = $('town').value.trim();
+    var status = $('searchStatus');
+    if (niche.length < 2 || town.length < 2) { status.textContent = 'Enter a niche and a town.'; return; }
+    status.textContent = '';
+    var btn = $('searchBtn'); btn.disabled = true; btn.textContent = 'Searching';
+
+    call({ action: 'search', niche: niche, town: town }).then(function(d){
+      state.searchId = d.search_id; state.niche = d.niche; state.town = d.town;
+      $('results').hidden = false;
+      $('afterUnlock').hidden = true;
+      $('resTitle').textContent = 'Weakest profiles for ' + d.niche + ' in ' + d.town;
+      if (d.total === 0) {
+        $('resSub').textContent = 'Google returned no businesses for this search. Try a broader niche or a bigger town.';
+        $('bizList').textContent = '';
+        $('gate').hidden = true;
+      } else {
+        $('resSub').textContent = d.benchmark > 0
+          ? 'Compared against the local leaders, who have about ' + d.benchmark + ' reviews.'
+          : 'Scored on profile completeness.';
+        renderList(d.preview);
+        var more = d.total - d.preview.length;
+        $('gate').hidden = more <= 0;
+        $('gateTitle').textContent = more + ' more ' + (more === 1 ? 'business' : 'businesses') + ' in this search';
+        if (more <= 0) { state.businesses = d.preview; $('afterUnlock').hidden = false; }
+      }
+      $('results').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }).catch(function(err){
+      status.textContent = err.message;
+    }).finally(function(){
+      btn.disabled = false; btn.textContent = 'Find weak profiles';
+    });
+  });
+
+  $('unlockForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = $('email').value.trim();
+    var status = $('unlockStatus');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { status.textContent = 'Enter a valid email address.'; return; }
+    status.textContent = '';
+    var btn = $('unlockBtn'); btn.disabled = true; btn.textContent = 'Loading';
+
+    call({
+      action: 'unlock', search_id: state.searchId, email: email,
+      marketing_consent: $('consent').checked,
+      utm_source: params.get('utm_source'), utm_medium: params.get('utm_medium'),
+      utm_campaign: params.get('utm_campaign'), utm_content: params.get('utm_content'),
+      utm_term: params.get('utm_term'), referrer: document.referrer || null
+    }).then(function(d){
+      state.businesses = d.businesses;
+      renderList(d.businesses);
+      $('gate').hidden = true;
+      $('afterUnlock').hidden = false;
+    }).catch(function(err){
+      status.textContent = err.message;
+    }).finally(function(){
+      btn.disabled = false; btn.textContent = 'Show the full list';
+    });
+  });
+
+  $('csvBtn').addEventListener('click', function(){
+    var cols = ['rank','name','score','rating','reviews','website','phone','hours_listed','photos','category','address','gaps','maps_url'];
+    var esc = function(v){ v = v == null ? '' : String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; };
+    var rows = [cols.join(',')];
+    state.businesses.forEach(function(b, i){
+      rows.push([i + 1, b.name, b.score, b.rating, b.reviews, b.website, b.phone, b.has_hours ? 'yes' : 'no',
+        b.photos, b.category, b.address, (b.gaps || []).join('; '), b.maps_url].map(esc).join(','));
+    });
+    var blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = ('weak-profiles-' + state.niche + '-' + state.town).toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  });
+})();
+</script>
+
+<!-- TRB visit tracker -->
+<script>
+(function(){
+  var p = new URLSearchParams(location.search);
+  fetch('https://wvuaqdoijqdyxncpviet.supabase.co/rest/v1/site_visits', {
+    method:'POST',
+    headers:{'Content-Type':'application/json','apikey':'sb_publishable_N4aqHZv72AvERxh7B-4VQg_Qoa8ngx2','Authorization':'Bearer sb_publishable_N4aqHZv72AvERxh7B-4VQg_Qoa8ngx2'},
+    body:JSON.stringify({site:'trb',path:location.pathname,referrer:document.referrer||null,
+      utm_source:p.get('utm_source'),utm_medium:p.get('utm_medium'),utm_campaign:p.get('utm_campaign'),
+      utm_content:p.get('utm_content'),utm_term:p.get('utm_term')})
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>
