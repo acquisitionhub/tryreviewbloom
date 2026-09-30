@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Review Bloom mockup: app search and results</title>
+<!-- Static mockup for validation only. Fictional businesses; [bracketed] text is filled in per agency. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;family=Caveat:wght@600&amp;display=swap">
+<style>
+body{margin:0;font-family:'Source Serif 4',Georgia,serif;background:#F6F8F5;color:#16211B}
+a{color:#1A7A45}a:hover{color:#0F3D27}
+</style>
+<style>html{background:#E9EDEA}body{display:flex;justify-content:center;padding:24px 0}</style>
+</head>
+<body>
+<div style="width: 1280px; height: 860px; display: flex; background: #F6F8F5; font-family: 'Source Serif 4', Georgia, serif; color: #16211B">
+
+  <nav aria-label="App" style="width: 220px; flex-shrink: 0; background: #0F3D27; color: #FFFFFF; box-sizing: border-box; padding: 24px 16px; display: flex; flex-direction: column; gap: 28px">
+    <div style="display: flex; align-items: center; gap: 10px; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 800; font-size: 19px; letter-spacing: -0.02em">
+      <span style="width: 26px; height: 26px; border-radius: 50% 50% 50% 7px; background: #A8E0BC; display: block"></span>
+      Review Bloom
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 4px; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 15px">
+      <a href="#" style="color: #FFFFFF; text-decoration: none; background: rgba(255,255,255,0.14); border-radius: 8px; padding: 11px 12px; font-weight: 700">Search</a>
+      <a href="#" style="color: #D9EBDF; text-decoration: none; border-radius: 8px; padding: 11px 12px">Saved searches</a>
+      <a href="#" style="color: #D9EBDF; text-decoration: none; border-radius: 8px; padding: 11px 12px">Audit reports</a>
+      <a href="#" style="color: #D9EBDF; text-decoration: none; border-radius: 8px; padding: 11px 12px">Branding</a>
+      <a href="#" style="color: #D9EBDF; text-decoration: none; border-radius: 8px; padding: 11px 12px">Settings</a>
+    </div>
+    <div style="margin-top: auto; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+      <div style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 13px; font-weight: 700">Agency plan</div>
+      <div style="font-size: 13px; color: #D9EBDF">218 of 300 audits left this month</div>
+      <div style="height: 6px; border-radius: 3px; background: rgba(255,255,255,0.2)">
+        <div style="width: 73%; height: 6px; border-radius: 3px; background: #A8E0BC"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main style="flex-grow: 1; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end">
+      <div>
+        <h1 style="margin: 0; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 30px; font-weight: 800; letter-spacing: -0.02em">Find weak profiles</h1>
+        <p style="margin: 6px 0 0; color: #4E5D54; font-size: 15px">Search a niche and a town. Weakest profiles come first.</p>
+      </div>
+    </div>
+
+    <form style="display: flex; gap: 12px; align-items: flex-end; background: #FFFFFF; border: 1px solid #D5DED8; border-radius: 12px; padding: 16px">
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px">
+        <label for="niche" style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 600; font-size: 13px">Niche</label>
+        <input id="niche" type="text" value="plumbers" style="height: 44px; box-sizing: border-box; padding: 0 12px; border: 1.5px solid #D5DED8; border-radius: 8px; font: inherit; font-size: 15px">
+      </div>
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px">
+        <label for="town" style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 600; font-size: 13px">Town or city</label>
+        <input id="town" type="text" value="Reading" style="height: 44px; box-sizing: border-box; padding: 0 12px; border: 1.5px solid #D5DED8; border-radius: 8px; font: inherit; font-size: 15px">
+      </div>
+      <button type="button" style="height: 44px; padding: 0 20px; border: 0; border-radius: 8px; background: #0F3D27; color: #FFFFFF; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 15px">Search</button>
+      <button type="button" style="height: 44px; padding: 0 16px; border: 1.5px solid #16211B; border-radius: 8px; background: transparent; color: #16211B; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 15px">Save this search</button>
+    </form>
+
+    <div style="display: flex; gap: 32px; align-items: flex-start">
+
+      <section style="flex-grow: 1; background: #FFFFFF; border: 1px solid #D5DED8; border-radius: 12px; overflow: hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #D5DED8">
+          <h2 style="margin: 0; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 17px; font-weight: 700">18 plumbers in Reading</h2>
+          <a href="#" style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 14px; font-weight: 600">Export CSV</a>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px">
+          <thead>
+            <tr style="text-align: left; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 12px; color: #4E5D54">
+              <th style="padding: 10px 12px 10px 20px; font-weight: 600">#</th>
+              <th style="padding: 10px 12px; font-weight: 600">Business</th>
+              <th style="padding: 10px 12px; font-weight: 600">Score</th>
+              <th style="padding: 10px 12px; font-weight: 600">Main gap</th>
+              <th style="padding: 10px 20px 10px 12px; font-weight: 600; text-align: right">Audit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-top: 1px solid #E4EBE6">
+              <td style="padding: 14px 12px 14px 20px; color: #4E5D54">1</td>
+              <td style="padding: 14px 12px"><div style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700">Hartwell Heating Ltd</div><div style="font-size: 13px; color: #4E5D54">3.9 stars, 11 reviews</div></td>
+              <td style="padding: 14px 12px; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 800; font-size: 20px; color: #B42A22">38</td>
+              <td style="padding: 14px 12px; font-family: 'Caveat', cursive; font-size: 19px; color: #B42A22">No website linked</td>
+              <td style="padding: 14px 20px 14px 12px; text-align: right"><button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 8px; background: #0F3D27; color: #FFFFFF; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 13px">Create audit</button></td>
+            </tr>
+            <tr style="border-top: 1px solid #E4EBE6">
+              <td style="padding: 14px 12px 14px 20px; color: #4E5D54">2</td>
+              <td style="padding: 14px 12px"><div style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700">Kingsway Plumbing</div><div style="font-size: 13px; color: #4E5D54">4.2 stars, 9 reviews</div></td>
+              <td style="padding: 14px 12px; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 800; font-size: 20px; color: #B42A22">44</td>
+              <td style="padding: 14px 12px; font-family: 'Caveat', cursive; font-size: 19px; color: #B42A22">Opening hours not listed</td>
+              <td style="padding: 14px 20px 14px 12px; text-align: right"><button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 8px; background: #0F3D27; color: #FFFFFF; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 13px">Create audit</button></td>
+            </tr>
+            <tr style="border-top: 1px solid #E4EBE6">
+              <td style="padding: 14px 12px 14px 20px; color: #4E5D54">3</td>
+              <td style="padding: 14px 12px"><div style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700">A1 Drains and Pipes</div><div style="font-size: 13px; color: #4E5D54">4.8 stars, 17 reviews</div></td>
+              <td style="padding: 14px 12px; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 800; font-size: 20px; color: #B42A22">51</td>
+              <td style="padding: 14px 12px; font-family: 'Caveat', cursive; font-size: 19px; color: #B42A22">17 reviews vs about 310 for leaders</td>
+              <td style="padding: 14px 20px 14px 12px; text-align: right"><a href="#" style="display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border: 1.5px solid #1A7A45; border-radius: 8px; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 13px; text-decoration: none">View audit</a></td>
+            </tr>
+            <tr style="border-top: 1px solid #E4EBE6">
+              <td style="padding: 14px 12px 14px 20px; color: #4E5D54">4</td>
+              <td style="padding: 14px 12px"><div style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700">Thames Valley Boilers</div><div style="font-size: 13px; color: #4E5D54">5.0 stars, 23 reviews</div></td>
+              <td style="padding: 14px 12px; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 800; font-size: 20px; color: #B42A22">55</td>
+              <td style="padding: 14px 12px; font-family: 'Caveat', cursive; font-size: 19px; color: #B42A22">23 reviews vs about 310 for leaders</td>
+              <td style="padding: 14px 20px 14px 12px; text-align: right"><button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 8px; background: #0F3D27; color: #FFFFFF; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 13px">Create audit</button></td>
+            </tr>
+            <tr style="border-top: 1px solid #E4EBE6">
+              <td style="padding: 14px 12px 14px 20px; color: #4E5D54">5</td>
+              <td style="padding: 14px 12px"><div style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700">Caversham Plumbing Co</div><div style="font-size: 13px; color: #4E5D54">4.6 stars, 31 reviews</div></td>
+              <td style="padding: 14px 12px; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 800; font-size: 20px; color: #B42A22">58</td>
+              <td style="padding: 14px 12px; font-family: 'Caveat', cursive; font-size: 19px; color: #B42A22">31 reviews vs about 310 for leaders</td>
+              <td style="padding: 14px 20px 14px 12px; text-align: right"><button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 8px; background: #0F3D27; color: #FFFFFF; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 13px">Create audit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <aside style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px">
+        <section style="background: #FFFFFF; border: 1px solid #D5DED8; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+          <h2 style="margin: 0; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 17px; font-weight: 700">Saved searches</h2>
+          <div style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 12px; border-bottom: 1px solid #E4EBE6">
+            <a href="#" style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 15px; text-decoration: none; color: #16211B">Plumbers in Reading</a>
+            <span style="font-size: 13px; color: #1A7A45; font-weight: 600">3 new weak profiles this month</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 12px; border-bottom: 1px solid #E4EBE6">
+            <a href="#" style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 15px; text-decoration: none; color: #16211B">Roofers in Bracknell</a>
+            <span style="font-size: 13px; color: #1A7A45; font-weight: 600">1 business dropped in score</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px">
+            <a href="#" style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 15px; text-decoration: none; color: #16211B">Electricians in Slough</a>
+            <span style="font-size: 13px; color: #4E5D54">No change this month</span>
+          </div>
+        </section>
+
+        <section style="background: #FFFFFF; border: 1px solid #D5DED8; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+          <h2 style="margin: 0; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 17px; font-weight: 700">Your branding</h2>
+          <div style="display: flex; gap: 12px; align-items: center">
+            <div style="width: 64px; height: 64px; border: 1.5px dashed #9AAAA0; border-radius: 10px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 11px; color: #4E5D54">Your logo</div>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px">
+              <div style="display: flex; gap: 8px; align-items: center"><span style="width: 18px; height: 18px; border-radius: 4px; background: #2B4C8C; display: block"></span>Report colour</div>
+              <div style="color: #4E5D54">Shown on every audit you send</div>
+            </div>
+          </div>
+          <a href="#" style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 14px; font-weight: 600">Edit branding</a>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+</body>
+</html>
