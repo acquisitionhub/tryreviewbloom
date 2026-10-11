@@ -1,0 +1,121 @@
+/* Shared stylesheet for London borough pages (Barking & Dagenham, Bexley, Enfield, Romford, Walthamstow).
+   Matches the palette and type of the other borough pages. */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;0,900;1,700&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root{--ink:#0d1a12;--forest:#0f3d27;--green:#1a7a45;--lime:#3ec96e;--gold:#f0c040;--cream:#f8f4ed;--white:#fff;--muted:#5a6e62;--border:#d4e4da;--card:#f1f7f3;--r:12px;--px:1.25rem;--max:1100px}
+@media(min-width:768px){:root{--px:2rem}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--ink);line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Fraunces',serif;line-height:1.15}
+h1{font-size:clamp(1.9rem,5.5vw,3.3rem);font-weight:900}
+h2{font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:700;margin-bottom:.5rem}
+h3{font-size:clamp(1.1rem,2.4vw,1.5rem);font-weight:700;margin-bottom:1rem}
+h4{font-size:1.1rem;font-weight:600;margin-bottom:.4rem}
+em{font-style:italic;color:var(--green)}
+a{color:var(--green)}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}
+section,header,footer,.borough-breadcrumb{padding-left:var(--px);padding-right:var(--px)}
+section>*,header>*,footer>*{max-width:var(--max);margin-left:auto;margin-right:auto}
+
+/* nav */
+.top-nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px var(--px);background:rgba(255,255,255,.96);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.1rem;color:var(--ink);text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:14px}
+.nav-links a{font-size:.88rem;color:var(--muted);text-decoration:none}
+.nav-links a.nav-cta{background:var(--forest);color:var(--white);padding:9px 16px;border-radius:999px;font-weight:600}
+.borough-breadcrumb{background:var(--forest);color:var(--lime);font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding-top:14px;padding-bottom:0}
+
+/* hero */
+.hero{background:linear-gradient(160deg,var(--forest) 0%,#0a2b1c 100%);color:var(--white);padding-top:2.5rem;padding-bottom:3.5rem}
+.hero h1{color:var(--white);margin-bottom:1rem;max-width:820px}
+.hero h1 em{color:var(--lime)}
+.hero-sub{color:rgba(255,255,255,.78);font-size:1.05rem;max-width:620px;margin-bottom:1.6rem}
+.hero-stats{display:flex;flex-wrap:wrap;gap:28px;margin-bottom:1.8rem}
+.stat{display:flex;flex-direction:column}
+.stat-num{font-family:'Fraunces',serif;font-weight:700;font-size:1.6rem;color:var(--lime)}
+.stat-label{font-size:.8rem;color:rgba(255,255,255,.65);max-width:150px}
+.hero-ctas,.cta-buttons{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:1.2rem}
+.btn-primary,.btn-secondary,.btn-plan{display:inline-block;text-decoration:none;font-weight:600;font-size:.98rem;padding:14px 24px;border-radius:999px;text-align:center}
+.btn-primary{background:var(--gold);color:var(--ink)}
+.btn-secondary{border:1.5px solid rgba(255,255,255,.4);color:var(--white)}
+.trust-badges{display:flex;flex-wrap:wrap;gap:16px;font-size:.84rem;color:rgba(255,255,255,.7)}
+
+/* stats bar */
+.stats-bar{background:var(--green);color:var(--white);padding-top:1.4rem;padding-bottom:1.4rem;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;text-align:center}
+.stats-bar>*{max-width:none;margin:0}
+@media(min-width:900px){.stats-bar{grid-template-columns:repeat(4,1fr);padding-left:max(var(--px),calc((100% - var(--max))/2));padding-right:max(var(--px),calc((100% - var(--max))/2))}}
+.stat-item{display:flex;flex-direction:column;font-size:.84rem;color:rgba(255,255,255,.85)}
+.stat-item .big{font-family:'Fraunces',serif;font-weight:700;font-size:1.9rem;color:var(--white)}
+
+/* borough intro */
+.borough-intro{background:var(--cream);padding-top:3.5rem;padding-bottom:3.5rem}
+.borough-intro>p{color:var(--muted);max-width:68ch;margin-bottom:1.5rem}
+.borough-meta{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:8px 18px;margin-bottom:1.5rem}
+.borough-meta div{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--border);font-size:.9rem}
+.borough-meta div:last-child{border-bottom:0}
+.borough-meta strong{color:var(--muted);font-weight:500}
+.borough-meta span{text-align:right;font-weight:600}
+.borough-problem{background:var(--forest);color:rgba(255,255,255,.85);border-radius:var(--r);padding:22px 24px}
+.borough-problem h4{color:var(--lime);font-family:'DM Sans',sans-serif;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
+.borough-problem p{margin-bottom:1rem}
+.borough-problem ul{list-style:none;display:grid;gap:8px}
+.borough-problem li{background:rgba(255,255,255,.08);border-radius:8px;padding:8px 12px}
+.borough-problem li::before{content:'✓ ';color:var(--lime);font-weight:700}
+
+/* how it works */
+.how-it-works{padding-top:3.5rem;padding-bottom:3.5rem}
+.how-it-works>h2{font-size:.8rem;font-family:'DM Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.steps{display:grid;gap:16px}
+@media(min-width:768px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--green);color:var(--white);font-weight:700;margin-bottom:12px}
+.step p{color:var(--muted);font-size:.92rem}
+
+/* pricing */
+.pricing{background:var(--cream);padding-top:3.5rem;padding-bottom:3.5rem}
+.pricing>h2{font-size:.8rem;font-family:'DM Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.pricing-note{color:var(--muted);max-width:60ch;margin-bottom:1.6rem}
+.pricing-grid{display:grid;gap:16px}
+.plan{position:relative;background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:26px 22px}
+.plan-featured{border:2px solid var(--green);box-shadow:0 12px 36px rgba(15,61,39,.12)}
+.plan-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--green);color:var(--white);font-size:.75rem;font-weight:600;padding:4px 12px;border-radius:999px;white-space:nowrap}
+.plan-sub{color:var(--muted);font-size:.9rem;margin-bottom:1rem}
+.plan-price{font-family:'Fraunces',serif;font-weight:700;font-size:2.4rem}
+.plan-price span{font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:400;color:var(--muted)}
+.plan-tag{color:var(--muted);font-size:.85rem;margin-bottom:1rem}
+.plan ul{list-style:none;display:grid;gap:8px;margin-bottom:1.4rem;font-size:.92rem}
+.plan li::before{content:'✓ ';color:var(--green);font-weight:700}
+.btn-plan{display:block;background:var(--green);color:var(--white)}
+.no-card{text-align:center;color:var(--muted);font-size:.8rem;margin-top:10px}
+
+/* faq */
+.faq{padding-top:3.5rem;padding-bottom:3.5rem}
+.faq>h2{font-size:.8rem;font-family:'DM Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.faq details{border-bottom:1px solid var(--border);padding:16px 0}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'+';color:var(--green);font-size:1.3rem;line-height:1}
+.faq details[open] summary::after{content:'−'}
+.faq details p{color:var(--muted);margin-top:10px;max-width:72ch}
+
+/* final cta */
+.cta-final{background:linear-gradient(160deg,var(--forest) 0%,#0a2b1c 100%);color:var(--white);text-align:center;padding-top:3.5rem;padding-bottom:3.5rem}
+.cta-final h2{color:var(--white)}
+.cta-final h2 em{color:var(--lime)}
+.cta-final p{color:rgba(255,255,255,.75);margin-bottom:1.5rem}
+.cta-final .cta-buttons,.cta-final .trust-badges{justify-content:center}
+
+/* footer */
+footer{background:var(--ink);color:rgba(255,255,255,.6);padding-top:2rem;padding-bottom:2rem;font-size:.85rem}
+.footer-logo{font-family:'Fraunces',serif;color:var(--white);font-size:1.05rem;margin-bottom:10px}
+.footer-nav{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px}
+.footer-nav a{color:rgba(255,255,255,.75);text-decoration:none}
+.footer-legal{font-size:.78rem}
+
+@media(max-width:480px){.btn-primary,.btn-secondary{width:100%}.nav-links a:not(.nav-cta){display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* keep narrower text blocks aligned with the page's left edge instead of centred */
+.hero h1,.hero-sub,.borough-intro>p,.pricing-note{margin-left:max(0px,calc((100% - var(--max))/2));margin-right:auto}
+.pricing-grid{margin-left:auto;margin-right:auto}
