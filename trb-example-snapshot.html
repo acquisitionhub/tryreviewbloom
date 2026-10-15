@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Example Review Snapshot | Try Review Bloom</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/png" href="/favicon.png" />
+<style>
+  :root{--ink:#0d1a12;--forest:#0f3d27;--green:#1a7a45;--lime:#3ec96e;--cream:#f8f4ed;--muted:#5a6e62;--border:#d4e4da;--card:#f1f7f3;--warn:#8a5a00;--warn-bg:#fff4d6;--r:14px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Georgia,'Times New Roman',serif;line-height:1.15}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px}
+  header.top{background:var(--forest);color:#fff;padding:18px 0}
+  header.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .brand{font-family:Georgia,serif;font-weight:700;font-size:1.15rem;color:#fff;text-decoration:none}
+  .brand span{color:var(--lime)}
+  .muted-on-dark{color:rgba(255,255,255,.7);font-size:.85rem}
+  .hero{background:linear-gradient(160deg,var(--forest) 0%,#0a2b1c 100%);color:#fff;padding:36px 0 44px}
+  .eyebrow{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);background:rgba(62,201,110,.15);border:1px solid rgba(62,201,110,.35);border-radius:50px;padding:4px 12px;margin-bottom:14px}
+  .hero h1{font-size:clamp(1.7rem,5vw,2.5rem);margin-bottom:6px}
+  .hero p{color:rgba(255,255,255,.75)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:-28px}
+  .stat{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px;box-shadow:0 8px 24px rgba(15,61,39,.07)}
+  .stat .num{font-family:Georgia,serif;font-size:1.8rem;font-weight:700;color:var(--forest);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--muted);margin-top:4px}
+  section{margin:28px 0}
+  .card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:22px}
+  .card h2{font-size:1.35rem;margin-bottom:6px}
+  .lead{font-size:1.02rem;color:var(--ink)}
+  .gap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  .gap div{background:var(--card);border-radius:10px;padding:14px}
+  .gap strong{display:block;font-family:Georgia,serif;font-size:1.5rem;color:var(--green)}
+  .gap span{font-size:.85rem;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:12px}
+  th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;padding:8px 6px;border-bottom:2px solid var(--border)}
+  td{padding:9px 6px;border-bottom:1px solid var(--border);vertical-align:top}
+  td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  th.n{text-align:right}
+  tr.you td{background:#e9f7ef;font-weight:700}
+  .tag{display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:var(--green);color:#fff;border-radius:50px;padding:2px 8px;margin-left:6px;vertical-align:middle}
+  .bar{height:8px;background:var(--card);border-radius:8px;overflow:hidden;min-width:60px}
+  .bar i{display:block;height:100%;background:var(--lime);border-radius:8px}
+  tr.you .bar i{background:var(--green)}
+  ul.steps{list-style:none;margin-top:10px;display:grid;gap:10px}
+  ul.steps li{background:var(--card);border-radius:10px;padding:12px 14px}
+  ul.steps b{color:var(--forest)}
+  .cta{background:var(--forest);color:#fff;border-radius:var(--r);padding:26px;text-align:center}
+  .cta h2{color:#fff;margin-bottom:6px}
+  .cta p{color:rgba(255,255,255,.75);margin-bottom:16px}
+  .btn{display:inline-block;background:var(--lime);color:var(--ink);font-weight:700;text-decoration:none;border-radius:50px;padding:13px 26px;min-height:48px}
+  .btn:hover{background:#5ad686}
+  .notes{font-size:.78rem;color:var(--muted)}
+  .notes li{margin-left:18px;margin-bottom:4px}
+  footer{padding:28px 0 40px;font-size:.78rem;color:var(--muted)}
+  footer a{color:var(--green)}
+  .state{padding:60px 0;text-align:center;color:var(--muted)}
+  .warn{background:var(--warn-bg);color:var(--warn);border:1px solid #f0d58a;border-radius:10px;padding:10px 14px;font-size:.88rem;margin-top:12px}
+  @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.gap{grid-template-columns:1fr}.hide-sm{display:none}}
+  @media print{header.top,.cta .btn{display:none}body{background:#fff}.stat{box-shadow:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="https://tryreviewbloom.com">🌿 Try Review<span>Bloom</span></a>
+  <span class="muted-on-dark">Example snapshot</span>
+</div></header>
+
+<main id="app"></main>
+
+<footer><div class="wrap">
+  Prepared by Try Review Bloom, a service of Camden Acquisition Hub Ltd · Company No. 15431935 · 349 Royal College St, London NW1 9QS ·
+  tryreviewbloom.com · julien@camdenacquisitionhub.com
+</div></footer>
+
+<script>
+(function () {
+  var DATA = {"gym": {"name": "A Pilates studio in Fulham", "rating": 4.1, "address": "Fulham, London SW6", "reviews": 15, "newest_review": "2026-06-22"}, "summary": {"out_of": 20, "median_reviews": 17, "rank_by_reviews": 11, "reviews_to_top3": 144, "competitors_found": 19, "reviews_to_median": 2, "top3_average_reviews": 159}, "radius_m": 2000, "generated_on": "2026-10-15", "competitors": [{"name": "Boutique studio A", "rating": 4.9, "reviews": 183, "distance_m": 649}, {"name": "Boutique studio B", "rating": 4.9, "reviews": 168, "distance_m": 577}, {"name": "Fitness studio C", "rating": 4.9, "reviews": 127, "distance_m": 408}, {"name": "Gym D", "rating": 5.0, "reviews": 84, "distance_m": 351}, {"name": "Barre studio E", "rating": 4.7, "reviews": 83, "distance_m": 15}, {"name": "Personal training F", "rating": 5.0, "reviews": 39, "distance_m": 471}, {"name": "Boxing gym G", "rating": 5.0, "reviews": 35, "distance_m": 112}, {"name": "Personal training H", "rating": 4.1, "reviews": 27, "distance_m": 639}, {"name": "Pilates studio I", "rating": 5.0, "reviews": 24, "distance_m": 345}, {"name": "Performance gym J", "rating": 5.0, "reviews": 17, "distance_m": 621}], "notes": ["Example based on a real snapshot of a London Pilates studio, made from Google Maps data on 15 Oct 2026. Business names have been removed.", "Nearby gyms are the closest gym, fitness and yoga listings on Google within 2 km."]};
+  var BOOK = "https://cal.com/julien-6itp3b/30min";
+  var app = document.getElementById("app");
+
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function fmtDate(iso) {
+    if (!iso) return "—";
+    var m = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    var p = iso.split("-"); return Number(p[2]) + " " + m[Number(p[1]) - 1] + " " + p[0];
+  }
+  function monthsAgo(iso, from) {
+    if (!iso) return null;
+    return Math.round((Date.parse(from) - Date.parse(iso)) / (30.44 * 864e5));
+  }
+  function km(m) { return m == null ? "—" : (m < 1000 ? m + " m" : (m / 1000).toFixed(1) + " km"); }
+  function fail(msg) { app.innerHTML = '<div class="wrap state">' + esc(msg) + '</div>'; }
+
+
+
+  function render(d) {
+    var g = d.gym, s = d.summary;
+    var rows = d.competitors.map(function (c) { return { name: c.name, rating: c.rating, reviews: c.reviews, newest: c.newest_review, dist: c.distance_m, you: false }; });
+    rows.push({ name: g.name, rating: g.rating, reviews: g.reviews, newest: g.newest_review, dist: 0, you: true });
+    rows.sort(function (a, b) { return b.reviews - a.reviews; });
+    var max = Math.max.apply(null, rows.map(function (r) { return r.reviews; }).concat([1]));
+    var ago = monthsAgo(g.newest_review, d.generated_on);
+
+    var headline;
+    if (s.reviews_to_median > 0) headline = g.name + " has " + g.reviews + " Google reviews. The typical gym or studio within " + (d.radius_m / 1000) + " km has " + s.median_reviews + ".";
+    else if (s.reviews_to_top3 > 0) headline = g.name + " is ahead of the typical nearby studio (" + s.median_reviews + " reviews) but " + s.reviews_to_top3 + " reviews behind the local top three.";
+    else headline = g.name + " is among the most-reviewed gyms and studios nearby. The opportunity is keeping new reviews coming.";
+
+    var recency = g.newest_review
+      ? "The newest review Google showed us is from " + fmtDate(g.newest_review) + (ago != null && ago >= 1 ? " (about " + ago + " month" + (ago === 1 ? "" : "s") + " before this snapshot)." : ".")
+      : "Google didn't return any recent reviews for this listing.";
+
+    var tableRows = rows.map(function (r, i) {
+      return '<tr class="' + (r.you ? "you" : "") + '"><td class="n">' + (i + 1) + '</td><td>' + esc(r.name) + (r.you ? '<span class="tag">This studio</span>' : "") +
+        '</td><td class="n">' + (r.rating != null ? Number(r.rating).toFixed(1) : "—") + '</td><td class="n">' + r.reviews +
+        '</td><td class="hide-sm"><div class="bar"><i style="width:' + Math.max(2, Math.round(r.reviews / max * 100)) + '%"></i></div></td>' +
+        '<td class="n hide-sm">' + (r.you ? "—" : km(r.dist)) + '</td></tr>';
+    }).join("");
+
+    var steps = [];
+    if (s.reviews_to_median > 0) steps.push("<b>Close the local gap:</b> " + s.reviews_to_median + " more reviews would bring you level with the typical nearby studio.");
+    if (s.reviews_to_top3 > 0) steps.push("<b>Aim for the top three:</b> they average " + s.top3_average_reviews + " reviews, " + s.reviews_to_top3 + " more than you have today. A steady few each week gets there faster than one-off pushes.");
+    steps.push("<b>Keep reviews recent:</b> people and Google both look at how fresh reviews are, not just how many there are.");
+    steps.push("<b>Ask everyone, every time:</b> a short text after each session, with one reminder, is the simplest way to make asking consistent.");
+
+    app.innerHTML =
+      '<div class="hero"><div class="wrap"><span class="eyebrow">Google review snapshot · ' + esc(fmtDate(d.generated_on)) + '</span>' +
+      '<h1>' + esc(g.name) + '</h1><p>' + esc(g.address) + '</p></div></div>' +
+      '<div class="wrap">' +
+        '<p class="warn" style="margin:16px 0 0;position:relative;z-index:1">This is an example. I can make one like it for your gym, free, comparing you with the gyms around you.</p>' +
+        '<div class="stats" style="margin-top:12px">' +
+          '<div class="stat"><div class="num">' + g.reviews + '</div><div class="lbl">Google reviews</div></div>' +
+          '<div class="stat"><div class="num">' + (g.rating != null ? Number(g.rating).toFixed(1) + "★" : "—") + '</div><div class="lbl">Rating</div></div>' +
+          '<div class="stat"><div class="num">' + s.rank_by_reviews + '<span style="font-size:1rem;color:var(--muted)"> / ' + s.out_of + '</span></div><div class="lbl">Rank by reviews, within ' + (d.radius_m / 1000) + ' km</div></div>' +
+          '<div class="stat"><div class="num">' + s.median_reviews + '</div><div class="lbl">Typical nearby studio</div></div>' +
+        '</div>' +
+        '<section class="card"><h2>What this shows</h2><p class="lead">' + esc(headline) + '</p><p style="margin-top:8px;color:var(--muted)">' + esc(recency) + '</p>' +
+          '<div class="gap"><div><strong>' + (s.reviews_to_median > 0 ? "+" + s.reviews_to_median : "✓") + '</strong><span>' + (s.reviews_to_median > 0 ? "reviews to reach the typical nearby studio" : "already at or above the typical nearby studio") + '</span></div>' +
+          '<div><strong>' + (s.reviews_to_top3 > 0 ? "+" + s.reviews_to_top3 : "✓") + '</strong><span>' + (s.reviews_to_top3 > 0 ? "reviews to match the local top three average" : "level with the local top three") + '</span></div></div>' +
+          (s.competitors_found < 5 ? '<p class="warn">Only ' + s.competitors_found + ' nearby listings were found, so treat the comparison as a rough guide.</p>' : "") +
+        '</section>' +
+        '<section class="card"><h2>You and the gyms around you</h2><p style="color:var(--muted);font-size:.9rem">The ten most-reviewed gym, fitness and yoga listings within ' + (d.radius_m / 1000) + ' km, plus this studio.</p>' +
+          '<div style="overflow-x:auto"><table><thead><tr><th class="n">#</th><th>Business</th><th class="n">Rating</th><th class="n">Reviews</th><th class="hide-sm"></th><th class="n hide-sm">Distance</th></tr></thead><tbody>' + tableRows + '</tbody></table></div>' +
+        '</section>' +
+        '<section class="card"><h2>What would move the needle</h2><ul class="steps">' + steps.map(function (x) { return "<li>" + x + "</li>"; }).join("") + '</ul></section>' +
+        '<section class="cta"><h2>Want to see yours?</h2><p>Try Review Bloom texts each client after their session and sends one gentle reminder, so new reviews keep arriving. I&#39;ll make your free snapshot first, so you can see where you stand.</p>' +
+          '<a class="btn" href="' + BOOK + '" target="_blank" rel="noopener">Book a short call</a><p style="margin:14px 0 0;font-size:.9rem">Julien · julien@camdenacquisitionhub.com</p></section>' +
+        '<section><ul class="notes">' + d.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") +
+          '</ul></section>' +
+      '</div>';
+  }
+  render(DATA);
+})();
+</script>
+</body>
+</html>
