@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Unsubscribe | Try Review Bloom</title>
+<style>
+  :root { --bg:#f6f7f5; --card:#fff; --ink:#1d2421; --muted:#5f6b66; --green:#1a7a45; --line:#dfe4e1; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#121614; --card:#1b201e; --ink:#e8ece9; --muted:#9aa7a1; --green:#4cc283; --line:#2c3430; } }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 Arial,Helvetica,sans-serif; padding:48px 16px; }
+  .card { max-width:460px; margin:0 auto; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:28px 24px; }
+  h1 { font-size:22px; margin:0 0 10px; }
+  p { margin:0 0 14px; color:var(--muted); }
+  button { width:100%; padding:14px; font-size:16px; border:0; border-radius:8px; background:var(--green); color:#fff; cursor:pointer; }
+  button:disabled { opacity:.6; }
+  .small { font-size:12px; margin-top:22px; }
+  a { color:var(--green); }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1 id="h">Stop the free tips?</h1>
+  <p id="msg">Tap below and you won't get any more tip emails from Julien at Try Review Bloom.</p>
+  <button id="btn" type="button">Unsubscribe</button>
+  <p class="small">Try Review Bloom is a trading name of Camden Acquisition Hub Ltd, registered in England and Wales, company no. 15431935. Changed your mind? Just reply to any tip email.</p>
+</div>
+<script>
+  var t = new URLSearchParams(location.search).get('t') || '';
+  var btn = document.getElementById('btn'), h = document.getElementById('h'), msg = document.getElementById('msg');
+  if (!/^[0-9a-f-]{36}$/i.test(t)) { h.textContent = 'Link not recognised'; msg.textContent = 'Please reply to any tip email with "unsubscribe" and Julien will remove you straight away.'; btn.style.display = 'none'; }
+  btn.addEventListener('click', function () {
+    btn.disabled = true; btn.textContent = 'One moment...';
+    fetch('https://wsdimsprzievzfvkfmjb.supabase.co/functions/v1/crm-nurture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'unsub', token: t }) })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok && d.ok }; }); })
+      .then(function (r) {
+        if (r.ok) { h.textContent = "You're unsubscribed"; msg.textContent = "You won't get any more tips. Thanks for reading them, and all the best with the gym."; btn.style.display = 'none'; }
+        else { h.textContent = 'Link not recognised'; msg.textContent = 'Please reply to any tip email with "unsubscribe" and Julien will remove you straight away.'; btn.style.display = 'none'; }
+      })
+      .catch(function () { btn.disabled = false; btn.textContent = 'Try again'; msg.textContent = 'Something went wrong. Please try again, or reply to any tip email with "unsubscribe".'; });
+  });
+</script>
+</body>
+</html>
