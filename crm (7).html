@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f3d27">
+<title>TRB CRM</title>
+<style>
+:root{--bg:#f4f6f4;--card:#fff;--ink:#1c2420;--muted:#62706a;--line:#dde3df;--green:#1a7a45;--green-soft:#e3f2e9;--amber:#a86a00;--amber-soft:#fdf1dc;--red:#b3261e;--red-soft:#fbe5e3;--blue:#1f5fa8;--blue-soft:#e3edf9;--chip:#eef1ef}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101412;--card:#1a1f1c;--ink:#e6ebe8;--muted:#98a59f;--line:#2b332f;--green:#4cc283;--green-soft:#173826;--amber:#f0b44c;--amber-soft:#3a2c12;--red:#ff8a80;--red-soft:#3d1d1b;--blue:#7fb2ef;--blue-soft:#18283c;--chip:#242b27}}
+:root[data-theme="dark"]{--bg:#101412;--card:#1a1f1c;--ink:#e6ebe8;--muted:#98a59f;--line:#2b332f;--green:#4cc283;--green-soft:#173826;--amber:#f0b44c;--amber-soft:#3a2c12;--red:#ff8a80;--red-soft:#3d1d1b;--blue:#7fb2ef;--blue-soft:#18283c;--chip:#242b27}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-text-size-adjust:100%}
+body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 16px 8px;border-bottom:1px solid var(--line)}
+header .row{display:flex;align-items:center;gap:10px}
+header h1{font-size:18px;margin:0;flex:1}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 12px}
+textarea{min-height:80px;resize:vertical}
+label{display:block;font-size:13px;color:var(--muted);margin:12px 0 4px}
+button{font:inherit;border:0;border-radius:10px;padding:11px 14px;cursor:pointer;background:var(--chip);color:var(--ink)}
+button.primary{background:var(--green);color:#fff;font-weight:600}
+button.small{padding:7px 10px;font-size:13px}
+button.link{background:none;color:var(--green);padding:6px 0}
+main{padding:12px 16px;max-width:720px;margin:0 auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 10px}
+.card.tap{cursor:pointer}
+.name{font-weight:600;font-size:16px}
+.meta{color:var(--muted);font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-size:12px;padding:3px 8px;border-radius:999px;background:var(--chip);color:var(--muted)}
+.t1{background:var(--red-soft);color:var(--red)}.t2{background:var(--amber-soft);color:var(--amber)}.t3{background:var(--blue-soft);color:var(--blue)}.tclient{background:var(--green-soft);color:var(--green)}
+.due{background:var(--amber-soft);color:var(--amber)}
+.ok{background:var(--green-soft);color:var(--green)}
+.actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.actions a,.actions button{flex:1;text-align:center;text-decoration:none;font-size:14px;padding:9px 10px;border-radius:10px;background:var(--chip);color:var(--ink);min-width:80px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{flex:1;min-width:56px;padding:9px 6px;font-size:14px}
+.seg button.on{background:var(--green);color:#fff;font-weight:600}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:6;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:none;border-radius:0;padding:10px 4px 12px;font-size:12px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button.on{color:var(--green);font-weight:600}
+nav svg{width:22px;height:22px}
+h2{font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:18px 0 8px}
+.empty{color:var(--muted);text-align:center;padding:28px 10px}
+.sheet{position:fixed;inset:0;z-index:10;background:var(--bg);overflow-y:auto;display:none;padding-bottom:40px}
+.sheet.open{display:block}
+.sheet header{display:flex;align-items:center;gap:10px}
+.tl{border-left:2px solid var(--line);margin-left:6px;padding-left:12px}
+.tl .item{margin-bottom:10px}
+.tl .when{font-size:12px;color:var(--muted)}
+.check{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:12px}
+.check input{width:22px;height:22px;flex:0 0 auto;margin:1px 0 0}
+.check span{font-size:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.toast{position:fixed;left:16px;right:16px;bottom:calc(86px + env(safe-area-inset-bottom));z-index:20;background:var(--ink);color:var(--bg);padding:12px 14px;border-radius:10px;text-align:center;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center}
+.stat b{display:block;font-size:20px}
+.stat span{font-size:11px;color:var(--muted)}
+#login{max-width:420px;margin:60px auto;padding:0 16px}
+.hidden{display:none!important}
+.gs{font-size:15px}.gs .meta{margin-top:2px}
+.voice{display:flex;gap:8px;align-items:center;margin:8px 0 6px}
+.voice button{display:flex;align-items:center;gap:8px;font-weight:600}
+.voice button svg{width:18px;height:18px}
+.voice button.rec{background:var(--red);color:#fff}
+.voice .meta{flex:1}
+.prompts{background:var(--chip);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--muted);margin:0 0 8px}
+.prompts ol{margin:4px 0 0;padding-left:18px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#fff;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+</style>
+</head>
+<body>
+
+<div id="login" class="hidden">
+  <h1 style="font-size:22px;margin:0 0 6px">TRB CRM</h1>
+  <p class="meta" style="margin:0 0 14px">Sign in with your CRM login.</p>
+  <label for="le">Email</label><input id="le" type="email" autocomplete="username" value="julien@camdenacquisitionhub.com">
+  <label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password">
+  <button class="primary" id="lbtn" style="width:100%;margin-top:16px">Sign in</button>
+  <p id="lerr" class="meta" style="color:var(--red);margin-top:10px"></p>
+  <button class="link" id="lforgot" type="button">Forgot password?</button>
+</div>
+
+<div id="reset" class="hidden" style="max-width:420px;margin:60px auto;padding:0 16px">
+  <h1 style="font-size:22px;margin:0 0 6px">Choose a new password</h1>
+  <p class="meta" style="margin:0 0 14px">At least 8 characters.</p>
+  <label for="np1">New password</label><input id="np1" type="password" autocomplete="new-password">
+  <label for="np2">Type it again</label><input id="np2" type="password" autocomplete="new-password">
+  <button class="primary" id="npbtn" style="width:100%;margin-top:16px">Save new password</button>
+  <button class="link" id="npcancel" type="button">Cancel</button>
+  <p id="nperr" class="meta" style="color:var(--red);margin-top:10px"></p>
+</div>
+
+<div id="app" class="hidden">
+  <header>
+    <div class="row"><h1 id="title">Today</h1><button class="small" id="refresh" aria-label="Refresh">Refresh</button></div>
+    <div id="searchwrap" style="margin-top:8px"><input id="q" type="search" placeholder="Search gyms, people, areas"></div>
+  </header>
+  <main id="view"></main>
+  <nav>
+    <button data-tab="today" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Today</button>
+    <button data-tab="visit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>To visit</button>
+    <button data-tab="add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Log visit</button>
+    <button data-tab="pipe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16l-6 7v6l-4 2v-8z"/></svg>Pipeline</button>
+  </nav>
+</div>
+
+<div class="sheet" id="sheet"></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+var SB = supabase.createClient('https://wsdimsprzievzfvkfmjb.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzZGltc3ByemlldnpmdmtmbWpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMDIwMjEsImV4cCI6MjEwNzU3ODAyMX0.t7vz_BBR-jb5rSSj3kNq5RVp0SQmDubvrWR68zuY05s', { auth: { persistSession: true, autoRefreshToken: true } });
+var TIPS_TOTAL = 14;
+var STAGES = [['to_visit','To visit'],['visited','Visited'],['nurturing','Nurturing'],['engaged','Engaged'],['call_booked','Call booked'],['trial','Trial'],['client','Client'],['out','Out']];
+var TIERS = [['3','Tier 3'],['2','Tier 2'],['1','Tier 1'],['client','Client'],['out','Out']];
+var CHANNELS = [['visit','Visit'],['call','Call'],['text','Text'],['email','Email'],['meeting','Meeting'],['note','Note']];
+var contacts = [], tab = 'today', current = null, showOut = false;
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function today(){ var d = new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function addDays(n){ var d = new Date(); d.setDate(d.getDate()+n); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function tipDay(d){ var t = today(); var x = new Date((d < t ? t : d)+'T12:00:00'); while (x.getDay() === 0 || x.getDay() === 6) x.setDate(x.getDate()+1); return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0'); }
+function nice(d){ if(!d) return ''; var x = new Date(d.length === 10 ? d+'T12:00:00' : d); return x.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}); }
+function ago(d){ if(!d) return ''; var days = Math.floor((Date.now() - new Date(d).getTime()) / 86400000);
+  if (days < 1) return 'today'; if (days < 2) return 'yesterday'; if (days < 14) return days+' days ago';
+  if (days < 60) return Math.round(days/7)+' weeks ago'; if (days < 365) return Math.round(days/30.4)+' months ago';
+  var y = Math.floor(days/365); return y+(y === 1 ? ' year ago' : ' years ago'); }
+function agoShort(d){ var a = ago(d); return a.replace(' months ago',' mo').replace(' weeks ago',' wk').replace(' days ago',' d').replace(' years ago',' yr').replace(' year ago',' yr'); }
+function statsHtml(c){
+  if (c.review_count == null) return c.place_id ? '<div class="meta">Checking Google…</div>' : '';
+  if (!c.review_count) return '<div class="gs"><b>No Google reviews yet</b></div>';
+  return '<div class="gs"><b>★ '+esc(Number(c.rating).toFixed(1))+'</b> · <b>'+esc(c.review_count)+'</b> Google reviews'
+    + (c.last_review_at ? '<div class="meta">Newest review: <b>'+esc(ago(c.last_review_at))+'</b>'+(new Date(c.last_review_at) < Date.now() - 90*86400000 ? ' <span class="chip due">quiet lately</span>' : '')+'</div>' : '')
+    + (c.stats_updated_at ? '<div class="meta" style="font-size:11px">Checked on Google '+esc(ago(c.stats_updated_at))+'</div>' : '') + '</div>';
+}
+async function refreshStats(c){
+  if (!c.place_id) return;
+  if (c.stats_updated_at && Date.now() - new Date(c.stats_updated_at).getTime() < 12*3600000) return;
+  try {
+    var r = await SB.functions.invoke('crm-place-stats', { body: { ids: [c.id] } });
+    var s = r.data && r.data.results && r.data.results[c.id];
+    if (s && !s.error) { c.rating = s.rating; c.review_count = s.review_count; c.last_review_at = s.last_review_at; c.stats_updated_at = s.stats_updated_at;
+      var el = $('s_stats'); if (el && current && current.id === c.id) el.innerHTML = statsHtml(c); }
+  } catch (e) {}
+}
+function niceTime(d){ var x = new Date(d); return x.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' '+x.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}); }
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(function(){ t.classList.remove('show'); }, 2200); }
+function label(list, v){ for (var i=0;i<list.length;i++) if (list[i][0] === v) return list[i][1]; return v; }
+function tierChip(c){ return '<span class="chip t'+esc(c.tier)+'">'+esc(label(TIERS,c.tier))+'</span>'; }
+
+// ---------- auth ----------
+var recovering = /type=recovery/.test(location.hash);
+function showReset(){ $('login').classList.add('hidden'); $('app').classList.add('hidden'); $('reset').classList.remove('hidden'); $('nperr').textContent = ''; $('np1').value = ''; $('np2').value = ''; }
+async function boot(){
+  if (recovering) { showReset(); return; }
+  $('reset').classList.add('hidden');
+  var s = await SB.auth.getSession();
+  if (s.data.session) { $('login').classList.add('hidden'); $('app').classList.remove('hidden'); await load(); }
+  else { $('app').classList.add('hidden'); $('login').classList.remove('hidden'); }
+}
+$('lbtn').onclick = async function(){
+  $('lerr').textContent = '';
+  var r = await SB.auth.signInWithPassword({ email: $('le').value.trim(), password: $('lp').value });
+  if (r.error) { $('lerr').textContent = r.error.message; return; }
+  boot();
+};
+$('lp').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('lbtn').click(); });
+$('lforgot').onclick = async function(){
+  var email = $('le').value.trim();
+  if (!email) { $('lerr').textContent = 'Type your email first.'; return; }
+  this.disabled = true;
+  var r = await SB.auth.resetPasswordForEmail(email, { redirectTo: 'https://tryreviewbloom.com/crm.html' });
+  this.disabled = false;
+  $('lerr').style.color = r.error ? 'var(--red)' : 'var(--green)';
+  $('lerr').textContent = r.error ? r.error.message : 'Check your inbox for a reset link. Open it on this phone.';
+};
+$('npbtn').onclick = async function(){
+  var a = $('np1').value, b = $('np2').value;
+  if (a.length < 8) { $('nperr').textContent = 'Use at least 8 characters.'; return; }
+  if (a !== b) { $('nperr').textContent = "The two passwords don't match."; return; }
+  this.disabled = true;
+  var r = await SB.auth.updateUser({ password: a });
+  this.disabled = false;
+  if (r.error) { $('nperr').textContent = r.error.message; return; }
+  recovering = false; history.replaceState(null, '', location.pathname); toast('Password changed'); boot();
+};
+$('npcancel').onclick = function(){ recovering = false; history.replaceState(null, '', location.pathname); boot(); };
+
+// ---------- data ----------
+async function load(){
+  var r = await SB.from('crm_contacts').select('*').order('business_name').limit(2000);
+  if (r.error) { $('view').innerHTML = '<div class="empty">Could not load: '+esc(r.error.message)+'</div>'; return; }
+  contacts = r.data;
+  if (!contacts.length) { $('view').innerHTML = '<div class="empty">No contacts visible. If you expected some, this login may not be on the CRM admin list.</div>'; return; }
+  render();
+}
+async function save(id, patch, msg){
+  var r = await SB.from('crm_contacts').update(patch).eq('id', id).select().single();
+  if (r.error) { toast('Not saved: '+r.error.message); return null; }
+  for (var i=0;i<contacts.length;i++) if (contacts[i].id === id) contacts[i] = r.data;
+  if (msg) toast(msg);
+  return r.data;
+}
+async function touch(id, channel, summary, direction){
+  return SB.from('crm_touches').insert({ contact_id: id, channel: channel, direction: direction || 'out', summary: summary });
+}
+
+// ---------- views ----------
+function matches(c, q){
+  if (!q) return true; q = q.toLowerCase();
+  return [c.business_name, c.contact_name, c.address, c.area, c.email, c.notes].join(' ').toLowerCase().indexOf(q) >= 0;
+}
+function card(c, extra){
+  var chips = tierChip(c) + '<span class="chip">'+esc(label(STAGES,c.stage))+'</span>';
+  if (c.review_count != null) chips += '<span class="chip">'+(c.rating ? esc(Number(c.rating).toFixed(1))+'★ · ' : '')+esc(c.review_count)+' reviews'+(c.last_review_at ? ' · last '+esc(agoShort(c.last_review_at)) : '')+'</span>';
+  if (c.consent_tips) chips += '<span class="chip ok">Tips '+(c.nurture_paused ? 'paused' : (c.nurture_step+'/'+TIPS_TOTAL))+'</span>';
+  if (c.unsubscribed_at) chips += '<span class="chip">Unsubscribed</span>';
+  if (c.next_action_on && c.next_action_on <= today()) chips += '<span class="chip due">Due '+esc(nice(c.next_action_on))+'</span>';
+  if (c.open_to_selling === 'maybe' || c.open_to_selling === 'yes') chips += '<span class="chip t1">Open to selling: '+esc(c.open_to_selling)+'</span>';
+  var place = (c.address || '').split(',').slice(-3, -1).join(',').trim() || c.area || '';
+  return '<div class="card tap" data-open="'+esc(c.id)+'"><div class="name">'+esc(c.business_name)+'</div>'
+    + '<div class="meta">'+esc(c.contact_name ? c.contact_name+(c.role ? ', '+c.role : '')+' · ' : '')+esc(place)+'</div>'
+    + (c.next_action ? '<div class="meta" style="color:var(--ink);margin-top:4px">Next: '+esc(c.next_action)+(c.next_action_on ? ' ('+esc(nice(c.next_action_on))+')' : '')+'</div>' : '')
+    + '<div class="chips">'+chips+'</div>' + (extra || '') + '</div>';
+}
+function render(){
+  stopVoice();
+  var q = $('q').value.trim();
+  $('searchwrap').classList.toggle('hidden', tab === 'add');
+  document.querySelectorAll('nav button').forEach(function(b){ b.classList.toggle('on', b.dataset.tab === tab); });
+  var v = $('view'), html = '';
+  if (q && tab !== 'add') {
+    $('title').textContent = 'Search';
+    var hits = contacts.filter(function(c){ return matches(c, q); });
+    html = hits.length ? hits.slice(0, 80).map(function(c){ return card(c); }).join('') : '<div class="empty">No match. Use Log visit to add a new gym.</div>';
+    v.innerHTML = html; return;
+  }
+  if (tab === 'today') {
+    $('title').textContent = 'Today';
+    var live = contacts.filter(function(c){ return c.tier !== 'out'; });
+    var due = live.filter(function(c){ return c.next_action_on && c.next_action_on <= today(); }).sort(function(a,b){ return a.next_action_on < b.next_action_on ? -1 : 1; });
+    var hot = live.filter(function(c){ return c.tier === '1'; });
+    var week = live.filter(function(c){ return c.consent_tips && !c.nurture_paused && c.next_tip_on && c.next_tip_on <= addDays(7); });
+    var n = function(t){ return live.filter(function(c){ return c.tier === t; }).length; };
+    html += '<div class="stats"><div class="stat"><b>'+n('3')+'</b><span>To visit</span></div><div class="stat"><b>'+n('2')+'</b><span>Nurturing</span></div><div class="stat"><b>'+n('1')+'</b><span>Hot</span></div><div class="stat"><b>'+n('client')+'</b><span>Clients</span></div></div>';
+    html += '<h2>Due now ('+due.length+')</h2>' + (due.length ? due.map(function(c){ return card(c); }).join('') : '<div class="empty">Nothing due. Go and visit a gym.</div>');
+    if (hot.length) html += '<h2>Tier 1: hot</h2>' + hot.map(function(c){ return card(c); }).join('');
+    html += '<h2>Tips going out in the next 7 days ('+week.length+')</h2>' + (week.length ? week.map(function(c){ return card(c, '<div class="meta" style="margin-top:6px">Next tip: '+esc(nice(tipDay(c.next_tip_on)))+'</div>'); }).join('') : '<div class="empty">None scheduled.</div>');
+  }
+  if (tab === 'visit') {
+    $('title').textContent = 'To visit';
+    var list = contacts.filter(function(c){ return c.tier === '3' && (c.stage === 'to_visit' || c.stage === 'visited'); })
+      .sort(function(a,b){ return (b.review_count||0) - (a.review_count||0); });
+    html = '<p class="meta" style="margin:0 0 10px">'+list.length+' independent gyms and studios from Google Maps, most reviewed first. Tap one after your tour to log it.</p>';
+    html += list.map(function(c){
+      var acts = '<div class="actions">'
+        + (c.google_maps ? '<a href="'+esc(c.google_maps)+'" target="_blank" rel="noopener" data-stop="1">Map</a>' : '')
+        + (c.phone ? '<a href="tel:'+esc(c.phone.replace(/\s/g,''))+'" data-stop="1">Call</a>' : '')
+        + (c.website ? '<a href="'+esc(c.website)+'" target="_blank" rel="noopener" data-stop="1">Website</a>' : '')
+        + '<button data-visit="'+esc(c.id)+'">Log visit</button></div>';
+      return card(c, acts);
+    }).join('');
+  }
+  if (tab === 'pipe') {
+    $('title').textContent = 'Pipeline';
+    [['1','Tier 1: hot (ready to talk, asked about help)'],['2','Tier 2: met, said yes to tips'],['client','Clients'],['out','Out']].forEach(function(g){
+      var l = contacts.filter(function(c){ return c.tier === g[0]; });
+      if (g[0] === 'out' && !l.length) return;
+      if (g[0] === 'out' && !showOut) { html += '<h2>Out and parked ('+l.length+')</h2><button id="showout" style="width:100%">Show them</button>'; return; }
+      html += '<h2>'+esc(g[0] === 'out' ? 'Out and parked' : g[1])+' ('+l.length+')</h2>' + (l.length ? l.map(function(c){ return card(c); }).join('') : '<div class="empty">None yet.</div>');
+    });
+    var visited3 = contacts.filter(function(c){ return c.tier === '3' && c.stage !== 'to_visit'; });
+    if (visited3.length) html += '<h2>Visited, no tips yet ('+visited3.length+')</h2>' + visited3.map(function(c){ return card(c); }).join('');
+    html += '<h2>Account</h2><div class="actions"><button id="a_pw">Change password</button><button id="a_out">Sign out</button></div>';
+  }
+  if (tab === 'add') { $('title').textContent = 'Log a visit'; html = visitForm(null); }
+  v.innerHTML = html;
+  if (tab === 'add') wireVisitForm(null);
+  if ($('showout')) $('showout').onclick = function(){ showOut = true; render(); };
+  if ($('a_pw')) $('a_pw').onclick = function(){ showReset(); };
+  if ($('a_out')) $('a_out').onclick = function(){ SB.auth.signOut(); };
+}
+
+// ---------- log visit (new gym, or an existing one from the list) ----------
+function visitForm(c){
+  c = c || {};
+  return '<div class="card">'
+    + (c.id ? '<div class="name">'+esc(c.business_name)+'</div><div class="meta">'+esc(c.address || '')+'</div>' : '<label for="v_bn">Gym or studio name</label><input id="v_bn" list="v_names" autocomplete="off"><datalist id="v_names">'+contacts.slice(0,400).map(function(x){ return '<option value="'+esc(x.business_name)+'">'; }).join('')+'</datalist><p class="meta" id="v_match" style="margin:6px 0 0"></p>')
+    + '<div class="grid2"><div><label for="v_cn">Person you met</label><input id="v_cn" value="'+esc(c.contact_name||'')+'" autocomplete="off"></div><div><label for="v_role">Role</label><input id="v_role" value="'+esc(c.role||'')+'" placeholder="Owner, manager" autocomplete="off"></div></div>'
+    + '<label for="v_em">Email</label><input id="v_em" type="email" value="'+esc(c.email||'')+'" autocomplete="off" inputmode="email">'
+    + '<label for="v_ph">Phone</label><input id="v_ph" type="tel" value="'+esc(c.phone||'')+'" autocomplete="off">'
+    + '<label class="check" for="v_consent"><input type="checkbox" id="v_consent"'+(c.consent_tips ? ' checked' : '')+'><span><b>They said yes to free tips by email.</b><br>Only tick this if they agreed in person. Weekly for 8 weeks, then monthly. The first one goes out on the next weekday morning.</span></label>'
+    + '<label for="v_notes">What did you learn?</label>'
+    + '<div class="prompts">Straight after the visit, talk for a minute about:<ol><li>Who you met and their role</li><li>What they care about, in their words</li><li>Any worries or objections</li><li>Tips by email: yes or no</li><li>Next step, and when</li></ol></div>'
+    + voiceBar('v')
+    + '<textarea id="v_notes" style="min-height:140px" placeholder="Speak with Voice note, or type here">'+esc(draftGet(c.id))+'</textarea>'
+    + '<label for="v_sell">Open to selling one day?</label><select id="v_sell">'+[['unknown','Not discussed'],['no','No'],['maybe','Maybe'],['yes','Yes']].map(function(o){ return '<option value="'+o[0]+'"'+((c.open_to_selling||'unknown')===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select>'
+    + '<label for="v_next">Next step (optional)</label><input id="v_next" placeholder="e.g. Drop in after the Saturday open mat" value="'+esc(c.next_action||'')+'">'
+    + '<label for="v_nextd">Next step date</label><input id="v_nextd" type="date" value="'+esc(c.next_action_on||'')+'">'
+    + '<button class="primary" id="v_save" style="width:100%;margin-top:16px">Save visit</button></div>';
+}
+// ---------- voice note (speech to text in the browser; no audio is stored) ----------
+// Each notes box gets its own Voice note + Clear bar via voiceBar(prefix) and wireVoice(prefix, textareaId, draftName, keepOriginal).
+function draftKey(name){ return 'crm_visit_draft_' + name; }
+function draftGet(id){ try { return localStorage.getItem(draftKey(id || 'new')) || ''; } catch (e) { return ''; } }
+function draftSave(name, v){ if (!name) return; try { if (v) localStorage.setItem(draftKey(name), v); else localStorage.removeItem(draftKey(name)); } catch (e) {} }
+function draftSet(id, v){ draftSave(id || 'new', v); }
+var rec = null, recOn = false, recStopUi = null;
+// Hard stop (saving, clearing, leaving the page): detach handlers so nothing is written back afterwards.
+function stopVoice(){ recOn = false; if (rec) { var r = rec; rec = null; r.onresult = r.onend = r.onerror = null; try { r.abort ? r.abort() : r.stop(); } catch (e) {} } if (recStopUi) recStopUi(); }
+var MIC_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>';
+var VOICE_IDLE = 'Speak; your words are typed below. No audio is kept.';
+function voiceBar(p){
+  return '<div class="voice"><button type="button" id="'+p+'_mic">'+MIC_SVG+'<span>Voice note</span></button><button type="button" class="small" id="'+p+'_clear">Clear</button><span class="meta" id="'+p+'_msg">'+VOICE_IDLE+'</span></div>';
+}
+function wireVoice(p, taId, draftName, keepOriginal){
+  var btn = $(p+'_mic'), msg = $(p+'_msg'), ta = $(taId), clr = $(p+'_clear');
+  if (!btn || !ta) return;
+  var original = keepOriginal ? ta.value : '';
+  var base = ta.value;
+  ta.addEventListener('input', function(){ base = ta.value; draftSave(draftName, ta.value); });
+  clr.onclick = function(){
+    if (ta.value === original) return;
+    if (!confirm(keepOriginal ? 'Remove what you\'ve added since opening? Your saved notes stay.' : 'Clear this and start again?')) return;
+    if (recOn) stopVoice();
+    base = original; ta.value = original; draftSave(draftName, '');
+    ta.focus();
+  };
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    btn.disabled = true;
+    msg.textContent = 'Voice note isn\'t available in this browser. Tap the box, then the microphone on your keyboard to dictate.';
+    return;
+  }
+  function setUi(on){
+    btn.classList.toggle('rec', on);
+    btn.querySelector('span').innerHTML = on ? '<i class="dot"></i> Stop' : 'Voice note';
+    msg.textContent = on ? 'Listening… tap Stop when you\'re done.' : VOICE_IDLE;
+  }
+  btn.onclick = function(){
+    if (recOn) { recOn = false; try { rec.stop(); } catch (e) {} return; }  // soft stop: the last words still arrive, then onend resets the button
+    stopVoice();  // only one box listens at a time
+    var r = new SR(); rec = r;
+    r.lang = 'en-GB'; r.continuous = true; r.interimResults = true;
+    base = ta.value;
+    r.onresult = function(ev){
+      var finals = '', interim = '';
+      for (var i = ev.resultIndex; i < ev.results.length; i++) {
+        var t = ev.results[i][0].transcript;
+        if (ev.results[i].isFinal) finals += t; else interim += t;
+      }
+      if (finals) { base = (base.trim() ? base.replace(/\s+$/, '') + (/[.!?]$/.test(base.trim()) ? ' ' : '. ') : '') + finals.trim().replace(/^./, function(x){ return x.toUpperCase(); }); draftSave(draftName, base); }
+      ta.value = base + (interim ? (base ? ' ' : '') + interim : '');
+    };
+    r.onerror = function(ev){
+      if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') { recOn = false; setUi(false); msg.textContent = 'Microphone blocked. Allow it for this site in your browser settings, or use the keyboard microphone.'; }
+      else if (ev.error === 'network') { recOn = false; setUi(false); msg.textContent = 'Voice note needs signal. Use the keyboard microphone, or try again when you have signal.'; }
+    };
+    r.onend = function(){
+      ta.value = base; draftSave(draftName, base);
+      if (recOn && rec === r) { try { r.start(); } catch (e) { recOn = false; setUi(false); } }  // phones stop after a pause; keep going until Stop
+      else { if (rec === r) rec = null; recStopUi = null; setUi(false); }
+    };
+    try { r.start(); recOn = true; recStopUi = function(){ setUi(false); recStopUi = null; }; setUi(true); } catch (e) { msg.textContent = 'Couldn\'t start the microphone: ' + e.message; }
+  };
+}
+
+function wireVisitForm(c){
+  wireVoice('v', 'v_notes', (c && c.id) || 'new', false);
+  var bn = $('v_bn');
+  if (bn) bn.addEventListener('input', function(){
+    var m = contacts.find(function(x){ return x.business_name.toLowerCase() === bn.value.trim().toLowerCase(); });
+    $('v_match').textContent = m ? 'Already in the CRM: this visit will be added to it.' : '';
+  });
+  $('v_save').onclick = async function(){
+    var btn = this; btn.disabled = true; stopVoice();
+    try {
+      var email = $('v_em').value.trim(), consent = $('v_consent').checked;
+      if (consent && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { toast('Add their email to send tips'); btn.disabled = false; return; }
+      var target = c;
+      if (!target) {
+        var name = bn.value.trim(); if (!name) { toast('Add the gym name'); btn.disabled = false; return; }
+        target = contacts.find(function(x){ return x.business_name.toLowerCase() === name.toLowerCase(); });
+        if (!target) {
+          var ins = await SB.from('crm_contacts').insert({ business_name: name, area: 'Milton Keynes', source: 'visit', tier: '3', stage: 'visited' }).select().single();
+          if (ins.error) { toast('Not saved: '+ins.error.message); btn.disabled = false; return; }
+          contacts.push(ins.data); target = ins.data;
+        }
+      }
+      var patch = { contact_name: $('v_cn').value.trim() || null, role: $('v_role').value.trim() || null, email: email || null, phone: $('v_ph').value.trim() || target.phone || null,
+        open_to_selling: $('v_sell').value, next_action: $('v_next').value.trim() || null, next_action_on: $('v_nextd').value || null };
+      if (target.stage === 'to_visit') patch.stage = 'visited';
+      if (consent && !target.consent_tips) { patch.consent_tips = true; patch.consent_method = 'in_person'; }
+      var notes = $('v_notes').value.trim(), newConsent = consent && !target.consent_tips;
+      var saved = await save(target.id, patch);
+      if (!saved) { btn.disabled = false; return; }
+      await touch(target.id, 'visit', 'Visited' + (patch.contact_name ? ', met '+patch.contact_name : '') + (newConsent ? '. Said yes to free tips in person.' : '') + (notes ? '\n'+notes : ''));
+      draftSet(c && c.id, ''); toast(newConsent ? 'Saved. Tips start next weekday.' : 'Visit saved');
+      if ($('sheet').classList.contains('open')) history.back(); closeSheet(); tab = 'today'; $('q').value = ''; render();
+    } catch (e) { toast('Error: '+e.message); btn.disabled = false; }
+  };
+}
+
+// ---------- contact sheet ----------
+async function openContact(id, replace){
+  current = contacts.find(function(c){ return c.id === id; }); if (!current) return;
+  var c = current, s = $('sheet');
+  var nurture = c.unsubscribed_at ? 'Unsubscribed on '+nice(c.unsubscribed_at)
+    : c.consent_tips ? (c.nurture_paused ? 'Paused' : 'Sent '+c.nurture_step+' of '+TIPS_TOTAL+(c.next_tip_on ? ' · next on '+nice(tipDay(c.next_tip_on)) : ''))
+    : 'Not receiving tips';
+  s.innerHTML = '<header><button class="small" id="s_back">Back</button><h1 style="font-size:17px;margin:0;flex:1">'+esc(c.business_name)+'</h1></header><main>'
+    + '<div class="card"><div class="meta">'+esc(c.address || c.area || '')+'</div><div id="s_stats" style="margin-top:8px">'+statsHtml(c)+'</div>'
+    + '<div class="actions">'+(c.phone ? '<a href="tel:'+esc(c.phone.replace(/\s/g,''))+'">Call</a>' : '')+(c.email ? '<a href="mailto:'+esc(c.email)+'">Email</a>' : '')+(c.google_maps ? '<a href="'+esc(c.google_maps)+'" target="_blank" rel="noopener">Map</a>' : '')+(c.website ? '<a href="'+esc(c.website)+'" target="_blank" rel="noopener">Website</a>' : '')+'</div></div>'
+    + (c.stage === 'to_visit' ? '<button class="primary" id="s_visit" style="width:100%;margin-bottom:10px">Log visit</button>' : '')
+    + '<h2>Tier</h2><div class="seg" id="s_tier">'+TIERS.map(function(t){ return '<button data-v="'+t[0]+'" class="'+(c.tier===t[0]?'on':'')+'">'+esc(t[1])+'</button>'; }).join('')+'</div>'
+    + '<label for="s_stage">Stage</label><select id="s_stage">'+STAGES.map(function(t){ return '<option value="'+t[0]+'"'+(c.stage===t[0]?' selected':'')+'>'+esc(t[1])+'</option>'; }).join('')+'</select>'
+    + '<h2>Free tips</h2><div class="card"><div>'+esc(nurture)+'</div><div class="actions">'
+    + (c.unsubscribed_at ? '' : c.consent_tips ? '<button id="s_pause">'+(c.nurture_paused ? 'Resume tips' : 'Pause tips')+'</button>' : '<button id="s_consent">They said yes to tips</button>')
+    + '</div></div>'
+    + '<h2>Next step</h2><input id="s_next" value="'+esc(c.next_action||'')+'" placeholder="What happens next?"><div class="grid2" style="margin-top:8px"><input id="s_nextd" type="date" value="'+esc(c.next_action_on||'')+'"><button id="s_nextsave">Save next step</button></div>'
+    + '<h2>Log something</h2><div class="seg" id="s_ch">'+CHANNELS.map(function(t,i){ return '<button data-v="'+t[0]+'" class="'+(i===5?'on':'')+'">'+esc(t[1])+'</button>'; }).join('')+'</div>'
+    + voiceBar('s')
+    + '<textarea id="s_sum" placeholder="What happened? e.g. They replied asking how the texts work"></textarea>'
+    + '<label class="check" for="s_in" style="margin-top:8px"><input type="checkbox" id="s_in"><span>They contacted me (inbound)</span></label>'
+    + '<button class="primary" id="s_log" style="width:100%;margin-top:10px">Add to timeline</button>'
+    + '<h2>Details</h2><div class="card">'
+    + '<div class="grid2"><div><label for="d_cn">Contact</label><input id="d_cn" value="'+esc(c.contact_name||'')+'"></div><div><label for="d_role">Role</label><input id="d_role" value="'+esc(c.role||'')+'"></div></div>'
+    + '<label for="d_em">Email</label><input id="d_em" type="email" value="'+esc(c.email||'')+'">'
+    + '<label for="d_ph">Phone</label><input id="d_ph" type="tel" value="'+esc(c.phone||'')+'">'
+    + '<label for="d_sell">Open to selling one day?</label><select id="d_sell">'+[['unknown','Not discussed'],['no','No'],['maybe','Maybe'],['yes','Yes']].map(function(o){ return '<option value="'+o[0]+'"'+(c.open_to_selling===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select>'
+    + '<label for="d_notes">Notes</label>' + voiceBar('d') + '<textarea id="d_notes" style="min-height:140px">'+esc(c.notes||'')+'</textarea>'
+    + '<button id="d_save" style="width:100%;margin-top:12px">Save details</button></div>'
+    + '<h2>Timeline</h2><div class="tl" id="s_tl"><div class="meta">Loading...</div></div>'
+    + '</main>';
+  var wasOpen = s.classList.contains('open'); s.classList.add('open'); if (!replace) s.scrollTop = 0; if (!wasOpen) history.pushState({ sheet: 1 }, '');
+  wireSheet(c); loadTimeline(c.id); refreshStats(c);
+}
+async function loadTimeline(id){
+  var r = await SB.from('crm_touches').select('*').eq('contact_id', id).order('at', { ascending: false }).limit(100);
+  var el = $('s_tl'); if (!el) return;
+  if (r.error) { el.innerHTML = '<div class="meta">'+esc(r.error.message)+'</div>'; return; }
+  el.innerHTML = r.data.length ? r.data.map(function(t){
+    return '<div class="item"><div class="when">'+esc(niceTime(t.at))+' · '+esc(t.channel === 'tip' ? 'Tip sent' : label(CHANNELS, t.channel))+(t.direction === 'in' ? ' · from them' : '')+'</div><div style="white-space:pre-wrap">'+esc(t.summary||'')+'</div></div>';
+  }).join('') : '<div class="meta">Nothing yet.</div>';
+}
+function wireSheet(c){
+  $('s_sum').value = draftGet('log_' + c.id);
+  wireVoice('s', 's_sum', 'log_' + c.id, false);
+  wireVoice('d', 'd_notes', null, true);
+  $('s_back').onclick = function(){ history.back(); };
+  if ($('s_visit')) $('s_visit').onclick = function(){
+    $('sheet').innerHTML = '<header><button class="small" id="s_back2">Back</button><h1 style="font-size:17px;margin:0;flex:1">Log visit</h1></header><main>'+visitForm(c)+'</main>';
+    $('s_back2').onclick = function(){ openContactReplace(c.id); };
+    wireVisitForm(c);
+  };
+  document.querySelectorAll('#s_tier button').forEach(function(b){ b.onclick = async function(){
+    var t = b.dataset.v, patch = { tier: t };
+    if (t === 'client') patch.stage = 'client';
+    if (t === 'out') patch.stage = 'out';
+    if (t === '1' && ['to_visit','visited','nurturing'].indexOf(c.stage) >= 0) patch.stage = 'engaged';
+    var d = await save(c.id, patch, 'Moved to '+label(TIERS, t));
+    if (d) { await touch(c.id, 'note', 'Moved to '+label(TIERS, t)); openContactReplace(c.id); }
+  }; });
+  $('s_stage').onchange = async function(){ var d = await save(c.id, { stage: this.value }, 'Stage saved'); if (d) openContactReplace(c.id); };
+  if ($('s_pause')) $('s_pause').onclick = async function(){
+    var p = !c.nurture_paused; var d = await save(c.id, { nurture_paused: p }, p ? 'Tips paused' : 'Tips resumed');
+    if (d) { await touch(c.id, 'note', p ? 'Paused tips' : 'Resumed tips'); openContactReplace(c.id); }
+  };
+  if ($('s_consent')) $('s_consent').onclick = async function(){
+    var email = ($('d_em').value || '').trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { toast('Add their email in Details first'); return; }
+    if (!confirm('Confirm they agreed in person to free tips by email?')) return;
+    var d = await save(c.id, { email: email, consent_tips: true, consent_method: 'in_person' }, 'Tips start next weekday');
+    if (d) { await touch(c.id, 'note', 'Said yes to free tips (in person)'); openContactReplace(c.id); }
+  };
+  $('s_nextsave').onclick = async function(){ await save(c.id, { next_action: $('s_next').value.trim() || null, next_action_on: $('s_nextd').value || null }, 'Next step saved'); };
+  var ch = 'note';
+  document.querySelectorAll('#s_ch button').forEach(function(b){ b.onclick = function(){ ch = b.dataset.v; document.querySelectorAll('#s_ch button').forEach(function(x){ x.classList.toggle('on', x === b); }); }; });
+  $('s_log').onclick = async function(){
+    stopVoice();
+    var sum = $('s_sum').value.trim(); if (!sum) { toast('Write what happened'); return; }
+    var r = await touch(c.id, ch, sum, $('s_in').checked ? 'in' : 'out');
+    if (r.error) { toast('Not saved: '+r.error.message); return; }
+    stopVoice(); $('s_sum').value = ''; draftSave('log_' + c.id, ''); $('s_in').checked = false; toast('Added'); loadTimeline(c.id);
+  };
+  $('d_save').onclick = async function(){
+    stopVoice();
+    await save(c.id, { contact_name: $('d_cn').value.trim() || null, role: $('d_role').value.trim() || null, email: $('d_em').value.trim() || null, phone: $('d_ph').value.trim() || null, open_to_selling: $('d_sell').value, notes: $('d_notes').value.trim() || null }, 'Details saved');
+  };
+}
+function openContactReplace(id){ openContact(id, true); }
+function closeSheet(){ stopVoice(); $('sheet').classList.remove('open'); }
+window.addEventListener('popstate', function(){ if ($('sheet').classList.contains('open')) { closeSheet(); render(); } });
+
+// ---------- wiring ----------
+document.querySelectorAll('nav button').forEach(function(b){ b.onclick = function(){ tab = b.dataset.tab; if (tab === 'add') $('q').value = ''; render(); window.scrollTo(0,0); }; });
+$('q').addEventListener('input', render);
+$('refresh').onclick = function(){ load().then(function(){ toast('Up to date'); }); };
+$('view').addEventListener('click', function(e){
+  if (e.target.closest('[data-stop]')) return;
+  var v = e.target.closest('[data-visit]');
+  if (v) { e.stopPropagation(); openContact(v.dataset.visit).then(function(){ if ($('s_visit')) $('s_visit').click(); }); return; }
+  var o = e.target.closest('[data-open]'); if (o) openContact(o.dataset.open);
+});
+SB.auth.onAuthStateChange(function(ev){ if (ev === 'PASSWORD_RECOVERY') { recovering = true; showReset(); } else if (ev === 'SIGNED_OUT') boot(); });
+boot();
+</script>
+</body>
+</html>
