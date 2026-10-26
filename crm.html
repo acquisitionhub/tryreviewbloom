@@ -49,6 +49,12 @@ h2{font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:var(--mute
 .sheet header{display:flex;align-items:center;gap:10px}
 .tl{border-left:2px solid var(--line);margin-left:6px;padding-left:12px}
 .tl .item{margin-bottom:10px}
+.tl .item img{display:block;max-width:100%;max-height:260px;border-radius:10px;border:1px solid var(--line);margin-top:6px;cursor:zoom-in}
+.photo-row{display:flex;gap:8px;align-items:center;margin:8px 0 0;flex-wrap:wrap}
+.photo-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;font-weight:600;font-size:14px;cursor:pointer}
+.photo-prev{display:block;max-width:100%;max-height:200px;border-radius:10px;margin-top:8px;border:1px solid var(--line)}
+#img_view{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px}
+#img_view img{max-width:100%;max-height:100%;border-radius:8px}
 .tl .when{font-size:12px;color:var(--muted)}
 .check{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:12px}
 .check input{width:22px;height:22px;flex:0 0 auto;margin:1px 0 0}
@@ -471,6 +477,8 @@ async function openContact(id, replace){
     + '<h2>Log something</h2><p class="meta" style="margin:-2px 0 6px">1. Choose the type&nbsp;&nbsp;2. Write or speak&nbsp;&nbsp;3. Tap Save to timeline</p><div class="seg" id="s_ch">'+CHANNELS.map(function(t,i){ return '<button data-v="'+t[0]+'" class="'+(i===5?'on':'')+'">'+esc(t[1])+'</button>'; }).join('')+'</div>'
     + voiceBar('s')
     + '<textarea id="s_sum" placeholder="What happened? e.g. They replied asking how the texts work"></textarea>'
+    + '<div class="photo-row"><label class="photo-btn" for="s_photo">📷 Add photo</label><input type="file" id="s_photo" accept="image/*" hidden><span class="meta" id="s_photo_name">Screenshot, flyer, door sign…</span><button type="button" class="small" id="s_photo_clear" hidden>Remove</button></div>'
+    + '<img id="s_photo_prev" class="photo-prev" alt="" hidden>'
     + '<label class="check" for="s_in" style="margin-top:8px"><input type="checkbox" id="s_in"><span>They contacted me (inbound)</span></label>'
     + '<button class="primary" id="s_log" style="width:100%;margin-top:10px">Save to timeline</button>'
     + '<h2>Details</h2><div class="card">'
@@ -491,8 +499,42 @@ async function loadTimeline(id){
   var el = $('s_tl'); if (!el) return;
   if (r.error) { el.innerHTML = '<div class="meta">'+esc(r.error.message)+'</div>'; return; }
   el.innerHTML = r.data.length ? r.data.map(function(t){
-    return '<div class="item"><div class="when">'+esc(niceTime(t.at))+' · '+esc(t.channel === 'tip' ? 'Tip sent' : label(CHANNELS, t.channel))+(t.direction === 'in' ? ' · from them' : '')+'</div><div style="white-space:pre-wrap">'+esc(t.summary||'')+'</div></div>';
+    return '<div class="item"><div class="when">'+esc(niceTime(t.at))+' · '+esc(t.channel === 'tip' ? 'Tip sent' : label(CHANNELS, t.channel))+(t.direction === 'in' ? ' · from them' : '')+'</div><div style="white-space:pre-wrap">'+esc(t.summary||'')+'</div>'
+      + (t.image_path ? '<img data-path="'+esc(t.image_path)+'" alt="Photo">' : '') + '</div>';
   }).join('') : '<div class="meta">Nothing yet.</div>';
+  // Photos are private: fetch short-lived signed links for the ones on screen.
+  var imgs = el.querySelectorAll('img[data-path]');
+  if (imgs.length) {
+    var paths = [].map.call(imgs, function(i){ return i.dataset.path; });
+    var s = await SB.storage.from('crm-images').createSignedUrls(paths, 3600);
+    (s.data || []).forEach(function(x, k){ if (x.signedUrl) { imgs[k].src = x.signedUrl; imgs[k].onclick = function(){ viewImage(x.signedUrl); }; } });
+  }
+}
+function viewImage(src){
+  var d = document.createElement('div'); d.id = 'img_view'; d.innerHTML = '<img alt="Photo">'; d.firstChild.src = src;
+  d.onclick = function(){ d.remove(); }; document.body.appendChild(d);
+}
+// Shrink phone photos before upload (max 1600px, JPEG) so they're quick on mobile data.
+function shrinkImage(file){
+  return new Promise(function(resolve, reject){
+    var url = URL.createObjectURL(file), img = new Image();
+    img.onload = function(){
+      var k = Math.min(1, 1600 / Math.max(img.width, img.height)), cv = document.createElement('canvas');
+      cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      URL.revokeObjectURL(url);
+      cv.toBlob(function(b){ b ? resolve(b) : reject(new Error('Could not read the photo')); }, 'image/jpeg', 0.82);
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); reject(new Error('Could not read the photo')); };
+    img.src = url;
+  });
+}
+async function uploadImage(contactId, file){
+  var blob = await shrinkImage(file);
+  var path = contactId + '/' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.jpg';
+  var r = await SB.storage.from('crm-images').upload(path, blob, { contentType: 'image/jpeg', upsert: false });
+  if (r.error) throw r.error;
+  return path;
 }
 function wireSheet(c){
   $('s_sum').value = draftGet('log_' + c.id);
@@ -528,11 +570,29 @@ function wireSheet(c){
   $('s_nextsave').onclick = async function(){ await save(c.id, { next_action: $('s_next').value.trim() || null, next_action_on: $('s_nextd').value || null }, 'Next step saved'); };
   var ch = 'note';
   document.querySelectorAll('#s_ch button').forEach(function(b){ b.onclick = function(){ ch = b.dataset.v; document.querySelectorAll('#s_ch button').forEach(function(x){ x.classList.toggle('on', x === b); }); }; });
+  var photo = null;
+  $('s_photo').onchange = function(){
+    photo = this.files && this.files[0] || null;
+    $('s_photo_name').textContent = photo ? photo.name : 'Screenshot, flyer, door sign…';
+    $('s_photo_clear').hidden = !photo;
+    var pv = $('s_photo_prev'); if (photo) { pv.src = URL.createObjectURL(photo); pv.hidden = false; } else { pv.hidden = true; pv.removeAttribute('src'); }
+  };
+  $('s_photo_clear').onclick = function(){ $('s_photo').value = ''; $('s_photo').onchange(); };
   $('s_log').onclick = async function(){
     stopVoice();
-    var sum = $('s_sum').value.trim(); if (!sum) { toast('Write what happened'); return; }
-    var r = await touch(c.id, ch, sum, $('s_in').checked ? 'in' : 'out');
+    var sum = $('s_sum').value.trim();
+    if (!sum && photo) sum = 'Photo';
+    if (!sum) { toast('Write what happened'); return; }
+    var btn = this; btn.disabled = true;
+    var imagePath = null;
+    if (photo) {
+      try { toast('Uploading photo…'); imagePath = await uploadImage(c.id, photo); }
+      catch (e) { toast('Photo not saved: ' + (e.message || e)); btn.disabled = false; return; }
+    }
+    var r = await SB.from('crm_touches').insert({ contact_id: c.id, channel: ch, direction: $('s_in').checked ? 'in' : 'out', summary: sum, image_path: imagePath });
+    btn.disabled = false;
     if (r.error) { toast('Not saved: '+r.error.message); return; }
+    if (photo) { $('s_photo').value = ''; $('s_photo').onchange(); }
     var inbound = $('s_in').checked;
     stopVoice(); $('s_sum').value = ''; draftSave('log_' + c.id, ''); $('s_in').checked = false;
     // Auto: an outgoing visit, meeting, call, text or email on a gym that's due today moves it off today's list.
