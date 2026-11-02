@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Unsubscribe from texts</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; font-family: system-ui, -apple-system, Segoe UI, Arial, sans-serif; background: #F6F8F5; color: #16211B; }
+  .box { max-width: 420px; padding: 28px 24px; text-align: center; }
+  h1 { font-size: 22px; margin: 0 0 10px; }
+  p { font-size: 16px; line-height: 1.5; color: #3d4a42; margin: 0 0 18px; }
+  button { font: inherit; font-size: 16px; padding: 12px 22px; border-radius: 8px; border: 0; background: #2E7D4F; color: #fff; cursor: pointer; }
+  button.ghost { background: transparent; color: #2E7D4F; border: 1px solid #2E7D4F; }
+  .small { font-size: 13px; color: #6b6558; margin-top: 18px; }
+</style>
+</head>
+<body>
+  <div class="box">
+    <h1 id="title">Unsubscribe from texts</h1>
+    <p id="msg">Loading…</p>
+    <button id="btn" hidden>Unsubscribe</button>
+    <p class="small">Messages sent on behalf of a local business by Try Review Bloom.</p>
+  </div>
+<script>
+  (function () {
+    var API = "https://wvuaqdoijqdyxncpviet.supabase.co/functions/v1/sms-opt-out";
+    var c = (new URLSearchParams(location.search).get("c") || "").replace(/[^a-f0-9]/gi, "");
+    var msg = document.getElementById("msg"), btn = document.getElementById("btn"), title = document.getElementById("title");
+    var biz = "this business", out = false;
+    function show() {
+      if (out) {
+        title.textContent = "You're unsubscribed";
+        msg.textContent = "You won't receive any more texts from " + biz + ".";
+        btn.textContent = "Undo"; btn.className = "ghost";
+      } else {
+        title.textContent = "Unsubscribe from texts";
+        msg.textContent = "Stop review texts from " + biz + "?";
+        btn.textContent = "Unsubscribe"; btn.className = "";
+      }
+      btn.hidden = false;
+    }
+    if (!c) { msg.textContent = "This link isn't valid."; return; }
+    fetch(API + "?c=" + encodeURIComponent(c)).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.error) { msg.textContent = d.error; return; }
+      biz = d.business || biz; out = !!d.opted_out; show();
+    }).catch(function () { msg.textContent = "Something went wrong. Please try again later."; });
+    btn.onclick = function () {
+      btn.disabled = true;
+      fetch(API, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c: c, undo: out }) })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { btn.disabled = false; if (d.error) { msg.textContent = d.error; return; } out = !!d.opted_out; show(); })
+        .catch(function () { btn.disabled = false; msg.textContent = "Something went wrong. Please try again."; });
+    };
+  })();
+</script>
+</body>
+</html>
