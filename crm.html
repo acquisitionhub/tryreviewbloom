@@ -114,6 +114,7 @@ h2{font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:var(--mute
     <button data-tab="today" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Today</button>
     <button data-tab="visit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>To visit</button>
     <button data-tab="add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Log visit</button>
+    <button data-tab="pains"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v4M12 14h.01"/></svg>Pains</button>
     <button data-tab="pipe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16l-6 7v6l-4 2v-8z"/></svg>Pipeline</button>
   </nav>
 </div>
@@ -131,6 +132,70 @@ var PLATFORMS = ['TeamUp','PTminder','Glofox','ClubRight','Mindbody','Gymcatch',
 function platformField(id, val){ return '<label for="'+id+'">Booking software</label><input id="'+id+'" list="'+id+'_l" value="'+esc(val||'')+'" placeholder="e.g. TeamUp, PTminder, Glofox" autocomplete="off"><datalist id="'+id+'_l">'+PLATFORMS.map(function(x){ return '<option value="'+esc(x)+'">'; }).join('')+'</datalist>'; }
 var CHANNELS = [['visit','Visit'],['call','Call'],['text','Text'],['email','Email'],['meeting','Meeting'],['note','Note']];
 var contacts = [], tab = 'today', current = null, showOut = false;
+
+// ---------- pains heard (discovery) ----------
+var PAIN_THEMES = ['Getting new members','Keeping members / people leaving','Admin eating my time','Payments / failed payments','Bookings, no-shows, cancellations','Software too dear or too complicated','Staff and coaches','Rent, energy and costs','Marketing and social media','Reviews and reputation','Other'];
+var GROUPS = [['studio','Class studio'],['coached','Coached group'],['pt','1:1 / PT'],['kids','Martial arts & kids'],['niche','Niche (running, swim…)']];
+var GROUP_HINT = 'Studio: yoga, Pilates, barre, spin, dance · Coached: CrossFit, bootcamp, S&C, functional · 1:1: PT, weight loss · Kids: martial arts, ninja, parkour';
+var pains = [], painGroup = 'all';
+async function loadPains(){
+  try { var r = await SB.from('crm_pains').select('*').order('at', { ascending: false }).limit(3000); pains = r.error ? [] : (r.data || []); } catch (e) { pains = []; }
+}
+function lastGroup(contactId){ var p = pains.find(function(x){ return x.contact_id === contactId && x.gym_group; }); return p ? p.gym_group : ''; }
+function painFields(p, contactId){
+  var g = contactId ? lastGroup(contactId) : '';
+  return '<label for="'+p+'_quote">Their words, as close as you can</label><textarea id="'+p+'_quote" style="min-height:70px" placeholder="e.g. &quot;I spend Sunday night chasing failed payments&quot;"></textarea>'
+    + '<div class="grid2"><div><label for="'+p+'_theme">What it\'s about</label><select id="'+p+'_theme"><option value="">Choose…</option>'+PAIN_THEMES.map(function(t){ return '<option>'+esc(t)+'</option>'; }).join('')+'</select></div>'
+    + '<div><label for="'+p+'_group">Type of gym</label><select id="'+p+'_group"><option value="">Choose…</option>'+GROUPS.map(function(o){ return '<option value="'+o[0]+'"'+(g===o[0]?' selected':'')+'>'+esc(o[1])+'</option>'; }).join('')+'</select></div></div>'
+    + '<p class="meta" style="margin:4px 0 0;font-size:12px">'+esc(GROUP_HINT)+'</p>'
+    + '<label for="'+p+'_level">How much it bothers them</label><select id="'+p+'_level"><option value="">Choose…</option><option value="1">1 · Mentioned it, shrugged</option><option value="2">2 · Mild annoyance</option><option value="3">3 · Clearly annoyed</option><option value="4">4 · Big problem, came back to it</option><option value="5">5 · Keeps them up at night</option></select>'
+    + '<label class="check" for="'+p+'_paying"><input type="checkbox" id="'+p+'_paying"><span>Already spending money or time to fix it (software, staff, spreadsheets, notebooks)</span></label>'
+    + '<label class="check" for="'+p+'_would"><input type="checkbox" id="'+p+'_would"><span>Said they\'d pay for, or switch to, something that fixed it</span></label>';
+}
+// Returns a row to insert, null if the quote is empty, or false if something required is missing.
+function readPain(p, contactId, source){
+  var q = ($(p+'_quote') || {}).value; q = (q || '').trim();
+  if (!q) return null;
+  if (!$(p+'_theme').value) { toast('Choose what the pain is about'); return false; }
+  return { contact_id: contactId || null, quote: q, theme: $(p+'_theme').value, gym_group: $(p+'_group').value || null,
+    level: $(p+'_level').value ? Number($(p+'_level').value) : null, paying_now: $(p+'_paying').checked, would_pay: $(p+'_would').checked, source: source };
+}
+async function savePain(row){
+  var r = await SB.from('crm_pains').insert(row).select().single();
+  if (r.error) { toast('Pain not saved: '+r.error.message); return null; }
+  pains.unshift(r.data); return r.data;
+}
+function painItem(x, showGym){
+  var c = x.contact_id ? contacts.find(function(k){ return k.id === x.contact_id; }) : null;
+  var who = c ? c.business_name : (x.source_name || 'Online');
+  return '<div class="item"><div class="when">'+esc(nice(x.at.slice(0,10)))+(showGym ? ' · '+esc(who) : '')+(x.gym_group ? ' · '+esc(label(GROUPS, x.gym_group)) : '')+(x.level ? ' · level '+x.level : '')+'</div>'
+    + '<div style="white-space:pre-wrap">“'+esc(x.quote)+'”</div>'
+    + '<div class="chips">'+(showGym ? '' : '<span class="chip">'+esc(x.theme)+'</span>')+(x.paying_now ? '<span class="chip ok">Paying to fix it</span>' : '')+(x.would_pay ? '<span class="chip t1">Would pay / switch</span>' : '')
+    + (x.source_url ? '<a class="chip" href="'+esc(x.source_url)+'" target="_blank" rel="noopener">Source</a>' : '')+'</div></div>';
+}
+// Score: each mention 1 point, plus how much it bothers them, plus 2 if they already pay to fix it, plus 3 if they'd pay or switch.
+function painScore(x){ return 1 + (x.level || 0) / 2 + (x.paying_now ? 2 : 0) + (x.would_pay ? 3 : 0); }
+function painsView(){
+  var inPerson = pains.filter(function(x){ return x.source !== 'online'; });
+  var list = pains.filter(function(x){ return painGroup === 'all' ? true : painGroup === 'online' ? x.source === 'online' : painGroup === 'person' ? x.source !== 'online' : x.gym_group === painGroup; });
+  var html = '<p class="meta" style="margin:0 0 10px">'+inPerson.length+' heard in person · '+(pains.length - inPerson.length)+' from online reviews. Ranked by score: each mention, how much it bothers them, whether they already pay to fix it, and whether they\'d pay you.</p>';
+  html += '<div class="chips" id="pg">'+[['all','All'],['person','In person'],['online','Online']].concat(GROUPS).map(function(o){ return '<button type="button" class="small'+(painGroup===o[0]?' primary':'')+'" data-g="'+o[0]+'">'+esc(o[1])+'</button>'; }).join('')+'</div>';
+  var by = {};
+  list.forEach(function(x){ var t = by[x.theme] || (by[x.theme] = { n: 0, score: 0, lv: 0, lvn: 0, pay: 0, would: 0, gyms: {}, items: [] });
+    t.n++; t.score += painScore(x); if (x.level) { t.lv += x.level; t.lvn++; } if (x.paying_now) t.pay++; if (x.would_pay) t.would++; if (x.contact_id) t.gyms[x.contact_id] = 1; t.items.push(x); });
+  var keys = Object.keys(by).sort(function(a,b){ return by[b].score - by[a].score; });
+  if (!keys.length) return html + '<div class="empty" style="margin-top:12px">Nothing logged here yet. After each chat, add what they complained about in Log visit or on the gym\'s page.</div>';
+  html += keys.map(function(k, i){ var t = by[k], g = Object.keys(t.gyms).length;
+    return '<details class="card" style="margin-top:10px"'+(i===0?' open':'')+'><summary style="cursor:pointer"><span class="name">'+(i+1)+'. '+esc(k)+'</span>'
+      + '<div class="chips"><span class="chip">Score '+t.score.toFixed(1)+'</span><span class="chip">'+t.n+(t.n===1?' mention':' mentions')+(g ? ' · '+g+(g===1?' gym':' gyms') : '')+'</span>'
+      + (t.lvn ? '<span class="chip">Avg level '+(t.lv/t.lvn).toFixed(1)+'</span>' : '')+(t.pay ? '<span class="chip ok">'+t.pay+' paying to fix</span>' : '')+(t.would ? '<span class="chip t1">'+t.would+' would pay</span>' : '')+'</div></summary>'
+      + '<div class="tl" style="margin-top:8px">'+t.items.map(function(x){ return painItem(x, true); }).join('')+'</div></details>';
+  }).join('');
+  return html;
+}
+function wirePainsView(){
+  document.querySelectorAll('#pg button').forEach(function(b){ b.onclick = function(){ painGroup = b.dataset.g; render(); }; });
+}
 
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
@@ -219,7 +284,7 @@ async function load(){
   var r = await SB.from('crm_contacts').select('*').order('business_name').limit(2000);
   if (r.error) { $('view').innerHTML = '<div class="empty">Could not load: '+esc(r.error.message)+'</div>'; return; }
   contacts = r.data;
-  await loadWaiting();
+  await Promise.all([loadWaiting(), loadPains()]);
   if (!contacts.length) { $('view').innerHTML = '<div class="empty">No contacts visible. If you expected some, this login may not be on the CRM admin list.</div>'; return; }
   render();
 }
@@ -319,8 +384,10 @@ function render(){
     html += '<h2>Account</h2><div class="actions"><button id="a_pw">Change password</button><button id="a_out">Sign out</button></div>';
   }
   if (tab === 'add') { $('title').textContent = 'Log a visit'; html = visitForm(null); }
+  if (tab === 'pains') { $('title').textContent = 'Pains heard'; html = painsView(); }
   v.innerHTML = html;
   if (tab === 'add') wireVisitForm(null);
+  if (tab === 'pains') wirePainsView();
   if ($('showout')) $('showout').onclick = function(){ showOut = true; render(); };
   if ($('a_pw')) $('a_pw').onclick = function(){ showReset(); };
   if ($('a_out')) $('a_out').onclick = function(){ SB.auth.signOut(); };
@@ -342,6 +409,7 @@ function visitForm(c){
     + '<div class="prompts">Straight after the visit, talk for a minute about:<ol><li>Who you met and their role</li><li>What they care about, in their words</li><li>Any worries or objections</li><li>Tips by email: yes or no</li><li>Next step, and when</li></ol></div>'
     + voiceBar('v')
     + '<textarea id="v_notes" style="min-height:140px" placeholder="Speak with Voice note, or type here">'+esc(draftGet(c.id))+'</textarea>'
+    + '<details style="margin-top:12px"><summary style="cursor:pointer;font-weight:600">+ Pain heard (what did they complain about?)</summary>' + painFields('vp', c.id) + '</details>'
     + '<label for="v_sell">Open to selling one day?</label><select id="v_sell">'+[['unknown','Not discussed'],['no','No'],['maybe','Maybe'],['yes','Yes']].map(function(o){ return '<option value="'+o[0]+'"'+((c.open_to_selling||'unknown')===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select>'
     + platformField('v_bp', c.booking_platform)
     + '<label for="v_next">Next step (optional)</label><input id="v_next" placeholder="e.g. Drop in after the Saturday open mat" value="'+esc(nextText)+'">'
@@ -428,6 +496,7 @@ function wireVisitForm(c){
     try {
       var email = $('v_em').value.trim(), consent = $('v_consent').checked;
       if (consent && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { toast('Add their email to send tips'); btn.disabled = false; return; }
+      if (readPain('vp', null, 'visit') === false) { btn.disabled = false; return; }
       var target = c;
       if (!target) {
         var name = bn.value.trim(); if (!name) { toast('Add the gym name'); btn.disabled = false; return; }
@@ -451,6 +520,8 @@ function wireVisitForm(c){
       var saved = await save(target.id, patch);
       if (!saved) { btn.disabled = false; return; }
       await touch(target.id, 'visit', 'Visited' + (patch.contact_name ? ', met '+patch.contact_name : '') + (newConsent ? '. Said yes to free tips in person.' : '') + (notes ? '\n'+notes : ''));
+      var pain = readPain('vp', target.id, 'visit');
+      if (pain) await savePain(pain);
       draftSet(c && c.id, ''); toast(newConsent ? 'Saved. Tips start next weekday.' : 'Visit saved. Next: ' + nice(patch.next_action_on));
       if ($('sheet').classList.contains('open')) history.back(); closeSheet(); tab = 'today'; $('q').value = ''; render();
     } catch (e) { toast('Error: '+e.message); btn.disabled = false; }
@@ -481,6 +552,10 @@ async function openContact(id, replace){
     + '<img id="s_photo_prev" class="photo-prev" alt="" hidden>'
     + '<label class="check" for="s_in" style="margin-top:8px"><input type="checkbox" id="s_in"><span>They contacted me (inbound)</span></label>'
     + '<button class="primary" id="s_log" style="width:100%;margin-top:10px">Save to timeline</button>'
+    + '<h2>Pains heard</h2><div class="tl" id="s_pains">'+(function(){ var l = pains.filter(function(x){ return x.contact_id === c.id; }); return l.length ? l.map(function(x){ return painItem(x, false); }).join('') : '<div class="meta">Nothing logged yet.</div>'; })()+'</div>'
+    + '<details class="card" style="margin-top:8px"><summary style="cursor:pointer;font-weight:600">+ Add a pain</summary>' + painFields('sp', c.id)
+    + '<label for="sp_ch">Heard on</label><select id="sp_ch"><option value="visit">Visit</option><option value="call">Call</option><option value="meeting">Meeting</option><option value="text">Text or email</option></select>'
+    + '<button class="primary" id="sp_save" style="width:100%;margin-top:12px">Save pain</button></details>'
     + '<h2>Details</h2><div class="card">'
     + '<div class="grid2"><div><label for="d_cn">Contact</label><input id="d_cn" value="'+esc(c.contact_name||'')+'"></div><div><label for="d_role">Role</label><input id="d_role" value="'+esc(c.role||'')+'"></div></div>'
     + '<label for="d_em">Email</label><input id="d_em" type="email" value="'+esc(c.email||'')+'">'
@@ -566,6 +641,13 @@ function wireSheet(c){
     if (!confirm('Confirm they agreed in person to free tips by email?')) return;
     var d = await save(c.id, { email: email, consent_tips: true, consent_method: 'in_person' }, 'Tips start next weekday');
     if (d) { await touch(c.id, 'note', 'Said yes to free tips (in person)'); openContactReplace(c.id); }
+  };
+  $('sp_save').onclick = async function(){
+    var row = readPain('sp', c.id, $('sp_ch').value);
+    if (row === null) { toast('Write what they said'); return; }
+    if (!row) return;
+    this.disabled = true; var d = await savePain(row); this.disabled = false;
+    if (d) { toast('Pain saved'); openContactReplace(c.id); }
   };
   $('s_nextsave').onclick = async function(){ await save(c.id, { next_action: $('s_next').value.trim() || null, next_action_on: $('s_nextd').value || null }, 'Next step saved'); };
   var ch = 'note';
