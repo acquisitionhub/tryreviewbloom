@@ -329,10 +329,8 @@ function card(c, extra){
   var chips = tierChip(c) + '<span class="chip">'+esc(label(STAGES,c.stage))+'</span>';
   if (c.review_count != null) chips += '<span class="chip">'+(c.rating ? esc(Number(c.rating).toFixed(1))+'★ · ' : '')+esc(c.review_count)+' reviews'+(c.last_review_at ? ' · last '+esc(agoShort(c.last_review_at)) : '')+'</span>';
   if (c.booking_platform) chips += '<span class="chip">📅 '+esc(c.booking_platform)+'</span>';
-  if (c.consent_tips) chips += '<span class="chip ok">Tips '+(c.nurture_paused ? 'paused' : (c.nurture_step+'/'+TIPS_TOTAL))+'</span>';
   if (c.unsubscribed_at) chips += '<span class="chip">Unsubscribed</span>';
   if (c.next_action_on && c.next_action_on <= today()) chips += '<span class="chip due">Due '+esc(nice(c.next_action_on))+'</span>';
-  if (c.open_to_selling === 'maybe' || c.open_to_selling === 'yes') chips += '<span class="chip t1">Open to selling: '+esc(c.open_to_selling)+'</span>';
   var place = (c.address || '').split(',').slice(-3, -1).join(',').trim() || c.area || '';
   return '<div class="card tap" data-open="'+esc(c.id)+'"><div class="name">'+esc(c.business_name)+'</div>'
     + '<div class="meta">'+esc(c.contact_name ? c.contact_name+(c.role ? ', '+c.role : '')+' · ' : '')+esc(place)+'</div>'
@@ -377,7 +375,6 @@ function render(){
       var label = x.w.last_out_at > new Date().toISOString() ? 'scheduled to send ' + nice(x.w.last_out_at) : (days < 1 ? 'today' : days === 1 ? '1 day ago' : days + ' days ago');
       return card(x.c, '<div class="meta" style="margin-top:6px">Last '+esc(label === 'today' ? x.w.last_channel + ' sent today' : x.w.last_channel + ': ' + label)+(x.c.next_action_on ? ' · follow up '+esc(nice(x.c.next_action_on)) : '')+'</div>');
     }).join('') : '<div class="empty">Nobody waiting.</div>');
-    html += '<h2>Tips going out in the next 7 days ('+week.length+')</h2>' + (week.length ? week.map(function(c){ return card(c, '<div class="meta" style="margin-top:6px">Next tip: '+esc(nice(tipDay(c.next_tip_on)))+'</div>'); }).join('') : '<div class="empty">None scheduled.</div>');
   }
   if (tab === 'visit') {
     $('title').textContent = 'To visit';
@@ -395,7 +392,7 @@ function render(){
   }
   if (tab === 'pipe') {
     $('title').textContent = 'Pipeline';
-    [['1','Tier 1: hot (ready to talk, asked about help)'],['2','Tier 2: met, said yes to tips'],['client','Clients'],['out','Out']].forEach(function(g){
+    [['1','Tier 1: hot (ready to talk, asked about help)'],['2','Tier 2: met, talked'],['client','Clients'],['out','Out']].forEach(function(g){
       var l = contacts.filter(function(c){ return c.tier === g[0]; });
       if (g[0] === 'out' && !l.length) return;
       if (g[0] === 'out' && !showOut) { html += '<h2>Out and parked ('+l.length+')</h2><button id="showout" style="width:100%">Show them</button>'; return; }
@@ -406,7 +403,7 @@ function render(){
     var tn = tk.reduce(function(n,k){ return n + tally[k]; }, 0);
     html += '<h2>Booking software seen ('+tn+(tn === 1 ? ' gym' : ' gyms')+')</h2>' + (tk.length ? '<div class="card"><div class="chips" style="margin-top:0">'+tk.map(function(k){ return '<span class="chip ok">'+esc(k)+': '+tally[k]+'</span>'; }).join('')+'</div><div class="meta" style="margin-top:8px">Ask every gym. The most common one is the integration to build first.</div></div>' : '<div class="empty">None recorded yet. Ask "What do you use for bookings?"</div>');
     var visited3 = contacts.filter(function(c){ return c.tier === '3' && c.stage !== 'to_visit'; });
-    if (visited3.length) html += '<h2>Visited, no tips yet ('+visited3.length+')</h2>' + visited3.map(function(c){ return card(c); }).join('');
+    if (visited3.length) html += '<h2>Visited, Tier 3 ('+visited3.length+')</h2>' + visited3.map(function(c){ return card(c); }).join('');
     html += '<h2>Account</h2><div class="actions"><button id="a_pw">Change password</button><button id="a_out">Sign out</button></div>';
   }
   if (tab === 'add') { $('title').textContent = 'Log a visit'; html = visitForm(null); }
@@ -431,13 +428,11 @@ function visitForm(c){
     + '<div class="grid2"><div><label for="v_cn">Person you met</label><input id="v_cn" value="'+esc(c.contact_name||'')+'" autocomplete="off"></div><div><label for="v_role">Role</label><input id="v_role" value="'+esc(c.role||'')+'" placeholder="Owner, manager" autocomplete="off"></div></div>'
     + '<label for="v_em">Email</label><input id="v_em" type="email" value="'+esc(c.email||'')+'" autocomplete="off" inputmode="email">'
     + '<label for="v_ph">Phone</label><input id="v_ph" type="tel" value="'+esc(c.phone||'')+'" autocomplete="off">'
-    + '<label class="check" for="v_consent"><input type="checkbox" id="v_consent"'+(c.consent_tips ? ' checked' : '')+'><span><b>They said yes to free tips by email.</b><br>Only tick this if they agreed in person. Weekly for 8 weeks, then monthly. The first one goes out on the next weekday morning.</span></label>'
     + '<label for="v_notes">What did you learn?</label>'
-    + '<div class="prompts">Straight after the visit, talk for a minute about:<ol><li>Who you met and their role</li><li>What they care about, in their words</li><li>Any worries or objections</li><li>Tips by email: yes or no</li><li>Next step, and when</li></ol></div>'
+    + '<div class="prompts">Straight after the visit, talk for a minute about:<ol><li>Who you met and their role</li><li>What they care about, in their words</li><li>Any worries or objections</li><li>Their biggest pain, in their words</li><li>Next step, and when</li></ol></div>'
     + voiceBar('v')
     + '<textarea id="v_notes" style="min-height:140px" placeholder="Speak with Voice note, or type here">'+esc(draftGet(c.id))+'</textarea>'
     + '<details style="margin-top:12px"><summary style="cursor:pointer;font-weight:600">+ Pain heard (what did they complain about?)</summary>' + painFields('vp', c.id) + '</details>'
-    + '<label for="v_sell">Open to selling one day?</label><select id="v_sell">'+[['unknown','Not discussed'],['no','No'],['maybe','Maybe'],['yes','Yes']].map(function(o){ return '<option value="'+o[0]+'"'+((c.open_to_selling||'unknown')===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select>'
     + platformField('v_bp', c.booking_platform)
     + '<label for="v_next">Next step (optional)</label><input id="v_next" placeholder="e.g. Drop in after the Saturday open mat" value="'+esc(nextText)+'">'
     + '<label for="v_nextd">Next step date</label><input id="v_nextd" type="date" value="'+esc(nextDate)+'">' + quickDates('v_nextd')
@@ -521,8 +516,7 @@ function wireVisitForm(c){
   $('v_save').onclick = async function(){
     var btn = this; btn.disabled = true; stopVoice();
     try {
-      var email = $('v_em').value.trim(), consent = $('v_consent').checked;
-      if (consent && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { toast('Add their email to send tips'); btn.disabled = false; return; }
+      var email = $('v_em').value.trim(), consent = false;  // free tips by email are switched off for now
       if (readPain('vp', null, 'visit') === false) { btn.disabled = false; return; }
       var target = c;
       if (!target) {
@@ -535,7 +529,7 @@ function wireVisitForm(c){
         }
       }
       var patch = { contact_name: $('v_cn').value.trim() || null, role: $('v_role').value.trim() || null, email: email || null, phone: $('v_ph').value.trim() || target.phone || null,
-        open_to_selling: $('v_sell').value, booking_platform: $('v_bp').value.trim() || target.booking_platform || null, next_action: $('v_next').value.trim() || null, next_action_on: $('v_nextd').value || null };
+        booking_platform: $('v_bp').value.trim() || target.booking_platform || null, next_action: $('v_next').value.trim() || null, next_action_on: $('v_nextd').value || null };
       // Auto: after a visit the gym always gets a future follow-up, so it drops off today's list.
       if (!patch.next_action_on || patch.next_action_on <= today()) {
         patch.next_action_on = followUpDay(AUTO_DAYS);
@@ -568,9 +562,6 @@ async function openContact(id, replace){
     + (c.stage === 'to_visit' ? '<button class="primary" id="s_visit" style="width:100%;margin-bottom:10px">Log visit</button>' : '')
     + '<h2>Tier</h2><div class="seg" id="s_tier">'+TIERS.map(function(t){ return '<button data-v="'+t[0]+'" class="'+(c.tier===t[0]?'on':'')+'">'+esc(t[1])+'</button>'; }).join('')+'</div>'
     + '<label for="s_stage">Stage</label><select id="s_stage">'+STAGES.map(function(t){ return '<option value="'+t[0]+'"'+(c.stage===t[0]?' selected':'')+'>'+esc(t[1])+'</option>'; }).join('')+'</select>'
-    + '<h2>Free tips</h2><div class="card"><div>'+esc(nurture)+'</div><div class="actions">'
-    + (c.unsubscribed_at ? '' : c.consent_tips ? '<button id="s_pause">'+(c.nurture_paused ? 'Resume tips' : 'Pause tips')+'</button>' : '<button id="s_consent">They said yes to tips</button>')
-    + '</div></div>'
     + '<h2>Next step</h2><input id="s_next" value="'+esc(c.next_action||'')+'" placeholder="What happens next?"><div class="grid2" style="margin-top:8px"><input id="s_nextd" type="date" value="'+esc(c.next_action_on||'')+'"><button id="s_nextsave">Save next step</button></div>' + quickDates('s_nextd')
     + '<h2>Log something</h2><p class="meta" style="margin:-2px 0 6px">1. Choose the type&nbsp;&nbsp;2. Write or speak&nbsp;&nbsp;3. Tap Save to timeline</p><div class="seg" id="s_ch">'+CHANNELS.map(function(t,i){ return '<button data-v="'+t[0]+'" class="'+(i===5?'on':'')+'">'+esc(t[1])+'</button>'; }).join('')+'</div>'
     + voiceBar('s')
@@ -587,7 +578,6 @@ async function openContact(id, replace){
     + '<div class="grid2"><div><label for="d_cn">Contact</label><input id="d_cn" value="'+esc(c.contact_name||'')+'"></div><div><label for="d_role">Role</label><input id="d_role" value="'+esc(c.role||'')+'"></div></div>'
     + '<label for="d_em">Email</label><input id="d_em" type="email" value="'+esc(c.email||'')+'">'
     + '<label for="d_ph">Phone</label><input id="d_ph" type="tel" value="'+esc(c.phone||'')+'">'
-    + '<label for="d_sell">Open to selling one day?</label><select id="d_sell">'+[['unknown','Not discussed'],['no','No'],['maybe','Maybe'],['yes','Yes']].map(function(o){ return '<option value="'+o[0]+'"'+(c.open_to_selling===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select>'
     + platformField('d_bp', c.booking_platform)
     + '<label for="d_notes">Notes</label>' + voiceBar('d') + '<textarea id="d_notes" style="min-height:140px">'+esc(c.notes||'')+'</textarea>'
     + '<button id="d_save" style="width:100%;margin-top:12px">Save details</button></div>'
@@ -715,7 +705,7 @@ function wireSheet(c){
   };
   $('d_save').onclick = async function(){
     stopVoice();
-    await save(c.id, { contact_name: $('d_cn').value.trim() || null, role: $('d_role').value.trim() || null, email: $('d_em').value.trim() || null, phone: $('d_ph').value.trim() || null, open_to_selling: $('d_sell').value, booking_platform: $('d_bp').value.trim() || null, notes: $('d_notes').value.trim() || null }, 'Details saved');
+    await save(c.id, { contact_name: $('d_cn').value.trim() || null, role: $('d_role').value.trim() || null, email: $('d_em').value.trim() || null, phone: $('d_ph').value.trim() || null, booking_platform: $('d_bp').value.trim() || null, notes: $('d_notes').value.trim() || null }, 'Details saved');
   };
 }
 function openContactReplace(id){ openContact(id, true); }
