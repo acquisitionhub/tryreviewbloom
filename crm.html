@@ -131,7 +131,7 @@ var TIERS = [['3','Tier 3'],['2','Tier 2'],['1','Tier 1'],['client','Client'],['
 var PLATFORMS = ['TeamUp','PTminder','Glofox','ClubRight','Mindbody','Gymcatch','Bookwhen','Wodify','Trainerize','PushPress','Paper / WhatsApp only','None'];
 function platformField(id, val){ return '<label for="'+id+'">Booking software</label><input id="'+id+'" list="'+id+'_l" value="'+esc(val||'')+'" placeholder="e.g. TeamUp, PTminder, Glofox" autocomplete="off"><datalist id="'+id+'_l">'+PLATFORMS.map(function(x){ return '<option value="'+esc(x)+'">'; }).join('')+'</datalist>'; }
 var CHANNELS = [['visit','Visit'],['call','Call'],['text','Text'],['email','Email'],['meeting','Meeting'],['note','Note']];
-var contacts = [], tab = 'today', current = null, showOut = false;
+var contacts = [], tab = 'today', current = null, showOut = false, showAllPain = false;
 
 // ---------- pains heard (discovery) ----------
 var PAIN_THEMES = ['Getting new members','Keeping members / people leaving','Admin eating my time','Payments / failed payments','Bookings, no-shows, cancellations','Software too dear or too complicated','Staff and coaches','Rent, energy and costs','Marketing and social media','Reviews and reputation','Other'];
@@ -360,6 +360,16 @@ function render(){
     var n = function(t){ return live.filter(function(c){ return c.tier === t; }).length; };
     html += '<div class="stats"><div class="stat"><b>'+n('3')+'</b><span>To visit</span></div><div class="stat"><b>'+n('2')+'</b><span>Nurturing</span></div><div class="stat"><b>'+n('1')+'</b><span>Hot</span></div><div class="stat"><b>'+n('client')+'</b><span>Clients</span></div></div>';
     html += '<h2>Due now ('+due.length+')</h2>' + (due.length ? due.map(function(c){ return card(c); }).join('') : '<div class="empty">Nothing due. Go and visit a gym.</div>');
+    // Pain chats to do: everyone with a named person and no pain logged in person yet, warmest first.
+    var heard = {}; pains.forEach(function(x){ if (x.contact_id && x.source !== 'online') heard[x.contact_id] = 1; });
+    var TRANK = { '1':0, client:1, '2':2, '3':3 }, SRANK = { trial:0, call_booked:1, engaged:2, nurturing:3, visited:4, to_visit:5 };
+    var todo = live.filter(function(c){ return c.contact_name && !heard[c.id]; })
+      .sort(function(a,b){ return (TRANK[a.tier] ?? 9) - (TRANK[b.tier] ?? 9) || (SRANK[a.stage] ?? 9) - (SRANK[b.stage] ?? 9) || a.business_name.localeCompare(b.business_name); });
+    html += '<h2>Pain chat to do ('+todo.length+')</h2>';
+    html += todo.length ? '<p class="meta" style="margin:-2px 0 8px">Warmest first. Ask the 5 questions, then open the gym and use "+ Add a pain". It drops off this list once a pain is logged.</p>'
+      + todo.slice(0, showAllPain ? todo.length : 8).map(function(c){ return card(c); }).join('')
+      + (todo.length > 8 && !showAllPain ? '<button id="painall" style="width:100%">Show all '+todo.length+'</button>' : '')
+      : '<div class="empty">Everyone you\'ve met has a pain logged. Check the Pains tab.</div>';
     if (hot.length) html += '<h2>Tier 1: hot</h2>' + hot.map(function(c){ return card(c); }).join('');
     var wl = waiting.map(function(w){ var c = contacts.find(function(x){ return x.id === w.id; }); return c ? { c: c, w: w } : null; }).filter(Boolean);
     html += '<h2>Waiting to hear back ('+wl.length+')</h2>' + (wl.length ? '<p class="meta" style="margin:-2px 0 8px">You contacted them last and they haven\'t replied yet. When they reply, log it with "They contacted me" ticked.</p>' + wl.map(function(x){
@@ -405,6 +415,7 @@ function render(){
   if (tab === 'add') wireVisitForm(null);
   if (tab === 'pains') wirePainsView();
   if ($('showout')) $('showout').onclick = function(){ showOut = true; render(); };
+  if ($('painall')) $('painall').onclick = function(){ showAllPain = true; render(); };
   if ($('a_pw')) $('a_pw').onclick = function(){ showReset(); };
   if ($('a_out')) $('a_out').onclick = function(){ SB.auth.signOut(); };
 }
