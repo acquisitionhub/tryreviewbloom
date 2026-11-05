@@ -178,7 +178,23 @@ function painScore(x){ return 1 + (x.level || 0) / 2 + (x.paying_now ? 2 : 0) + 
 function painsView(){
   var inPerson = pains.filter(function(x){ return x.source !== 'online'; });
   var list = pains.filter(function(x){ return painGroup === 'all' ? true : painGroup === 'online' ? x.source === 'online' : painGroup === 'person' ? x.source !== 'online' : x.gym_group === painGroup; });
-  var html = '<p class="meta" style="margin:0 0 10px">'+inPerson.length+' heard in person · '+(pains.length - inPerson.length)+' from online reviews. Ranked by score: each mention, how much it bothers them, whether they already pay to fix it, and whether they\'d pay you.</p>';
+  // Countdown to 20 discovery conversations: each gym with at least one pain logged in person counts once.
+  var GOAL = 20, gymIds = {}, gymGroup = {};
+  inPerson.forEach(function(x){ if (x.contact_id) { gymIds[x.contact_id] = 1; if (x.gym_group && !gymGroup[x.contact_id]) gymGroup[x.contact_id] = x.gym_group; } });
+  var done = Object.keys(gymIds).length, left = Math.max(0, GOAL - done);
+  var perGroup = GROUPS.map(function(g){ var n = Object.keys(gymGroup).filter(function(k){ return gymGroup[k] === g[0]; }).length;
+    return '<span class="chip'+(n >= 3 ? ' ok' : '')+'">'+esc(g[1])+': '+n+'</span>'; }).join('');
+  var topTheme = '', topScore = 0, ts = {};
+  inPerson.forEach(function(x){ ts[x.theme] = (ts[x.theme] || 0) + painScore(x); if (ts[x.theme] > topScore) { topScore = ts[x.theme]; topTheme = x.theme; } });
+  var html = '<div class="card" style="margin:0 0 12px">'
+    + '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap"><b style="font-size:17px">'+(left ? left+' conversation'+(left===1?'':'s')+' to go' : 'Decision time')+'</b><span class="meta">'+done+' of '+GOAL+' gyms</span></div>'
+    + '<div style="height:10px;background:var(--chip);border-radius:5px;overflow:hidden;margin:8px 0"><div style="height:100%;width:'+Math.min(100, done/GOAL*100)+'%;background:var(--green);border-radius:5px"></div></div>'
+    + (left ? '<div class="meta">A gym counts once you log at least one pain from talking to them. Aim for 3–4 of each type:</div>'
+      : '<div class="meta">You\'ve heard from 20 gyms. Your top pain is <b style="color:var(--ink)">'+esc(topTheme)+'</b>. Ask the owners who raised it: "If I built this, would you try it for a month?" and look for 3–5 yeses.</div>')
+    + '<div class="chips" style="margin-top:6px">'+perGroup+'</div>'
+    + (left && topTheme ? '<div class="meta" style="margin-top:6px">Leading so far: <b style="color:var(--ink)">'+esc(topTheme)+'</b></div>' : '')
+    + '</div>';
+  html += '<p class="meta" style="margin:0 0 10px">'+inPerson.length+' heard in person · '+(pains.length - inPerson.length)+' from online reviews. Ranked by score: each mention, how much it bothers them, whether they already pay to fix it, and whether they\'d pay you.</p>';
   html += '<div class="chips" id="pg">'+[['all','All'],['person','In person'],['online','Online']].concat(GROUPS).map(function(o){ return '<button type="button" class="small'+(painGroup===o[0]?' primary':'')+'" data-g="'+o[0]+'">'+esc(o[1])+'</button>'; }).join('')+'</div>';
   var by = {};
   list.forEach(function(x){ var t = by[x.theme] || (by[x.theme] = { n: 0, score: 0, lv: 0, lvn: 0, pay: 0, would: 0, gyms: {}, items: [] });
