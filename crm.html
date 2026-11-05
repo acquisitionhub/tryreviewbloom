@@ -150,7 +150,10 @@ function painFields(p, contactId){
     + '<p class="meta" style="margin:4px 0 0;font-size:12px">'+esc(GROUP_HINT)+'</p>'
     + '<label for="'+p+'_level">How much it bothers them</label><select id="'+p+'_level"><option value="">Choose…</option><option value="1">1 · Mentioned it, shrugged</option><option value="2">2 · Mild annoyance</option><option value="3">3 · Clearly annoyed</option><option value="4">4 · Big problem, came back to it</option><option value="5">5 · Keeps them up at night</option></select>'
     + '<label class="check" for="'+p+'_paying"><input type="checkbox" id="'+p+'_paying"><span>Already spending money or time to fix it (software, staff, spreadsheets, notebooks)</span></label>'
-    + '<label class="check" for="'+p+'_would"><input type="checkbox" id="'+p+'_would"><span>Said they\'d pay for, or switch to, something that fixed it</span></label>';
+    + '<label class="check" for="'+p+'_would"><input type="checkbox" id="'+p+'_would"><span>Said they\'d pay for, or switch to, something that fixed it</span></label>'
+    + '<label for="'+p+'_ideal">Ideal fix, in their words (optional)</label><textarea id="'+p+'_ideal" style="min-height:56px" placeholder="&quot;If you found the perfect fix, what would it need to have?&quot; e.g. &quot;It has to run itself&quot;"></textarea>'
+    + '<div class="grid2"><div><label for="'+p+'_fix">Using now (optional)</label><input id="'+p+'_fix" placeholder="e.g. Glofox, a spreadsheet, a part-timer"></div>'
+    + '<div><label for="'+p+'_cost">Costs them (optional)</label><input id="'+p+'_cost" placeholder="e.g. £120/month, 3 hrs a week"></div></div>';
 }
 // Returns a row to insert, null if the quote is empty, or false if something required is missing.
 function readPain(p, contactId, source){
@@ -158,7 +161,8 @@ function readPain(p, contactId, source){
   if (!q) return null;
   if (!$(p+'_theme').value) { toast('Choose what the pain is about'); return false; }
   return { contact_id: contactId || null, quote: q, theme: $(p+'_theme').value, gym_group: $(p+'_group').value || null,
-    level: $(p+'_level').value ? Number($(p+'_level').value) : null, paying_now: $(p+'_paying').checked, would_pay: $(p+'_would').checked, source: source };
+    level: $(p+'_level').value ? Number($(p+'_level').value) : null, paying_now: $(p+'_paying').checked, would_pay: $(p+'_would').checked, source: source,
+    ideal_criteria: (($(p+'_ideal') || {}).value || '').trim() || null, current_fix: (($(p+'_fix') || {}).value || '').trim() || null, current_cost: (($(p+'_cost') || {}).value || '').trim() || null };
 }
 async function savePain(row){
   var r = await SB.from('crm_pains').insert(row).select().single();
@@ -170,6 +174,8 @@ function painItem(x, showGym){
   var who = c ? c.business_name : (x.source_name || 'Online');
   return '<div class="item"><div class="when">'+esc(nice(x.at.slice(0,10)))+(showGym ? ' · '+esc(who) : '')+(x.gym_group ? ' · '+esc(label(GROUPS, x.gym_group)) : '')+(x.level ? ' · level '+x.level : '')+'</div>'
     + '<div style="white-space:pre-wrap">“'+esc(x.quote)+'”</div>'
+    + (x.ideal_criteria ? '<div class="meta" style="margin-top:4px;white-space:pre-wrap"><b style="color:var(--ink)">Ideal fix:</b> “'+esc(x.ideal_criteria)+'”</div>' : '')
+    + (x.current_fix || x.current_cost ? '<div class="meta" style="margin-top:2px"><b style="color:var(--ink)">Using now:</b> '+esc(x.current_fix || '—')+(x.current_cost ? ' · '+esc(x.current_cost) : '')+'</div>' : '')
     + '<div class="chips">'+(showGym ? '' : '<span class="chip">'+esc(x.theme)+'</span>')+(x.paying_now ? '<span class="chip ok">Paying to fix it</span>' : '')+(x.would_pay ? '<span class="chip t1">Would pay / switch</span>' : '')
     + (x.source_url ? '<a class="chip" href="'+esc(x.source_url)+'" target="_blank" rel="noopener">Source</a>' : '')+'</div></div>';
 }
@@ -205,9 +211,19 @@ function painsView(){
     return '<details class="card" style="margin-top:10px"'+(i===0?' open':'')+'><summary style="cursor:pointer"><span class="name">'+(i+1)+'. '+esc(k)+'</span>'
       + '<div class="chips"><span class="chip">Score '+t.score.toFixed(1)+'</span><span class="chip">'+t.n+(t.n===1?' mention':' mentions')+(g ? ' · '+g+(g===1?' gym':' gyms') : '')+'</span>'
       + (t.lvn ? '<span class="chip">Avg level '+(t.lv/t.lvn).toFixed(1)+'</span>' : '')+(t.pay ? '<span class="chip ok">'+t.pay+' paying to fix</span>' : '')+(t.would ? '<span class="chip t1">'+t.would+' would pay</span>' : '')+'</div></summary>'
+      + specBlock(t.items)
       + '<div class="tl" style="margin-top:8px">'+t.items.map(function(x){ return painItem(x, true); }).join('')+'</div></details>';
   }).join('');
   return html;
+}
+// Product spec for a theme: every "ideal fix" they described, plus what they use and pay now. Their words become the build list and the pitch.
+function specBlock(items){
+  var ideal = items.filter(function(x){ return x.ideal_criteria; }), now = items.filter(function(x){ return x.current_fix || x.current_cost; });
+  if (!ideal.length && !now.length) return '';
+  return '<div style="margin-top:8px;padding:10px 12px;background:var(--chip);border-radius:10px">'
+    + (ideal.length ? '<div style="font-weight:600;margin-bottom:4px">What the ideal fix needs ('+ideal.length+')</div><ul style="margin:0 0 6px;padding-left:18px">'+ideal.map(function(x){ return '<li>“'+esc(x.ideal_criteria)+'”</li>'; }).join('')+'</ul>' : '')
+    + (now.length ? '<div style="font-weight:600;margin-bottom:4px">What they use now</div><ul style="margin:0;padding-left:18px">'+now.map(function(x){ return '<li>'+esc(x.current_fix || '—')+(x.current_cost ? ' · '+esc(x.current_cost) : '')+'</li>'; }).join('')+'</ul>' : '')
+    + '</div>';
 }
 function wirePainsView(){
   document.querySelectorAll('#pg button').forEach(function(b){ b.onclick = function(){ painGroup = b.dataset.g; render(); }; });
