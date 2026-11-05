@@ -373,18 +373,22 @@ function render(){
     var week = live.filter(function(c){ return c.consent_tips && !c.nurture_paused && c.next_tip_on && c.next_tip_on <= addDays(7); });
     var n = function(t){ return live.filter(function(c){ return c.tier === t; }).length; };
     html += '<div class="stats"><div class="stat"><b>'+n('3')+'</b><span>To visit</span></div><div class="stat"><b>'+n('2')+'</b><span>Nurturing</span></div><div class="stat"><b>'+n('1')+'</b><span>Hot</span></div><div class="stat"><b>'+n('client')+'</b><span>Clients</span></div></div>';
-    html += '<h2>Due now ('+due.length+')</h2>' + (due.length ? due.map(function(c){ return card(c); }).join('') : '<div class="empty">Nothing due. Go and visit a gym.</div>');
-    // Pain chats to do: everyone with a named person and no pain logged in person yet, warmest first.
+    // Focus mode: "Due now" is only the pain-discovery chats still needed to reach 20, warmest first.
     var heard = {}; pains.forEach(function(x){ if (x.contact_id && x.source !== 'online') heard[x.contact_id] = 1; });
+    var GOAL = 20, done = Object.keys(heard).length, left = Math.max(0, GOAL - done);
     var TRANK = { '1':0, client:1, '2':2, '3':3 }, SRANK = { trial:0, call_booked:1, engaged:2, nurturing:3, visited:4, to_visit:5 };
     var todo = live.filter(function(c){ return c.contact_name && !heard[c.id]; })
       .sort(function(a,b){ return (TRANK[a.tier] ?? 9) - (TRANK[b.tier] ?? 9) || (SRANK[a.stage] ?? 9) - (SRANK[b.stage] ?? 9) || a.business_name.localeCompare(b.business_name); });
-    html += '<h2>Pain chat to do ('+todo.length+')</h2>';
-    html += todo.length ? '<p class="meta" style="margin:-2px 0 8px">Warmest first. Ask the 5 questions, then open the gym and use "+ Add a pain". It drops off this list once a pain is logged.</p>'
-      + todo.slice(0, showAllPain ? todo.length : 8).map(function(c){ return card(c); }).join('')
-      + (todo.length > 8 && !showAllPain ? '<button id="painall" style="width:100%">Show all '+todo.length+'</button>' : '')
-      : '<div class="empty">Everyone you\'ve met has a pain logged. Check the Pains tab.</div>';
-    if (hot.length) html += '<h2>Tier 1: hot</h2>' + hot.map(function(c){ return card(c); }).join('');
+    var focus = todo.slice(0, left), inFocus = {}; focus.forEach(function(c){ inFocus[c.id] = 1; });
+    html += '<h2>Due now: pain chats ('+left+' to go)</h2>';
+    if (!left) html += '<div class="empty">20 conversations done. Open the Pains tab: your top pain is the one to test next.</div>';
+    else html += '<p class="meta" style="margin:-2px 0 8px">'+done+' of '+GOAL+' done. Warmest first. Ask the 5 questions, then open the gym and use "+ Add a pain". It drops off once a pain is logged.</p>'
+      + (focus.length ? focus.map(function(c){ return card(c); }).join('') : '<div class="empty">No one left with a named contact. Visit a gym from To visit to add new people.</div>')
+      + (focus.length < left ? '<p class="meta" style="margin:6px 0 0">Only '+focus.length+(focus.length === 1 ? ' person' : ' people')+' left to ask. Find '+(left - focus.length)+' more through new visits.</p>' : '');
+    // Everything else that's due stays available, folded away.
+    var other = due.filter(function(c){ return !inFocus[c.id]; });
+    if (other.length) html += '<details class="card" style="margin-top:14px"><summary style="cursor:pointer;font-weight:600">Other follow-ups due ('+other.length+')</summary><div style="margin-top:8px">'
+      + other.map(function(c){ return card(c); }).join('') + '</div></details>';
     var wl = waiting.map(function(w){ var c = contacts.find(function(x){ return x.id === w.id; }); return c ? { c: c, w: w } : null; }).filter(Boolean);
     html += '<h2>Waiting to hear back ('+wl.length+')</h2>' + (wl.length ? '<p class="meta" style="margin:-2px 0 8px">You contacted them last and they haven\'t replied yet. When they reply, log it with "They contacted me" ticked.</p>' + wl.map(function(x){
       var days = Math.floor((Date.now() - new Date(x.w.last_out_at).getTime()) / 86400000);
