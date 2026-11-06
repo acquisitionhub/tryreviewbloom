@@ -4,19 +4,45 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Opening Google reviews…</title>
-<script>
-  (function () {
-    var g = new URLSearchParams(location.search).get("g") || "";
-    location.replace("https://wvuaqdoijqdyxncpviet.supabase.co/functions/v1/r?g=" + encodeURIComponent(g));
-  })();
-</script>
+<title>Leave a Google review</title>
 <style>
   body { margin: 0; min-height: 100vh; display: grid; place-items: center; font-family: system-ui, -apple-system, Segoe UI, Arial, sans-serif; background: #F6F8F5; color: #16211B; }
-  p { font-size: 17px; text-align: center; padding: 0 24px; }
+  .box { max-width: 420px; padding: 28px 24px; text-align: center; }
+  h1 { font-size: 22px; margin: 0 0 10px; }
+  p { font-size: 16px; line-height: 1.5; color: #3d4a42; margin: 0 0 18px; }
+  a.btn { display: inline-block; font-size: 16px; padding: 12px 22px; border-radius: 8px; background: #2E7D4F; color: #fff; text-decoration: none; }
+  .small { font-size: 13px; color: #6b6558; margin-top: 18px; }
 </style>
 </head>
 <body>
-  <p>Opening the Google review page…</p>
+  <div class="box">
+    <h1 id="title">Taking you to Google…</h1>
+    <p id="msg">Thanks for taking a moment to leave a review.</p>
+    <a class="btn" id="btn" href="#" hidden>Open the review page</a>
+    <noscript><p>Please open this link in your phone's browser to continue.</p></noscript>
+    <p class="small">Review requests sent on behalf of a local business by Try Review Bloom.</p>
+  </div>
+<script>
+  // The tap is recorded here, in the browser, so link previews in messaging apps don't count as a tap.
+  (function () {
+    var API = "https://wvuaqdoijqdyxncpviet.supabase.co/functions/v1/review-click";
+    var c = (new URLSearchParams(location.search).get("c") || "").replace(/[^a-f0-9]/gi, "");
+    var title = document.getElementById("title"), msg = document.getElementById("msg"), btn = document.getElementById("btn");
+    function go(d) {
+      if (!d || !d.link) return fail(d && d.error);
+      if (d.business) msg.textContent = "Thanks for taking a moment to review " + d.business + ".";
+      btn.href = d.link; btn.hidden = false;
+      location.replace(d.link);
+    }
+    function fail(text) { title.textContent = "Leave a review"; msg.textContent = text || "Something went wrong. Please try the link again in a minute."; }
+    if (!c) return fail("This link isn't valid.");
+    fetch(API, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c: c }) })
+      .then(function (r) { return r.json(); }).then(go)
+      .catch(function () {
+        // Recording failed: still get them to Google with the look-up.
+        fetch(API + "?c=" + encodeURIComponent(c)).then(function (r) { return r.json(); }).then(go).catch(function () { fail(); });
+      });
+  })();
+</script>
 </body>
 </html>
